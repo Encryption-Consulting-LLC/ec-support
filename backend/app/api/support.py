@@ -128,7 +128,20 @@ def _now():
 
 
 def _iso(dt):
-    return dt.isoformat().replace("+00:00", "Z") if dt else None
+    """Serialize a datetime as UTC ISO-8601 WITH the Z suffix.
+
+    We insert timezone-aware UTC datetimes, but PyMongo returns them
+    NAIVE on read (tz_aware defaults to False). A naive isoformat() has
+    no Z/offset, and JavaScript parses suffix-less ISO strings as LOCAL
+    time — which shifted every timestamp in the portal by the viewer's
+    UTC offset (a case opened "just now" showed as hours old). All
+    stored datetimes here are UTC by construction, so stamping UTC onto
+    a naive value is correct, not a guess."""
+    if not dt:
+        return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.isoformat().replace("+00:00", "Z")
 
 
 def _caller():
