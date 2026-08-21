@@ -1,0 +1,10 @@
+[Unit]
+Description=EC Support Portal health probe (restarts whatever is down)
+Documentation=file:///home/ec/ec-support-portal/deploy/ecsupport-health.sh
+After=ecsupport.service
+
+[Service]
+Type=oneshot
+# Runs as root: its job is to systemctl restart failed units.
+ExecStart=/opt/ec-support/bin/ecsupport-health.sh
+TimeoutStartSec=120

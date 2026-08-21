@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/ec-light-theme-favicon-32x32.png"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/ec-dark-theme-favicon-32x32.png"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/ec-light-theme-favicon-192x192.png"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/ec-dark-theme-favicon-192x192.png"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link rel="apple-touch-icon" sizes="180x180" href="/ec-dark-theme-favicon-180x180.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Encryption Consulting Support Portal</title>
+    <script>
+      // No-flash theme init. Runs before React boots so the page never
+      // paints light-on-dark (or vice versa) for a frame. Dark is the
+      // brand default — only flip to light if the user explicitly chose
+      // it via the Topbar toggle (persisted in localStorage). Mirrors
+      // the useTheme hook's STORAGE_KEY and DEFAULT_THEME exactly —
+      // keep both in sync.
+      (function () {
+        var theme = "dark";
+        try {
+          var stored = window.localStorage.getItem("ec-portal-theme");
+          if (stored === "light") theme = "light";
+        } catch (_) {
+          // localStorage unavailable — default dark theme renders.
+        }
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

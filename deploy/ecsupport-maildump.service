@@ -1,0 +1,29 @@
+[Unit]
+Description=EC Support Portal dev SMTP sink (writes .eml to /var/lib/ec-support/maildump)
+Documentation=file:///home/ec/ec-support-portal/deploy/maildump.py
+# DEV ONLY. This stands in for a real SMTP relay so the full
+# "case -> support@ + client ack" path is observable on disk. When the
+# real relay is configured in backend/.env, disable this unit.
+After=network.target
+
+[Service]
+Type=exec
+User=ecsupport
+Group=ecsupport
+Environment=SUPPORT_MAILDUMP_DIR=/var/lib/ec-support/maildump
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=SUPPORT_MAILDUMP_HOST=127.0.0.1
+Environment=SUPPORT_MAILDUMP_PORT=2525
+ExecStart=/opt/ec-support/backend/.venv/bin/python /opt/ec-support/bin/maildump.py
+Restart=always
+RestartSec=3
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/ec-support
+
+[Install]
+WantedBy=multi-user.target

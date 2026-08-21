@@ -1,0 +1,15 @@
+[Unit]
+Description=Run the EC Support Portal health probe every 2 minutes
+
+[Timer]
+# First probe 90s after boot, giving mongod/gunicorn time to settle.
+OnBootSec=90s
+# OnUnitInactiveSec (not OnUnitActiveSec): the next run is scheduled 2min
+# after the previous one FINISHES, so a slow probe can never overlap
+# itself and start duelling restarts.
+OnUnitInactiveSec=2min
+AccuracySec=15s
+Unit=ecsupport-health.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,2504 @@
+@font-face {
+  font-family: "Poppins Regular";
+  src: url("../src/assets//font/Poppins/Poppins-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins SemiBold";
+  src: url("../src/assets/font/Poppins/Poppins-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins Medium";
+  src: url("../src/assets/font/Poppins/Poppins-Medium.ttf") format("truetype");
+}
+
+$ec-brand-color: #0d56d4;
+$ec-black-color: #111111;
+$ec-green-color: #1ebdbd;
+$ec-cyan-color: #0095c6;
+$ec-purple-color: #8d4cef;
+$ec-emerald-color: #0ebc81;
+$ec-gold-color: #f1a600;
+$ec-dark-gray-color: #2a2a2a;
+$ec-light-gray-color: #b2b2b2;
+$ec-light-off-white: #fafafa;
+
+.bg-ec-primary-color {
+  background-color: $ec-brand-color;
+}
+.bg-ec-secondary-color {
+  background-color: var(--color-bg-banner);
+}
+.bg-ec-dark-gray-color {
+  background-color: $ec-dark-gray-color;
+}
+.bg-light-off-white {
+  background-color: var(--color-bg-surface);
+}
+.text-ec-primary-color {
+  color: $ec-brand-color;
+}
+.text-ec-secondary-color {
+  color: var(--color-text);
+}
+.text-ec-green-color {
+  color: $ec-green-color;
+}
+.text-ec-cyan-color {
+  color: $ec-cyan-color;
+}
+.text-ec-purple-color {
+  color: $ec-purple-color;
+}
+.text-ec-emerald-color {
+  color: $ec-emerald-color;
+}
+.text-ec-gold-color {
+  color: $ec-gold-color;
+}
+.text-ec-light-gray-color {
+  color: $ec-light-gray-color;
+}
+
+// ----------------------------------------------------------------------
+// Theme tokens
+// ----------------------------------------------------------------------
+// All themeable surfaces, borders, and text colors are exposed as CSS
+// variables on :root. Per-product brand accents (blue/teal/cyan/purple/
+// emerald/gold) intentionally stay the same in both themes — they are
+// brand identity, not theme colors.
+//
+// To force a theme at boot without React paint, an inline script in
+// index.html reads localStorage('ec-portal-theme') and sets the
+// data-theme attribute on <html> before mount. The toggle in the
+// Topbar (see Topbar.jsx → useTheme hook) flips it at runtime.
+// ----------------------------------------------------------------------
+
+:root {
+  // Surfaces
+  --color-bg-page: #ffffff;
+  --color-bg-surface: #f5f5f5; // product / doc / training cards
+  --color-bg-elevated: #ffffff; // dialogs, dropdowns, topbar
+  --color-bg-banner: #{$ec-black-color}; // dashboard + product banner
+
+  // Borders / dividers
+  --color-border: #e5e7eb;
+  --color-divider: #dddddd;
+
+  // Text
+  --color-text: #{$ec-black-color};
+  --color-text-muted: #{$ec-light-gray-color};
+  --color-text-on-banner: #ffffff;
+
+  // Custom-badge surface (the pill on dashboard cards). Defined as a
+  // token so it inverts cleanly in dark mode.
+  --color-badge-bg: #ffffff;
+  --color-badge-border: #d9d9d9;
+}
+
+[data-theme="dark"] {
+  --color-bg-page: #0f1115;
+  --color-bg-surface: #1a1c20;
+  --color-bg-elevated: #16181d;
+  --color-bg-banner: #0a0c10;
+
+  --color-border: #2a2d34;
+  --color-divider: #2a2d34;
+
+  --color-text: #e8eaed;
+  --color-text-muted: #8a8d94;
+  --color-text-on-banner: #ffffff;
+
+  --color-badge-bg: #22252b;
+  --color-badge-border: #353941;
+
+  // ----- PrimeReact lara theme overrides ----------------------------
+  // The lara theme reads these vars internally, so overriding them
+  // dark-skins Dialog, Menu, Dropdown, Button, InputText, Password,
+  // Toast, ConfirmDialog etc. without swapping the theme stylesheet.
+  --surface-ground: #0f1115;
+  --surface-card: #1a1c20;
+  --surface-overlay: #22252b;
+  --surface-section: #16181d;
+  --surface-border: #2a2d34;
+  --surface-hover: #22252b;
+  --text-color: #e8eaed;
+  --text-color-secondary: #b0b3b8;
+  --surface-0: #16181d;
+  --surface-50: #1a1c20;
+  --surface-100: #22252b;
+  --surface-200: #2a2d34;
+  --surface-300: #353941;
+  --surface-400: #4a4d52;
+  --surface-500: #5e6168;
+  --surface-600: #7a7d84;
+  --surface-700: #989ba2;
+  --surface-800: #b8bbc1;
+  --surface-900: #d8dadf;
+
+  // ----- PrimeFlex utility class overrides --------------------------
+  // Many components in this codebase use PrimeFlex utility classes
+  // directly (bg-gray-100, bg-white, border-gray-200, text-gray-*).
+  // Rather than refactor every call-site, override the few common ones
+  // so they map to dark equivalents when the theme attribute is set.
+  // !important is needed because PrimeFlex specificity matches ours.
+  .bg-white {
+    background-color: var(--color-bg-elevated) !important;
+  }
+  .bg-gray-100 {
+    background-color: var(--color-bg-surface) !important;
+  }
+  .bg-gray-200 {
+    background-color: #22252b !important;
+  }
+  .border-gray-200 {
+    border-color: var(--color-border) !important;
+  }
+  .text-gray-800 {
+    color: var(--color-text) !important;
+  }
+  .text-gray-700,
+  .text-gray-600,
+  .text-gray-500 {
+    color: var(--color-text-muted) !important;
+  }
+  // PrimeFlex's .surface-overlay class ships a hardcoded background.
+  // The topbar relies on it ("layout-topbar … surface-overlay …"), so
+  // without this override the topbar paints white even in dark mode
+  // and the nav buttons disappear.
+  .surface-overlay,
+  .surface-card,
+  .surface-section,
+  .surface-ground {
+    background-color: var(--color-bg-elevated) !important;
+  }
+  // PrimeReact Menubar (Topbar nav: Products / Docs / Trainings) has
+  // its own background + text-color rules that don't read from our
+  // theme tokens. Force transparent + themed text so the nav items
+  // stay readable on the dark topbar — including hover, focus, and
+  // keyboard-focus states (PrimeReact toggles .p-focus on click too,
+  // which is why a clicked item stays highlighted with a light bg
+  // until you click elsewhere).
+  .p-menubar,
+  .p-menubar .p-menubar-root-list {
+    background: transparent !important;
+    border: 0 !important;
+  }
+  .p-menubar .p-menuitem-text,
+  .p-menubar .p-menuitem-link,
+  .p-menubar .p-menuitem-link:hover .p-menuitem-text,
+  .p-menubar .p-menuitem-link:focus .p-menuitem-text,
+  .p-menubar .p-menuitem.p-focus > .p-menuitem-link .p-menuitem-text {
+    color: var(--color-text) !important;
+  }
+  // Kill hardcoded backgrounds on EVERY level of the Menubar tree so
+  // PrimeReact's sticky .p-focus and .p-menuitem-content highlights
+  // can't bleed through. Newer PrimeReact wraps each link in a
+  // .p-menuitem-content; older versions paint the link directly. We
+  // override both. Then hover is the only state that paints.
+  .p-menubar .p-menuitem,
+  .p-menubar .p-menuitem-content,
+  .p-menubar .p-menuitem-link,
+  .p-menubar .p-menuitem.p-focus,
+  .p-menubar .p-menuitem.p-focus > .p-menuitem-content,
+  .p-menubar .p-menuitem.p-focus > .p-menuitem-content > .p-menuitem-link,
+  .p-menubar .p-menuitem-link:focus,
+  .p-menubar .p-menuitem-link:active,
+  .p-menubar .p-menuitem-content:focus {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  // Subtle EC-blue tint, painted on BOTH the content wrapper and the
+  // link so it works regardless of which one captures :hover.
+  .p-menubar .p-menuitem-link:not(.p-disabled):hover,
+  .p-menubar .p-menuitem:hover > .p-menuitem-content,
+  .p-menubar .p-menuitem-content:hover {
+    background: rgba(13, 86, 212, 0.14) !important;
+    box-shadow: none !important;
+  }
+  // Keyboard-only focus ring (a11y) — won't fire on mouse click.
+  .p-menubar .p-menuitem-link:focus-visible {
+    background: rgba(13, 86, 212, 0.14) !important;
+    outline: 1px solid var(--color-text-muted);
+    outline-offset: -1px;
+  }
+
+  // The EC logo is a black-on-transparent PNG — invert it to white in
+  // dark mode so it stays visible on dark surfaces. Targets:
+  //   .sidebar-logo img  → the topbar logo wrapper
+  //   .ec-logo           → the login form logo (explicit class, robust
+  //                        against Vite's asset-hashing in production)
+  //   img[src*=…]        → catch-all fallback for any other usage
+  .sidebar-logo img,
+  .ec-logo,
+  img[src*="encryption-consulting-black-logo"] {
+    filter: brightness(0) invert(1);
+  }
+
+  // ----- Login form (PrimeReact InputText / Password / FloatLabel /
+  //                  Divider / SSO button) ---------------------------
+  // The lara-light-indigo theme paints these with hardcoded light
+  // surfaces that don't read from --surface-*. Without these overrides
+  // the login card renders dark-text-on-dark-bg.
+  .p-inputtext {
+    background: var(--color-bg-elevated) !important;
+    color: var(--color-text) !important;
+    border-color: var(--color-border) !important;
+  }
+  .p-inputtext:enabled:focus,
+  .p-inputtext:enabled:hover {
+    border-color: var(--color-text-muted) !important;
+    box-shadow: none !important;
+  }
+  .p-password input {
+    background: var(--color-bg-elevated) !important;
+    color: var(--color-text) !important;
+  }
+  // Chrome autofill paints its own background (yellow / pale blue /
+  // off-white depending on theme heuristic) that overrides anything we
+  // set on .p-inputtext. The standard workaround is an inset box-shadow
+  // matching our surface color — Chrome respects shadows but not bg —
+  // plus -webkit-text-fill-color for the typed value, plus a long
+  // transition so the bg never "flashes" to the autofill color.
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--color-bg-elevated) inset !important;
+    -webkit-text-fill-color: var(--color-text) !important;
+    caret-color: var(--color-text);
+    transition: background-color 5000s ease-in-out 0s;
+  }
+  .p-float-label > label {
+    color: var(--color-text-muted) !important;
+    background: transparent;
+  }
+  // PrimeReact's Divider renders the "or" label inside a span whose
+  // background is set to the surrounding surface (so the line appears
+  // to "break" around it). Re-skin to the dark surface so the label
+  // and line both blend correctly.
+  .p-divider .p-divider-content {
+    background: var(--color-bg-surface) !important;
+    color: var(--color-text-muted) !important;
+  }
+  .p-divider.p-divider-horizontal::before {
+    border-top-color: var(--color-border) !important;
+  }
+  // SSO button label uses PrimeFlex .text-900 (which is hardcoded to
+  // a near-black). Force the theme text color.
+  .text-900 {
+    color: var(--color-text) !important;
+  }
+
+  // ----- PrimeReact Dropdown (closed trigger + open overlay panel) --
+  // Closed trigger uses the .p-inputtext override above. The OPEN
+  // overlay panel renders in a portal at the document root, so it
+  // doesn't inherit any local styles — explicit overrides needed for
+  // background, item text, selected highlight, and hover.
+  .p-dropdown {
+    background: var(--color-bg-elevated) !important;
+    border-color: var(--color-border) !important;
+    color: var(--color-text) !important;
+  }
+  .p-dropdown:not(.p-disabled):hover,
+  .p-dropdown:not(.p-disabled).p-focus {
+    border-color: var(--color-text-muted) !important;
+    box-shadow: none !important;
+  }
+  .p-dropdown .p-dropdown-label {
+    color: var(--color-text) !important;
+  }
+  .p-dropdown .p-dropdown-trigger {
+    color: var(--color-text-muted) !important;
+  }
+}
+
+// Dropdown panel renders in a portal — it's mounted outside the
+// [data-theme="dark"] subtree, so style it via the html attribute
+// instead of nesting. Same trick for any other PrimeReact overlay
+// (Menu popups, ConfirmDialog, etc).
+// Dropdown TRIGGER (the inline pill — different element from the
+// portal-mounted panel below). Without these overrides, the realm
+// selector in the admin toolbar would render as a white slab on the
+// dark page, clashing with the IconField search next to it.
+html[data-theme="dark"] .p-dropdown {
+  background: var(--color-bg-surface) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+html[data-theme="dark"] .p-dropdown .p-dropdown-label {
+  color: var(--color-text) !important;
+}
+html[data-theme="dark"] .p-dropdown .p-dropdown-trigger {
+  color: var(--color-text-muted) !important;
+}
+html[data-theme="dark"] .p-dropdown:not(.p-disabled):hover {
+  border-color: var(--color-text-muted) !important;
+}
+html[data-theme="dark"] .p-dropdown:not(.p-disabled).p-focus {
+  border-color: var(--product-accent, #{$ec-brand-color}) !important;
+  box-shadow: 0 0 0 2px
+    color-mix(
+      in srgb,
+      var(--product-accent, #{$ec-brand-color}) 25%,
+      transparent
+    ) !important;
+}
+
+html[data-theme="dark"] .p-dropdown-panel {
+  background: var(--color-bg-elevated) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+html[data-theme="dark"] .p-dropdown-panel .p-dropdown-items {
+  background: var(--color-bg-elevated) !important;
+  padding: 0.25rem !important;
+}
+html[data-theme="dark"] .p-dropdown-panel .p-dropdown-item {
+  color: var(--color-text) !important;
+  background: transparent !important;
+  border-radius: 4px;
+}
+html[data-theme="dark"] .p-dropdown-panel .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
+  background: var(--surface-hover) !important;
+  color: var(--color-text) !important;
+}
+// Selected item picks up the per-product accent. ProductOverview hoists
+// --product-accent to <html> while a product page is mounted; outside
+// product pages, color-mix's fallback (var()) resolves to EC blue.
+html[data-theme="dark"] .p-dropdown-panel .p-dropdown-item.p-highlight {
+  background: color-mix(
+    in srgb,
+    var(--product-accent, #0d56d4) 22%,
+    transparent
+  ) !important;
+  color: var(--color-text) !important;
+}
+
+// Dropdown/MultiSelect filter input — lara ships a hardcoded white
+// background + light border + dark text on this input, which renders
+// as a glaring slab against the dark panel. The panel header wrapping
+// it picks up no theme either. Re-skin both so the filter blends with
+// the panel and the typed query is legible.
+html[data-theme="dark"] .p-dropdown-panel .p-dropdown-header,
+html[data-theme="dark"] .p-multiselect-panel .p-multiselect-header {
+  background: var(--color-bg-elevated) !important;
+  border-bottom-color: var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+html[data-theme="dark"] .p-dropdown-panel .p-dropdown-filter,
+html[data-theme="dark"] .p-multiselect-panel .p-multiselect-filter {
+  background: var(--color-bg-surface) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+html[data-theme="dark"] .p-dropdown-panel .p-dropdown-filter::placeholder,
+html[data-theme="dark"] .p-multiselect-panel .p-multiselect-filter::placeholder {
+  color: var(--color-text-muted) !important;
+}
+html[data-theme="dark"] .p-dropdown-panel .p-dropdown-filter:focus,
+html[data-theme="dark"] .p-multiselect-panel .p-multiselect-filter:focus {
+  border-color: var(--product-accent, #{$ec-brand-color}) !important;
+  box-shadow: 0 0 0 2px
+    color-mix(
+      in srgb,
+      var(--product-accent, #{$ec-brand-color}) 25%,
+      transparent
+    ) !important;
+}
+// The search-icon wrapper on the filter input (.p-dropdown-filter-icon /
+// .p-multiselect-filter-icon) — make sure the icon picks up the muted
+// theme color so it doesn't disappear against the dark filter input.
+html[data-theme="dark"] .p-dropdown-panel .p-dropdown-filter-icon,
+html[data-theme="dark"] .p-multiselect-panel .p-multiselect-filter-icon {
+  color: var(--color-text-muted) !important;
+}
+// MultiSelect panel itself + items — same treatment the Dropdown
+// panel gets above. Without these the products multi-select renders
+// with a white panel against the dark Edit-user dialog.
+html[data-theme="dark"] .p-multiselect-panel {
+  background: var(--color-bg-elevated) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+html[data-theme="dark"] .p-multiselect-panel .p-multiselect-items,
+html[data-theme="dark"] .p-multiselect-panel .p-multiselect-item {
+  background: transparent !important;
+  color: var(--color-text) !important;
+}
+html[data-theme="dark"] .p-multiselect-panel .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
+  background: var(--surface-hover) !important;
+}
+html[data-theme="dark"] .p-multiselect-panel .p-multiselect-item.p-highlight {
+  background: color-mix(
+    in srgb,
+    var(--product-accent, #0d56d4) 22%,
+    transparent
+  ) !important;
+  color: var(--color-text) !important;
+}
+
+// PrimeReact Dialog (Reset Password dialog, ConfirmDialog used for
+// logout, etc). Portal-mounted like the dropdown panel — needs the
+// html-attribute selector so the styles reach overlays mounted at
+// the document root.
+html[data-theme="dark"] .p-dialog {
+  background: var(--color-bg-elevated) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+html[data-theme="dark"] .p-dialog .p-dialog-header,
+html[data-theme="dark"] .p-dialog .p-dialog-content,
+html[data-theme="dark"] .p-dialog .p-dialog-footer {
+  background: var(--color-bg-elevated) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+html[data-theme="dark"] .p-dialog .p-dialog-title {
+  color: var(--color-text) !important;
+}
+// Close (X) icon — make it visible against the dark header and give
+// it a subtle hover affordance.
+html[data-theme="dark"] .p-dialog .p-dialog-header-icon {
+  color: var(--color-text-muted) !important;
+}
+html[data-theme="dark"] .p-dialog .p-dialog-header-icon:hover {
+  background: var(--surface-hover) !important;
+  color: var(--color-text) !important;
+  box-shadow: none !important;
+}
+// Backdrop mask — slightly heavier so the dark dialog reads against
+// the dark page underneath.
+html[data-theme="dark"] .p-dialog-mask.p-component-overlay {
+  background-color: rgba(0, 0, 0, 0.55) !important;
+}
+
+// Outlined buttons (e.g. Cancel in Reset Password) — lara's outlined
+// style hardcodes a white background + indigo text + light border
+// that all clash against the dark dialog. Re-skin to the theme.
+html[data-theme="dark"] .p-button.p-button-outlined {
+  background: transparent !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+html[data-theme="dark"] .p-button.p-button-outlined:not(:disabled):hover {
+  background: var(--surface-hover) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-text-muted) !important;
+}
+
+// PrimeReact Menu popup (profile dropdown). Same portal-mounted overlay
+// situation — needs the same html-attribute selector.
+html[data-theme="dark"] .p-menu {
+  background: var(--color-bg-elevated) !important;
+  border: 1px solid var(--color-border) !important;
+}
+html[data-theme="dark"] .p-menu .p-menuitem-link {
+  color: var(--color-text) !important;
+}
+// Kill hardcoded backgrounds on EVERY level of the Menu tree —
+// PrimeReact wraps each link in .p-menuitem-content and may paint the
+// sticky .p-focus highlight on the wrapper, not the link. Override
+// both so the white slab can't bleed through after click.
+html[data-theme="dark"] .p-menu .p-menuitem,
+html[data-theme="dark"] .p-menu .p-menuitem-content,
+html[data-theme="dark"] .p-menu .p-menuitem-link,
+html[data-theme="dark"] .p-menu .p-menuitem.p-focus,
+html[data-theme="dark"] .p-menu .p-menuitem.p-focus > .p-menuitem-content,
+html[data-theme="dark"] .p-menu .p-menuitem.p-focus > .p-menuitem-content > .p-menuitem-link,
+html[data-theme="dark"] .p-menu .p-menuitem-link:focus,
+html[data-theme="dark"] .p-menu .p-menuitem-link:active,
+html[data-theme="dark"] .p-menu .p-menuitem-content:focus {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+// Paint hover on BOTH the link and the content wrapper so it works
+// regardless of which one captures the mouse event.
+html[data-theme="dark"] .p-menu .p-menuitem-link:not(.p-disabled):hover,
+html[data-theme="dark"] .p-menu .p-menuitem:hover > .p-menuitem-content,
+html[data-theme="dark"] .p-menu .p-menuitem-content:hover {
+  background: var(--surface-hover) !important;
+  box-shadow: none !important;
+}
+// Keyboard-only focus ring (a11y) — won't fire on mouse click.
+html[data-theme="dark"] .p-menu .p-menuitem-link:focus-visible {
+  background: var(--surface-hover) !important;
+  outline: 1px solid var(--color-text-muted);
+  outline-offset: -1px;
+}
+// The focused/hovered text + icon need an explicit color too — without
+// this they fall back to lara's hardcoded near-white which becomes
+// invisible against the same surface-hover background.
+html[data-theme="dark"] .p-menu .p-menuitem-icon,
+html[data-theme="dark"] .p-menu .p-menuitem-text,
+html[data-theme="dark"] .p-menu .p-menuitem-link:hover .p-menuitem-text,
+html[data-theme="dark"] .p-menu .p-menuitem-link:hover .p-menuitem-icon,
+html[data-theme="dark"] .p-menu .p-menuitem-link:focus .p-menuitem-text,
+html[data-theme="dark"] .p-menu .p-menuitem-link:focus .p-menuitem-icon,
+html[data-theme="dark"] .p-menu .p-menuitem.p-focus > .p-menuitem-link .p-menuitem-text,
+html[data-theme="dark"] .p-menu .p-menuitem.p-focus > .p-menuitem-link .p-menuitem-icon {
+  color: var(--color-text) !important;
+}
+
+html {
+  font-size: 14px;
+  // Animate every same-page scroll: anchor links from the topbar
+  // (Products / Docs / Trainings), Dashboard "Browse Trainings → product
+  // page #trainings" deep links, and any programmatic scrollIntoView call
+  // we already do. Without this, hash navigation snaps instantly which
+  // reads as jarring against the rest of the polished motion in the UI.
+  scroll-behavior: smooth;
+  // Sticky topbar (.layout-topbar) is ~64-80px tall. Without this offset,
+  // anchor jumps land the target right under the topbar — visually
+  // hidden from the user. scroll-padding-top tells the browser to leave
+  // that much space above the scroll target. Pairs with smooth scroll
+  // above so the destination row lands cleanly below the topbar.
+  scroll-padding-top: 80px;
+}
+
+// Respect users' reduced-motion preference. Browsers/OS settings can
+// signal this for vestibular sensitivity / seizure concerns — instant
+// scrolling there.
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+// Themed scrollbars — replace the chunky default browser scrollbar
+// with a thin, theme-aware track. Firefox uses the shorthand
+// scrollbar-* properties; Chromium/Safari/Edge use ::-webkit-scrollbar
+// pseudo-elements. Both written so behavior matches across engines.
+//
+// Color inherits from --color-text-muted so the scrollbar darkens
+// nicely on light theme and lightens on dark theme without any extra
+// dark-mode override.
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-text-muted) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-text-muted);
+  border-radius: 6px;
+  // 2px transparent border via background-clip gives the thumb visual
+  // padding inside the 10px track — feels less crammed.
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-text);
+  background-clip: content-box;
+}
+// Prevent scroll chaining: when a user reaches the bottom/top of a
+// scrollable region inside the page, scroll wheel events stop here
+// instead of bubbling up and over-scrolling the document beneath.
+// Useful for the eventual modals/drawers/etc.
+body {
+  overscroll-behavior: contain;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins Regular", sans-serif;
+  font-size: 1rem;
+  color: var(--color-text);
+  background-color: var(--color-bg-page);
+  // Smooth the surface-color flips when the user toggles themes.
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 0.7rem 0;
+}
+h1,
+h2 {
+  font-family: "Poppins SemiBold", sans-serif;
+}
+p {
+  margin: 0 0 2rem 0;
+}
+a {
+  color: $ec-brand-color;
+  text-decoration: none;
+}
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+.grid {
+  margin-left: -0.7rem;
+  margin-right: -0.7rem;
+  margin-top: -0.7rem;
+}
+.custom-padding-1 {
+  padding: 0.7rem;
+}
+.custom-margin-bottom-1 {
+  margin-bottom: 0.7rem;
+}
+.gradient-border {
+  border: none;
+  outline: none;
+  position: relative;
+  border-radius: 7px;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    right: 1px;
+    bottom: 2px;
+    left: 2px;
+    border-radius: 6px;
+  }
+}
+
+.gradient-blue-border {
+  background: linear-gradient(90deg, $ec-brand-color, #b7cdf2);
+  &::before {
+    background-color: var(--color-bg-elevated);
+  }
+}
+
+.gradient-product-certsecuremanager {
+  background: linear-gradient(113.25deg, #0d56d4 0.87%, #ededed 100%);
+  border-radius: 8px;
+  &::before {
+    left: 1px;
+    bottom: 1px;
+    background-color: var(--color-bg-surface);
+    border-radius: 6px;
+  }
+}
+
+.gradient-product-codesignsecure {
+  background: linear-gradient(113.25deg, #1ebdbd 0.87%, #ededed 100%);
+  border-radius: 8px;
+  &::before {
+    left: 1px;
+    bottom: 1px;
+    background-color: var(--color-bg-surface);
+    border-radius: 6px;
+  }
+}
+.gradient-product-sshsecure {
+  background: linear-gradient(113.25deg, #0095c6 0.87%, #ededed 100%);
+  border-radius: 8px;
+  &::before {
+    left: 1px;
+    bottom: 1px;
+    background-color: var(--color-bg-surface);
+    border-radius: 6px;
+  }
+}
+.gradient-product-hsmasaservice {
+  background: linear-gradient(113.25deg, #8d4cef 0.87%, #ededed 100%);
+  border-radius: 8px;
+  &::before {
+    left: 1px;
+    bottom: 1px;
+    background-color: var(--color-bg-surface);
+    border-radius: 6px;
+  }
+}
+.gradient-product-cbomsecure {
+  background: linear-gradient(113.25deg, #0ebc81 0.87%, #0aa06a 100%);
+  border-radius: 8px;
+  &::before {
+    left: 1px;
+    bottom: 1px;
+    background-color: var(--color-bg-surface);
+    border-radius: 6px;
+  }
+}
+.gradient-product-pkiasaservice {
+  background: linear-gradient(113.25deg, #f1a600 0.87%, #ededed 100%);
+  border-radius: 8px;
+  &::before {
+    left: 1px;
+    bottom: 1px;
+    background-color: var(--color-bg-surface);
+    border-radius: 6px;
+  }
+}
+.blue-title {
+  background: linear-gradient(90deg, #0d56d4 0%, #019bff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* for future compatibility */
+  color: transparent;
+}
+.green-title {
+  background: linear-gradient(90deg, #1ebdbd 0%, #66d9bd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* for future compatibility */
+  color: transparent;
+}
+.sshsecure-title {
+  background: linear-gradient(90deg, #0095c6 0%, #4fc3e9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+.hsmasaservice-title {
+  background: linear-gradient(90deg, #8d4cef 0%, #c4a4ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+.cbomsecure-title {
+  background: linear-gradient(90deg, #0ebc81 0%, #0aa06a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+.pkiasaservice-title {
+  background: linear-gradient(90deg, #f1a600 0%, #ffb710 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+// Login screen background. The old PNG ellipses on either edge felt
+// disconnected from the rest of the brand, so they're replaced with a
+// soft EC-brand-blue radial glow centered behind the login card. The
+// glow is rendered purely in CSS, scales with the viewport, and reads
+// correctly in both light and dark themes.
+.section-wrapper {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: var(--color-bg-page);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 60% 55% at 50% 50%,
+      rgba(13, 86, 212, 0.28) 0%,
+      rgba(13, 86, 212, 0.08) 40%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+  // Subtle second accent — a slightly off-center glow gives the
+  // background depth without the "two floating circles" look the PNGs
+  // had. Tinted with the secondary brand color (cyan).
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle 40% at 80% 90%,
+      rgba(30, 189, 189, 0.12) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+  // Make sure form content sits above the glow layers.
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+.custom-badge {
+  border: 1.06px solid var(--color-badge-border);
+  border-radius: 30.08px;
+  background: var(--color-badge-bg);
+  display: flex;
+  padding: 0.2rem 0.7rem;
+  align-items: center;
+  gap: 0.4rem;
+  .green {
+    background: #00e24b;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .title {
+    font-family: "Poppins Medium";
+    font-size: 0.8rem;
+    display: block;
+  }
+}
+.banner {
+  position: relative;
+  min-height: clamp(131px, 30vh, 262px);
+  padding: 5rem 3rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  // Per-product accent. Set --banner-accent on an ancestor (e.g. .product-{slug})
+  // to override; otherwise the fallback in var() below applies.
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: radial-gradient(
+      circle,
+      var(--banner-accent, #0d56d4) 0%,
+      transparent 70%
+    );
+    opacity: 0.45;
+    filter: blur(40px);
+  }
+  &::before {
+    left: -110px;
+  }
+  &::after {
+    right: -110px;
+  }
+}
+
+// Per-product theme — set on a wrapper element (e.g. .product-{slug}).
+// CSS variables cascade down to .banner (--banner-accent) and to themed
+// buttons/links (--product-accent). Keep slugs in sync with backend product_id.
+.product-certsecuremanager {
+  --banner-accent: #0d56d4;
+  --product-accent: #0d56d4;
+}
+.product-codesignsecure {
+  --banner-accent: #1ebdbd;
+  --product-accent: #1ebdbd;
+}
+.product-sshsecure {
+  --banner-accent: #0095c6;
+  --product-accent: #0095c6;
+}
+.product-hsmasaservice {
+  --banner-accent: #8d4cef;
+  --product-accent: #8d4cef;
+}
+.product-cbomsecure {
+  --banner-accent: #0ebc81;
+  --product-accent: #0ebc81;
+}
+.product-pkiasaservice {
+  --banner-accent: #f1a600;
+  --product-accent: #f1a600;
+}
+.error-msg {
+  color: #e24c4c;
+}
+.form-error-msg {
+  color: #e24c4c;
+}
+.layout-sidebar {
+  background-color: $ec-black-color;
+  .sidebar-logo {
+    padding-top: 0.6rem;
+    padding-bottom: 0.4rem;
+    border-color: #4a4d4f;
+  }
+  .sidebar-link {
+    .link {
+      padding: 0.7rem;
+      &.active {
+        &::before {
+          content: "";
+          position: absolute;
+          border-left: 6px solid #94caff;
+          background-color: #0d56d4;
+          border-radius: 4px;
+          width: 100%;
+          height: 100%;
+          left: -8px;
+          top: 0;
+          z-index: -1;
+        }
+      }
+    }
+  }
+}
+.layout-content-wrapper {
+  .layout-topbar {
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }
+  .layout-topbar {
+    // @include styleclass(
+    //   "border-bottom-2 border-gray-200 surface-overlay flex flex-wrap justify-content-between align-items-center"
+    // );
+
+    .topbar {
+      .p-breadcrumb {
+        background: transparent;
+        border: none;
+        padding: 0;
+        font-size: 14px;
+        .p-icon {
+          width: 0.7rem;
+          height: 0.7rem;
+        }
+        .p-breadcrumb-list li .p-menuitem-link .p-menuitem-icon {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+  .layout-content {
+    min-height: 100vh;
+    overflow-x: auto;
+    // @include styleclass("mb-5");
+  }
+  .footer-wrapper {
+    padding: 1.5rem;
+    background-color: $ec-dark-gray-color;
+  }
+}
+.version-selector {
+  border: 1.05px solid #ffffff;
+  background: transparent;
+  border-radius: 5px;
+  // border-top-left-radius: 20px;
+  // border-top-right-radius: 20px;
+  // border-bottom-left-radius: 20px;
+  // border-bottom-right-radius: 20px;
+  &.p-dropdown {
+    .p-dropdown-label.p-placeholder {
+      color: #ffffff;
+    }
+    .p-dropdown-trigger {
+      color: #ffffff;
+    }
+  }
+  &.p-inputwrapper-focus {
+    // border-bottom-left-radius: 0px;
+    // border-bottom-right-radius: 0px;
+    // //border-bottom: 1.05px solid transparent;
+    box-shadow: none;
+  }
+  .p-inputtext {
+    color: #ffffff;
+  }
+}
+.p-chip-text {
+  font-size: 14px;
+}
+.download-box-wrapper {
+  border: 1px solid #dddddd;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.sidebar-menu {
+  margin-top: 1.5rem;
+  .p-panelmenu {
+    .p-panelmenu-header {
+      .p-panelmenu-header-content {
+        background-color: transparent;
+        border: 0;
+        margin: 0.9rem 0.5rem;
+        .p-panelmenu-header-link {
+          padding: 0.6rem 1.25rem;
+          border-radius: 6px;
+          color: #fff;
+          &:hover {
+            background-color: #2e2e2e;
+          }
+        }
+      }
+    }
+  }
+}
+.breadcrumb-wrapper {
+  .p-breadcrumb {
+    background: transparent;
+    border: none;
+    justify-content: center;
+  }
+}
+.topbar-menus {
+  .p-menubar {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: 14px;
+  }
+}
+.p-sidebar-header.p-sidebar-custom-header {
+  border-bottom: 1px solid #e4e4e4;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+}
+// Topbar icon buttons (theme toggle, profile dropdown). Single class
+// so every icon-style affordance on the right side of the top bar
+// shares the same hit area, visual weight, and hover state — no more
+// "mt-2 here, mt-3 there, different widths" inconsistency.
+//
+// Sized 36×36 so the touch target meets WCAG 2.5.5. Hover paints a
+// subtle circular highlight using --surface-hover (themed). Color
+// uses currentColor so the contained icons (PrimeIcons <i>, inline
+// SVGs with currentColor fill) inherit theme text color automatically.
+.topbar-icon-button {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text);
+  border-radius: 50%;
+  transition: background-color 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--surface-hover, rgba(0, 0, 0, 0.06));
+    outline: none;
+  }
+}
+
+// Section break between major surfaces on a product page (resources →
+// documentation → trainings). Renders as a centered gradient rule with
+// an accent dot in the middle. Picks up the per-product accent if a
+// .product-{slug} wrapper is present; falls back to EC brand blue.
+//
+// Rendered as a <div> rather than an <hr> because <hr> doesn't support
+// pseudo-elements consistently across browsers.
+.product-section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 16px;
+  margin: 0;
+  border: 0;
+  background: transparent;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    border-radius: 2px;
+    opacity: 0.55;
+  }
+  &::before {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--product-accent, #{$ec-brand-color}) 100%
+    );
+  }
+  &::after {
+    background: linear-gradient(
+      90deg,
+      var(--product-accent, #{$ec-brand-color}) 0%,
+      transparent 100%
+    );
+  }
+  // Centered accent dot — picks up the same product accent so the whole
+  // break reads as one themed mark instead of three disconnected pieces.
+  .product-section-divider-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--product-accent, #{$ec-brand-color});
+    margin: 0 14px;
+    box-shadow: 0 0 0 4px
+      color-mix(in srgb, var(--product-accent, #{$ec-brand-color}) 18%, transparent);
+  }
+}
+
+.download-btn {
+  padding: 0;
+  color: var(--product-accent, #{$ec-brand-color});
+  &:hover {
+    background: transparent;
+    opacity: 0.7;
+  }
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+// =====================================================================
+// Notification UI (Phase 2)
+// =====================================================================
+// All of these use the project's --color-* vars (defined in :root +
+// [data-theme="dark"] near the top of this file) so light + dark mode
+// share the same SCSS rules. PrimeReact components that ship with
+// hardcoded lara-light styling get explicit dark overrides below.
+
+// ----- Notification bell drawer (PrimeReact Sidebar overrides) -------
+// The Sidebar component is portal-mounted at the document root, so
+// only the html-attribute selector reaches it. Same pattern as the
+// dropdown / dialog / menu overrides above.
+
+.ec-notification-drawer {
+  // Base styling applies in both themes — light mode inherits
+  // PrimeReact's lara defaults for shell, only the inner list elements
+  // need theming. Dark mode gets full re-skin below.
+  .p-sidebar-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .p-sidebar-content {
+    padding: 0;
+  }
+}
+.ec-notification-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.ec-notification-drawer__title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--color-text);
+}
+.ec-notification-drawer__actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.ec-notification-drawer__action {
+  padding: 4px 8px !important;
+  font-size: 0.85rem !important;
+}
+.ec-notification-drawer__list {
+  display: flex;
+  flex-direction: column;
+}
+.ec-notification-drawer__empty {
+  padding: 32px 14px;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+.ec-notification-drawer__loadmore {
+  padding: 12px 14px;
+  text-align: center;
+}
+
+// Drawer items
+.ec-notification-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  font: inherit;
+  transition: background 120ms ease;
+
+  &:hover {
+    background: var(--color-bg-surface);
+  }
+  // Unread state — soft accent strip on the left + slightly elevated
+  // background so the eye lands on new items first.
+  &.unread {
+    background: color-mix(
+      in srgb,
+      var(--product-accent, #{$ec-brand-color}) 8%,
+      transparent
+    );
+    box-shadow: inset 3px 0 0
+      var(--product-accent, #{$ec-brand-color});
+  }
+  &.unread:hover {
+    background: color-mix(
+      in srgb,
+      var(--product-accent, #{$ec-brand-color}) 14%,
+      transparent
+    );
+  }
+}
+.ec-notification-item__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+.ec-notification-item__title {
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+.ec-notification-item__time {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+.ec-notification-item__body {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+// Dark-mode overrides for the Sidebar shell itself. lara hardcodes
+// white background + light borders; without these the drawer renders
+// as a bright slab against the dark page.
+html[data-theme="dark"] .p-sidebar,
+html[data-theme="dark"] .ec-notification-drawer {
+  background: var(--color-bg-elevated) !important;
+  color: var(--color-text) !important;
+  border-left: 1px solid var(--color-border) !important;
+}
+html[data-theme="dark"] .ec-notification-drawer .p-sidebar-header,
+html[data-theme="dark"] .ec-notification-drawer .p-sidebar-content {
+  background: var(--color-bg-elevated) !important;
+  color: var(--color-text) !important;
+}
+// Close (X) on the sidebar header
+html[data-theme="dark"] .p-sidebar .p-sidebar-icon {
+  color: var(--color-text-muted) !important;
+}
+html[data-theme="dark"] .p-sidebar .p-sidebar-icon:hover {
+  background: var(--surface-hover) !important;
+  color: var(--color-text) !important;
+}
+// Backdrop mask behind the drawer
+html[data-theme="dark"] .p-sidebar-mask.p-component-overlay {
+  background-color: rgba(0, 0, 0, 0.55) !important;
+}
+
+// ----- Notification settings page ------------------------------------
+.ec-settings-page {
+  padding: 16px 24px 48px;
+  max-width: 780px;
+  color: var(--color-text);
+}
+.ec-settings-page__title {
+  margin: 0 0 4px;
+  color: var(--color-text);
+}
+.ec-settings-page__lede {
+  margin: 0 0 24px;
+  color: var(--color-text-muted);
+}
+.ec-settings-page__footnote {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.ec-settings-card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-top: 24px;
+  color: var(--color-text);
+}
+.ec-settings-card__title {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+// Small inline status pill next to the card title — used to indicate
+// whether the configured destination is currently in use (e.g. the
+// Teams webhook is set but the Teams channel master is off).
+.ec-settings-card__status {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  text-transform: uppercase;
+
+  &--on {
+    background: color-mix(
+      in srgb,
+      var(--product-accent, #{$ec-brand-color}) 20%,
+      transparent
+    );
+    color: var(--color-text);
+  }
+  &--off {
+    background: var(--color-bg-surface);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+  }
+}
+.ec-settings-card__hint {
+  margin: 0 0 12px;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+.ec-settings-card__empty {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.ec-settings-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.ec-settings-row__label {
+  color: var(--color-text);
+}
+
+.ec-settings-input-row {
+  display: flex;
+  gap: 8px;
+}
+.ec-settings-input-row__input {
+  flex: 1;
+}
+
+// PrimeReact InputSwitch dark overrides.
+//
+// IMPORTANT: PrimeReact v10 marks the "on" state with `.p-highlight`,
+// NOT `.p-inputswitch-checked` (v8/v9). Easy mistake to make — both
+// names show up in old StackOverflow answers. If you change PrimeReact
+// versions, re-check the actual class against node_modules/primereact/
+// resources/themes/lara-light-indigo/theme.css.
+//
+// Light mode keeps lara's defaults (indigo accent on white track).
+// Dark mode below re-skins both states to the EC brand colour against
+// the dark surface so the toggles read clearly.
+html[data-theme="dark"] .p-inputswitch .p-inputswitch-slider {
+  background: var(--color-bg-surface) !important;
+  border: 1px solid var(--color-border) !important;
+}
+html[data-theme="dark"] .p-inputswitch .p-inputswitch-slider:before {
+  background: var(--color-text-muted) !important;
+}
+// ON state — PrimeReact v10 class is .p-highlight.
+html[data-theme="dark"] .p-inputswitch.p-highlight .p-inputswitch-slider {
+  background: var(--product-accent, #{$ec-brand-color}) !important;
+  border-color: var(--product-accent, #{$ec-brand-color}) !important;
+}
+html[data-theme="dark"]
+  .p-inputswitch.p-highlight
+  .p-inputswitch-slider:before {
+  background: #ffffff !important;
+}
+// Hover affordance on both states so the toggle feels responsive.
+html[data-theme="dark"]
+  .p-inputswitch:not(.p-disabled):has(.p-inputswitch-input:hover)
+  .p-inputswitch-slider {
+  border-color: var(--color-text-muted) !important;
+}
+html[data-theme="dark"]
+  .p-inputswitch:not(.p-disabled):has(.p-inputswitch-input:hover).p-highlight
+  .p-inputswitch-slider {
+  background: color-mix(
+    in srgb,
+    var(--product-accent, #{$ec-brand-color}) 85%,
+    white
+  ) !important;
+}
+html[data-theme="dark"] .p-inputtext {
+  background: var(--color-bg-surface) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+html[data-theme="dark"] .p-inputtext:focus,
+html[data-theme="dark"] .p-inputtext:enabled:focus {
+  border-color: var(--product-accent, #{$ec-brand-color}) !important;
+  box-shadow: 0 0 0 2px
+    color-mix(
+      in srgb,
+      var(--product-accent, #{$ec-brand-color}) 25%,
+      transparent
+    ) !important;
+}
+
+// PrimeReact Divider — lara's default dim line is invisible on dark.
+html[data-theme="dark"] .p-divider.p-divider-horizontal:before {
+  border-top-color: var(--color-border) !important;
+}
+
+// =====================================================================
+// Admin panel (Phase 3)
+// =====================================================================
+
+.ec-admin-layout {
+  display: flex;
+  min-height: calc(100vh - 64px); // topbar offset
+  background: var(--color-bg-page);
+  color: var(--color-text);
+}
+
+.ec-admin-sidenav {
+  width: 220px;
+  flex-shrink: 0;
+  padding: 16px;
+  border-right: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+  position: sticky;
+  top: 64px;
+  align-self: flex-start;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+}
+.ec-admin-sidenav__title {
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+  color: var(--color-text);
+}
+.ec-admin-sidenav__link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  margin-bottom: 4px;
+  color: var(--color-text-muted);
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: background 120ms ease, color 120ms ease;
+
+  i {
+    font-size: 1rem;
+    width: 18px;
+    text-align: center;
+  }
+
+  &:hover {
+    background: var(--color-bg-surface);
+    color: var(--color-text);
+  }
+
+  &.active {
+    background: color-mix(
+      in srgb,
+      var(--product-accent, #{$ec-brand-color}) 14%,
+      transparent
+    );
+    color: var(--color-text);
+    font-weight: 600;
+  }
+}
+
+.ec-admin-content {
+  flex: 1;
+  padding: 24px 32px 64px;
+  min-width: 0; // lets DataTable shrink properly inside flex
+  background: var(--color-bg-page);
+  color: var(--color-text);
+}
+
+.ec-admin-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 16px;
+
+  h2 {
+    margin: 0;
+    color: var(--color-text);
+  }
+}
+.ec-admin-page-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ec-admin-actions {
+  display: flex;
+  gap: 4px;
+}
+
+// Big centered loading block — shown above admin tables on first
+// load when there's no cached data yet, so the user sees an explicit
+// "Loading..." instead of "No products yet." while the fetch is in
+// flight. Subsequent reloads use the table's built-in subtle overlay.
+.ec-admin-loading-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 64px 16px;
+  color: var(--color-text-muted);
+
+  p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  // The PrimeReact spinner's default stroke uses an indigo palette
+  // that doesn't match the EC brand. Tint via the SVG circle's
+  // animated color custom-property exposed by lara.
+  .p-progress-spinner-circle {
+    stroke: var(--product-accent, #{$ec-brand-color}) !important;
+    animation-duration: 1.5s;
+  }
+}
+
+.ec-admin-expansion {
+  padding: 12px 16px 16px 56px; // indent under the expander column
+  background: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border);
+
+  &.ec-admin-expansion--nested {
+    padding-left: 32px;
+    background: var(--color-bg-elevated);
+  }
+}
+.ec-admin-expansion__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.ec-admin-expansion__empty {
+  margin: 8px 0;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+.ec-admin-expansion__hint {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+// Admin dialog forms — single column stack with consistent spacing.
+// IMPORTANT: every label uses `display: block` so it sits on its own
+// line inside ANY container (the form's flex column, OR the grid cells
+// of __pair/__triplet). Without this, labels are HTML-default inline
+// and flow horizontally next to the InputText component on the same
+// line — which is what caused the First name / Last name overlap.
+.ec-admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    // Slightly brighter than --color-text-muted so labels are legible
+    // against the dark dialog background. --color-text wins here over
+    // muted — labels are functional, not decoration.
+    color: var(--color-text);
+    letter-spacing: 0.02em;
+  }
+
+  // Make every PrimeReact input inside the form span the full grid
+  // cell. Without this the inputs default to their natural width and
+  // labels look like they're floating.
+  .p-inputtext,
+  .p-password,
+  .p-password .p-password-input,
+  .p-multiselect,
+  .p-inputnumber,
+  .p-inputnumber .p-inputnumber-input {
+    width: 100%;
+  }
+}
+.ec-admin-form__pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  // Each cell is its own column-stack so the label sits cleanly above
+  // the input. Without this the label-then-input pair re-flows in the
+  // block context and the label can wrap onto the input row.
+  > div {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.ec-admin-form__triplet {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+// Help text that follows a label or a control. Replaces the prior
+// pattern of `<small style={{ opacity: 0.6 }}>...` which compounded
+// muted-color × low-opacity into unreadable gray on dark.
+.ec-admin-form small,
+.ec-admin-form .ec-admin-form__help {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  // Single muted color, no opacity stacking. Use code-style
+  // inline emphasis where the small text references field names.
+  color: var(--color-text-muted);
+  line-height: 1.45;
+
+  code {
+    background: var(--color-bg-surface);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    color: var(--color-text);
+  }
+}
+.ec-admin-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+// Roles row in the Invite/Edit User dialog. Three-column grid so the
+// checkboxes don't wrap awkwardly on narrow dialogs, with consistent
+// vertical alignment of label text to the checkbox.
+.ec-admin-roles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 2px;
+}
+// SPECIFICITY NOTE: This selector qualifies the class with the `label`
+// type so its specificity (0,1,1) matches `.ec-admin-form label` —
+// then source order (this block comes later) lets us win. Without
+// this qualification, `.ec-admin-form label` (0,1,1) was beating
+// `.ec-admin-roles-grid__item` (0,1,0), forcing `display: block` on
+// the pill and breaking the entire flex layout — gap had nothing to
+// apply to and the checkbox + text flowed inline with no separation.
+label.ec-admin-roles-grid__item {
+  display: flex;
+  align-items: center;
+  // 12px between the checkbox and the role label.
+  gap: 12px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 10px 14px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--color-text);
+  transition: border-color 120ms ease, background 120ms ease;
+
+  &:hover {
+    border-color: var(--color-text-muted);
+  }
+
+  // Visually emphasize the checked state — easier to scan at a glance.
+  &:has(.p-checkbox.p-checkbox-checked) {
+    border-color: var(--product-accent, #{$ec-brand-color});
+    background: color-mix(
+      in srgb,
+      var(--product-accent, #{$ec-brand-color}) 12%,
+      var(--color-bg-surface)
+    );
+  }
+}
+// Role-pill label text. Explicit class so we don't pick up any rules
+// from the broader `<span>` inside `<label>` cascade. line-height: 1
+// keeps the text vertically centered against the checkbox box rather
+// than sitting half a line below it.
+.ec-admin-roles-grid__label {
+  line-height: 1;
+  // Sub-pixel adjustment: PrimeReact's checkbox is 22px tall and its
+  // visual centerline sits ~1px below the bounding-box center. This
+  // nudge re-aligns the text baseline so the row reads as level.
+  transform: translateY(-1px);
+}
+
+// PrimeReact DataTable dark overrides — lara renders the table with
+// hardcoded white surfaces + light row borders. Without these the
+// admin tables become a bright slab on the dark page.
+html[data-theme="dark"] .p-datatable {
+  background: transparent !important;
+  color: var(--color-text) !important;
+}
+html[data-theme="dark"] .p-datatable .p-datatable-header,
+html[data-theme="dark"] .p-datatable .p-datatable-footer {
+  background: var(--color-bg-elevated) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+html[data-theme="dark"] .p-datatable .p-datatable-thead > tr > th {
+  background: var(--color-bg-elevated) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+html[data-theme="dark"] .p-datatable .p-datatable-tbody > tr {
+  background: var(--color-bg-page) !important;
+  color: var(--color-text) !important;
+}
+html[data-theme="dark"] .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+  background: var(--color-bg-surface) !important;
+}
+html[data-theme="dark"] .p-datatable .p-datatable-tbody > tr > td {
+  border-color: var(--color-border) !important;
+}
+html[data-theme="dark"] .p-datatable .p-datatable-tbody > tr:hover {
+  background: var(--surface-hover) !important;
+}
+// Row expander icon + buttons inside the table inherit text color from
+// the inherit-from-parent rules above, but PrimeReact paints the
+// "p-row-toggler" with a hardcoded light color. Re-skin.
+html[data-theme="dark"] .p-row-toggler {
+  color: var(--color-text-muted) !important;
+}
+html[data-theme="dark"] .p-row-toggler:hover {
+  background: var(--surface-hover) !important;
+  color: var(--color-text) !important;
+}
+
+// PrimeReact MultiSelect (used in the Edit User dialog for products).
+html[data-theme="dark"] .p-multiselect {
+  background: var(--color-bg-surface) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+html[data-theme="dark"] .p-multiselect .p-multiselect-label {
+  color: var(--color-text) !important;
+}
+html[data-theme="dark"] .p-multiselect-panel {
+  background: var(--color-bg-elevated) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+html[data-theme="dark"] .p-multiselect-panel .p-multiselect-item {
+  color: var(--color-text) !important;
+}
+html[data-theme="dark"] .p-multiselect-panel .p-multiselect-item:hover {
+  background: var(--surface-hover) !important;
+}
+html[data-theme="dark"] .p-multiselect-panel .p-multiselect-item.p-highlight {
+  background: color-mix(
+    in srgb,
+    var(--product-accent, #{$ec-brand-color}) 30%,
+    transparent
+  ) !important;
+  color: var(--color-text) !important;
+}
+html[data-theme="dark"] .p-multiselect-panel .p-multiselect-header {
+  background: var(--color-bg-elevated) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+// Chip-style tokens for selected products in the multiselect.
+html[data-theme="dark"] .p-multiselect .p-multiselect-token {
+  background: color-mix(
+    in srgb,
+    var(--product-accent, #{$ec-brand-color}) 22%,
+    transparent
+  ) !important;
+  color: var(--color-text) !important;
+}
+
+// Checkbox (used in Edit User dialog for roles)
+html[data-theme="dark"] .p-checkbox .p-checkbox-box {
+  background: var(--color-bg-surface) !important;
+  border-color: var(--color-border) !important;
+}
+html[data-theme="dark"] .p-checkbox .p-checkbox-box.p-highlight {
+  background: var(--product-accent, #{$ec-brand-color}) !important;
+  border-color: var(--product-accent, #{$ec-brand-color}) !important;
+}
+
+// Tag (used to render products + roles in the user table)
+html[data-theme="dark"] .p-tag {
+  font-weight: 500;
+}
+
+// ----- Admin users: read-only preference badges + chips ----------
+// Theme badge + channel chips render the user's own preferences so
+// admins can see, at a glance, why one user isn't getting emails
+// (channel off) or which theme they're using (helpful for debugging
+// dark-mode-only UI bugs across users).
+//
+// Why no opacity-based dimming: opacity stacks with --color-text
+// poorly in dark mode and the dimmed text becomes unreadable. Use
+// dedicated muted/strong color tokens instead.
+
+.ec-admin-pref-dim {
+  color: var(--color-text-muted);
+}
+
+.ec-admin-pref-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: capitalize;
+}
+
+// 2x2 alert channel grid — icon-only with tooltip on hover. Replaces
+// the old flex-wrap chip list which was inconsistent in width and
+// height across rows. The grid is fixed at 2 columns x 2 rows so
+// every row's Alerts cell is the same compact rectangle, easy to
+// scan vertically.
+.ec-admin-channel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 22px);
+  grid-template-rows: repeat(2, 22px);
+  gap: 4px;
+  width: max-content;
+}
+.ec-admin-channel-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  line-height: 1;
+  border: 1px solid transparent;
+  // Default cursor — the cells aren't clickable, just hover-tooltipped.
+  // Was `cursor: help` which painted the question-mark cursor and
+  // read as "click for documentation" rather than "hover for status."
+  cursor: default;
+
+  i {
+    font-size: 0.78rem;
+  }
+
+  &.is-on {
+    background: color-mix(
+      in srgb,
+      var(--product-accent, #{$ec-brand-color}) 22%,
+      transparent
+    );
+    color: var(--color-text);
+    border-color: color-mix(
+      in srgb,
+      var(--product-accent, #{$ec-brand-color}) 50%,
+      transparent
+    );
+  }
+
+  &.is-off {
+    background: transparent;
+    color: var(--color-text-muted);
+    border-color: var(--color-border);
+    i {
+      opacity: 0.55;
+    }
+  }
+}
+
+// Admin channel-toggle row inside the Edit User dialog. Four pills
+// (one per channel) with a checkbox + icon + label, laid out in a
+// 2x2 grid so the form stays compact even on narrow dialogs. Visual
+// language matches the role-pill grid above so admins know it's a
+// matching toggleable group.
+.ec-admin-channel-toggles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 2px;
+}
+.ec-admin-channel-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 0;
+  transition: border-color 120ms ease, background 120ms ease;
+
+  &:hover {
+    border-color: var(--color-text-muted);
+  }
+
+  &:has(.p-checkbox.p-checkbox-checked) {
+    border-color: var(--product-accent, #{$ec-brand-color});
+    background: color-mix(
+      in srgb,
+      var(--product-accent, #{$ec-brand-color}) 12%,
+      var(--color-bg-surface)
+    );
+  }
+
+  i {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  span {
+    line-height: 1;
+  }
+}
+
+// Same specificity-bump trick as the role pills — the broader
+// .ec-admin-form label rule (specificity 0,1,1) would otherwise win
+// over .ec-admin-channel-toggle (0,1,0) and force display:block.
+label.ec-admin-channel-toggle {
+  display: flex;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+// Native file input themed to match the form's other controls. PrimeReact
+// doesn't ship a "minimal file picker" component and FileUpload is too
+// heavy for a single-file admin upload; using <input type="file"> with
+// targeted styling is lighter and keeps the dialog feeling consistent.
+.ec-admin-file-input {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--color-bg-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text);
+  font-size: 0.88rem;
+  cursor: pointer;
+
+  &::file-selector-button {
+    margin-right: 12px;
+    padding: 6px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background: var(--color-bg-elevated);
+    color: var(--color-text);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  &::file-selector-button:hover {
+    border-color: var(--product-accent, #{$ec-brand-color});
+  }
+
+  &:hover {
+    border-color: var(--color-text-muted);
+  }
+}
+
+// Realm pill — color-coded badge per realm. Color choice is
+// deterministic-by-name via JS hash; we just style the pill shell
+// here. White-on-saturated-dark works in both themes (those palette
+// colors are already dark-bg-friendly).
+.ec-admin-realm-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  // Cap so a very long realm name doesn't blow up the column width;
+  // truncate with ellipsis. The full name is on the tooltip anyway.
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Compact actions row — 4 icon buttons sitting close together. Reins
+// in PrimeReact's default ~12px button padding so the column doesn't
+// monopolize horizontal space. Rounded + text buttons need an explicit
+// width to stay aligned (otherwise icon-only buttons can drift by 1-2px).
+.ec-admin-actions--compact {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  .p-button.p-button-rounded.p-button-text {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+  }
+  .p-button.p-button-rounded.p-button-text .p-button-icon {
+    font-size: 0.95rem;
+  }
+}
+
+// =====================================================================
+// Toast notifications (dark-mode overrides)
+// =====================================================================
+// Lara's defaults use pale tinted backgrounds (rgba ~70% alpha) with
+// medium-saturation severity colors for text — which lets the dark
+// page bleed through and renders the message text as low-contrast
+// blob in dark mode. The screenshot from the user clearly shows
+// success-toast text being hard to read.
+//
+// Strategy: replace each severity with a saturated-dark surface that
+// keeps the severity hue legible at a glance, plus a bright text
+// color for body copy and the existing accent for the left border.
+//
+// Light mode is left untouched — lara's pale tints work fine against
+// a white page.
+
+html[data-theme="dark"] .p-toast .p-toast-message {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55) !important;
+  // Subtle border so the toast reads as a card against the page,
+  // not as a colored stripe floating on darkness.
+  border-right: 1px solid var(--color-border) !important;
+  border-top: 1px solid var(--color-border) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+
+// Body text + summary heading get full-contrast white, regardless
+// of severity. The severity color is reserved for the icon + left
+// border so it still reads as "success" / "error" at a glance.
+html[data-theme="dark"] .p-toast .p-toast-message-content,
+html[data-theme="dark"] .p-toast .p-toast-message-content .p-toast-summary,
+html[data-theme="dark"] .p-toast .p-toast-message-content .p-toast-detail {
+  color: #f1f3f5 !important;
+}
+
+// Close (X) hover affordance — lara's `rgba(255,255,255,0.5)` brightens
+// the icon area unpleasantly on a dark toast. Use a subtle surface tint.
+html[data-theme="dark"] .p-toast .p-toast-icon-close:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+// ----- success -----
+html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-success {
+  background: #0f3a2c !important;       // saturated dark green
+  border-left-color: #22d3a0 !important;
+  color: #f1f3f5 !important;
+}
+html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon,
+html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
+  color: #22d3a0 !important;            // bright accent for icons
+}
+
+// ----- info -----
+html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-info {
+  background: #0d2848 !important;       // saturated dark blue
+  border-left-color: #60a5fa !important;
+  color: #f1f3f5 !important;
+}
+html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-info .p-toast-message-icon,
+html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-info .p-toast-icon-close {
+  color: #60a5fa !important;
+}
+
+// ----- warn -----
+html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-warn {
+  background: #3b2a0c !important;       // saturated dark amber
+  border-left-color: #f5b454 !important;
+  color: #f1f3f5 !important;
+}
+html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-warn .p-toast-message-icon,
+html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-warn .p-toast-icon-close {
+  color: #f5b454 !important;
+}
+
+// ----- error -----
+html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-error {
+  background: #3a1414 !important;       // saturated dark red
+  border-left-color: #ff8585 !important;
+  color: #f1f3f5 !important;
+}
+html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-error .p-toast-message-icon,
+html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-error .p-toast-icon-close {
+  color: #ff8585 !important;
+}
+
+// =====================================================================
+// Video Tutorials section on the product overview page
+// =====================================================================
+// Header row places the section title on the left and the YouTube CTA
+// on the right. The player below caps at a sensible reading width so
+// the iframe doesn't dominate the page on wide displays.
+
+.ec-video-tutorials__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  // No max-width — the link CTA sits at the right edge of the full
+  // content column while the video below is independently capped at
+  // 720px. Matches the spec from the screenshot the design lead
+  // shared: title left, themed link far right, video left-aligned
+  // smaller block.
+}
+
+// Themed text-link CTA. Inherits its color via inline style
+// (theme.color from the product's per-product accent map) so the
+// link reads as "part of this product" rather than as a generic
+// YouTube branded button. Subtle hover lift via arrow translate,
+// underline appears on focus for accessibility.
+.ec-video-tutorials__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 2px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity 120ms ease;
+
+  // color is set via inline style from theme.color — don't fight it
+  // with !important here; let the per-product accent win.
+
+  svg {
+    flex-shrink: 0;
+    transition: transform 160ms ease;
+  }
+
+  &:hover {
+    opacity: 0.85;
+    text-decoration: none;
+    svg {
+      transform: translateX(3px);
+    }
+  }
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+// Cap the embedded player width so it sits as one element among
+// the page content rather than as the whole page. 720px keeps the
+// 16:9 frame ~405px tall — large enough to actually watch a demo
+// from, small enough that the surrounding context stays visible.
+.ec-video-tutorials__player {
+  max-width: 720px;
+  // No `margin: 0 auto` — the section reads better left-aligned
+  // with the rest of the product content. Switch to centered if the
+  // design later moves to a hero-style video block.
+}
+
+// =====================================================================
+// Settings — Account self-service action grid
+// =====================================================================
+// Each button kicks off a Keycloak Application Initiated Action (AIA).
+// Six tiles in a responsive grid: 3 columns on wide screens, 2 on
+// medium, 1 on narrow. Each tile shows an icon + title + one-line hint;
+// the whole tile is the click target. Visual language matches the role
+// pills in the admin user dialog so users learn one interaction shape.
+
+.ec-settings-action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.ec-settings-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 14px 16px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: var(--color-text);
+  transition: border-color 120ms ease, background 120ms ease,
+    transform 120ms ease;
+
+  i {
+    font-size: 1.1rem;
+    color: var(--product-accent, #{$ec-brand-color});
+  }
+
+  &:hover {
+    border-color: var(--product-accent, #{$ec-brand-color});
+    background: color-mix(
+      in srgb,
+      var(--product-accent, #{$ec-brand-color}) 8%,
+      var(--color-bg-surface)
+    );
+    transform: translateY(-1px);
+  }
+  &:active {
+    transform: translateY(0);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--product-accent, #{$ec-brand-color});
+    outline-offset: 2px;
+  }
+}
+.ec-settings-action__title {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--color-text);
+}
+.ec-settings-action__hint {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+// ======================================================================
+// EC Support Portal — page shell & surface system
+// ----------------------------------------------------------------------
+// The enterprise-portal look comes from three things the raw pages
+// lacked: a CENTERED content column (nothing hugs the left edge of a
+// wide monitor), a quiet gray page ground with white elevated cards on
+// top (surface hierarchy instead of one flat white sheet), and a brand
+// hero band that anchors each page. Everything reads the existing
+// theme tokens, so dark mode inherits for free.
+// ======================================================================
+
+.support-main {
+  background: var(--surface-ground, #eff3f8);
+  flex: 1 1 auto;
+}
+
+[data-theme="dark"] .support-main {
+  background: var(--color-bg-page);
+}
+
+// Centered content column. 1200px reads as "product", not "document":
+// wide enough for a 7-column case table, narrow enough that lines of
+// text stay scannable on a 27" monitor.
+.support-shell {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 0 1.5rem;
+  width: 100%;
+}
+
+// Brand hero band — same ink as the EC banner/email header so the
+// portal, the marketing site, and case emails read as one family.
+.page-hero {
+  background: linear-gradient(135deg, #0b1220 0%, #101828 55%, #16233a 100%);
+  color: var(--color-text-on-banner);
+  padding: 2.75rem 0 3rem;
+
+  h1 {
+    color: var(--color-text-on-banner);
+  }
+  .hero-sub {
+    color: rgba(255, 255, 255, 0.72);
+    max-width: 44rem;
+  }
+}
+
+// Pull the first card up into the hero — the overlap is what makes the
+// band feel designed rather than stacked.
+.hero-overlap {
+  margin-top: -1.75rem;
+  position: relative;
+  z-index: 1;
+}
+
+.page-plain-head {
+  padding: 2.25rem 0 1.5rem;
+}
+
+.support-content {
+  padding-bottom: 4rem;
+}
+
+// Elevated card — the one content surface used everywhere.
+.content-card {
+  background: var(--surface-card, #ffffff);
+  border: 1px solid var(--surface-border, var(--color-border));
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px rgba(16, 24, 40, 0.05),
+    0 1px 3px rgba(16, 24, 40, 0.06);
+  padding: 1.75rem;
+}
+
+[data-theme="dark"] .content-card {
+  box-shadow: none;
+}
+
+.content-card + .content-card {
+  margin-top: 1.25rem;
+}
+
+// Cards' DataTable: let the table bleed to the card edge so its own
+// paddings don't double up with the card's.
+.content-card--flush {
+  padding: 0;
+  overflow: hidden;
+
+  .card-toolbar {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--surface-border, var(--color-border));
+  }
+  .p-datatable .p-datatable-thead > tr > th {
+    background: var(--surface-50, #f8fafc);
+  }
+  .p-paginator {
+    border-top: 1px solid var(--surface-border, var(--color-border));
+  }
+}
+
+// Hand-rolled tables on the guide page.
+.guide-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    background: var(--surface-50, #f8fafc);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--surface-border, var(--color-border));
+    white-space: nowrap;
+  }
+  td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--surface-border, var(--color-border));
+    vertical-align: top;
+  }
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+// Numbered process steps on the guide page.
+.step-badge {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background: var(--primary-color, #6366f1);
+  color: var(--primary-color-text, #ffffff);
+}
+
+// Case-number link in the list — a real link, styled like one.
+.case-link {
+  color: var(--primary-color, #6366f1);
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Contact cards on the guide hero.
+.contact-card {
+  background: var(--surface-card, #ffffff);
+  border: 1px solid var(--surface-border, var(--color-border));
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px rgba(16, 24, 40, 0.05),
+    0 1px 3px rgba(16, 24, 40, 0.06);
+  padding: 1.5rem;
+  height: 100%;
+
+  .contact-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--primary-color, #6366f1) 12%, transparent);
+    color: var(--primary-color, #6366f1);
+    font-size: 1.1rem;
+  }
+}
+
+[data-theme="dark"] .contact-card {
+  box-shadow: none;
+}
+
+// ---- post-review fixes (visual QA round 1) ---------------------------
+// Case numbers are identifiers — never let them wrap mid-number.
+.case-link {
+  white-space: nowrap;
+}
+
+// PrimeReact Chips renders an inline-flex pill container that collapses
+// to its content, so the empty CC field looked like an 8rem stub next
+// to full-width inputs. Stretch it to match its siblings.
+.p-chips,
+.p-chips .p-chips-multiple-container {
+  width: 100%;
+}
+
+// Buttons used as left-aligned list rows (attachment downloads): the
+// label span defaults to flex:1 + centered text, which floats the
+// filename to the middle of the row.
+.p-button.justify-content-start .p-button-label {
+  flex: 0 1 auto;
+  text-align: left;
+}
+
+// Coverage tiles on the guide page — capability grid instead of two
+// bullet walls. Quiet tint (not full card-on-card) so the section reads
+// as one card containing a grid, not nested boxes fighting for shadow.
+.coverage-tile {
+  background: var(--surface-50, #f8fafc);
+  border: 1px solid var(--surface-border, var(--color-border));
+  border-radius: 10px;
+  padding: 1.25rem;
+  height: 100%;
+}
+
+.coverage-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-color-secondary, #64748b);
+  background: var(--surface-100, #f1f5f9);
+  border: 1px solid var(--surface-border, var(--color-border));
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  white-space: nowrap;
+}

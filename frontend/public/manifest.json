@@ -1,0 +1,25 @@
+{
+  "short_name": "EC Support",
+  "name": "Encryption Consulting Support Portal",
+  "icons": [
+    {
+      "src": "ec-light-theme-favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "ec-light-theme-favicon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "ec-dark-theme-favicon-180x180.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0d56d4",
+  "background_color": "#111111"
+}

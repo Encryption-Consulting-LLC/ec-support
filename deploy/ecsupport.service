@@ -1,0 +1,70 @@
+[Unit]
+Description=EC Support Portal API (gunicorn)
+Documentation=file:///home/ec/ec-support-portal/INTEGRATION.md
+# This is the single entry point for the stack. A systemd unit cannot
+# literally contain other daemons, but Wants= pulls them up alongside it
+# and After= orders them ahead of gunicorn, so:
+#
+#   systemctl start ecsupport    -> mongod + mail sink + nginx + API
+#   systemctl status ecsupport   -> the API's own health
+#
+# They stay separate units deliberately: nginx and mongod are shared
+# host services, so stopping the portal must not take them down.
+# The dev mail sink is deliberately NOT in Wants=: backend/.env points at
+# Exchange Online, and Wants= would start the sink anyway even though it is
+# disabled. After= still orders it correctly if both are ever started
+# together (offline testing).
+Wants=mongod.service nginx.service
+After=network-online.target mongod.service ecsupport-maildump.service nginx.service
+# Crash-loop backstop: with Restart=always and no limit, a unit that can
+# never start would restart forever. 5 failures inside 60s gives up and
+# leaves the unit "failed" so the health timer and journal show it.
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=exec
+User=ecsupport
+Group=ecsupport
+WorkingDirectory=/opt/ec-support/backend
+EnvironmentFile=/opt/ec-support/backend/.env
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+# gunicorn >=26 opens a control server under $HOME/.gunicorn. The service
+# account's home is /opt/ec-support, which ProtectSystem=strict mounts
+# read-only, so it logged "Read-only file system" on every start. Point HOME
+# at a systemd-managed runtime dir instead: created 0700 on start, removed
+# on stop, and kept out of /var/lib so durable case data stays separate.
+Environment=HOME=/run/ecsupport
+RuntimeDirectory=ecsupport
+RuntimeDirectoryMode=0700
+# gthread, not the default sync worker: every request makes a blocking
+# HTTP call to the auth service to introspect the bearer session
+# (app/auth/session.py). With sync workers, 2 slow validates would block
+# the whole API; threads let those overlap.
+ExecStart=/opt/ec-support/backend/.venv/bin/gunicorn \
+    --worker-class gthread \
+    --workers 2 \
+    --threads 8 \
+    --bind 127.0.0.1:8006 \
+    --timeout 60 \
+    --graceful-timeout 30 \
+    --access-logfile - \
+    --error-logfile - \
+    wsgi:app
+Restart=always
+RestartSec=3
+
+# Hardening. The app reads code from /opt (read-only under
+# ProtectSystem=strict) and writes only attachments under /var/lib.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+ReadWritePaths=/var/lib/ec-support
+
+[Install]
+WantedBy=multi-user.target
