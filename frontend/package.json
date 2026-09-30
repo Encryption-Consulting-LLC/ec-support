@@ -7,19 +7,25 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.9.0",
     "axios": "^1.12.1",
     "formik": "^2.4.6",
+    "front-matter": "^4.0.2",
+    "minisearch": "^7.2.0",
     "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",
     "primereact": "^10.9.7",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-markdown": "^10.1.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.1",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.1",
     "yup": "^1.7.0"
   },
   "devDependencies": {
@@ -32,6 +38,7 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
     "sass": "^1.92.1",
-    "vite": "^7.1.2"
+    "vite": "^7.1.2",
+    "vitest": "^5.0.3"
   }
 }
