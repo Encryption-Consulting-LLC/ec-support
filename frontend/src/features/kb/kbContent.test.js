@@ -1,82 +1,161 @@
 import { describe, it, expect } from "vitest";
-import { parseContent, parseFaq, validate, files } from "./kbContent";
+import {
+  routeId,
+  parseContent,
+  resolveLink,
+  validate,
+  files,
+  images,
+} from "./kbContent";
 
-// Fake files: keys look like real glob paths, values are raw file text.
-const article = (fm, body = "## Intro\n\nHello.") => `---\n${fm}\n---\n\n${body}`;
+// Fake files: keys mimic the real glob keys, values are raw file text.
+const K = (rel) => `/knowledge-base/${rel}`;
+const META = [
+  'title: "Export CBOM"',
+  'summary: "How to export."',
+  'article_type: "How-to"',
+  'last_reviewed: "2026-10-06"',
+  'keywords: ["export", "cyclonedx"]',
+];
+const doc = (meta = META, body = "# Export CBOM\n\n## Steps\n\nHello.") =>
+  `---\n${meta.join("\n")}\n---\n\n${body}`;
+const without = (field) => META.filter((line) => !line.startsWith(field));
+const replace = (field, line) => [...without(field), line];
 
-const GOOD = article(
-  "title: Install agent\nsummary: How to install.\ncategory: How-to\nupdated: 2026-09-30"
-);
-
-describe("parseContent", () => {
-  it("reads product and slug from the path", () => {
-    const { articles } = parseContent({ "/content/cbomsecure/install-agent.md": GOOD });
-    expect(articles).toHaveLength(1);
-    expect(articles[0]).toMatchObject({
-      product: "cbomsecure",
-      slug: "install-agent",
-      title: "Install agent",
-      updated: "2026-09-30",
-    });
-    expect(articles[0].body).toContain("Hello.");
+describe("routeId", () => {
+  it("drops order prefixes and lowercases", () => {
+    expect(routeId("01-Products/CBOM-Secure/export-cbom.md")).toBe(
+      "products/cbom-secure/export-cbom"
+    );
   });
 
-  it("skips _files and files outside a product folder", () => {
-    const { articles } = parseContent({
-      "/content/_TEMPLATE.md": GOOD,
-      "/content/README.md": "# readme",
-      "/content/cbomsecure/_draft.md": GOOD,
-    });
-    expect(articles).toHaveLength(0);
-  });
-
-  it("puts faq.md into faqs, not articles", () => {
-    const { articles, faqs } = parseContent({
-      "/content/cbomsecure/faq.md": "---\ntitle: CBOM FAQ\n---\n\n## Q1?\n\nA1.",
-    });
-    expect(articles).toHaveLength(0);
-    expect(faqs.cbomsecure.title).toBe("CBOM FAQ");
-    expect(faqs.cbomsecure.items).toEqual([{ question: "Q1?", answer: "A1." }]);
+  it("maps _index.md to its folder and README.md to the home page", () => {
+    expect(routeId("01-Products/CBOM-Secure/_index.md")).toBe("products/cbom-secure");
+    expect(routeId("README.md")).toBe("");
   });
 });
 
-describe("parseFaq", () => {
-  it("splits on ## headings and keeps multi-line answers", () => {
-    const items = parseFaq("intro ignored\n\n## First?\n\nLine 1\n\n- a\n- b\n\n## Second?\n\nAnswer 2\n### sub stays");
-    expect(items).toEqual([
-      { question: "First?", answer: "Line 1\n\n- a\n- b" },
-      { question: "Second?", answer: "Answer 2\n### sub stays" },
-    ]);
+describe("parseContent", () => {
+  it("builds an article from path and frontmatter", () => {
+    const { articles } = parseContent({
+      [K("01-Products/CBOM-Secure/export-cbom.md")]: doc(),
+    });
+    expect(articles).toHaveLength(1);
+    expect(articles[0]).toMatchObject({
+      id: "products/cbom-secure/export-cbom",
+      rel: "01-Products/CBOM-Secure/export-cbom.md",
+      parent: "products/cbom-secure",
+      title: "Export CBOM",
+      type: "How-to",
+      keywords: ["export", "cyclonedx"],
+      updated: "2026-10-06",
+      product: "cbomsecure",
+    });
+  });
+
+  it("removes the duplicate # title from the body", () => {
+    const { articles } = parseContent({
+      [K("01-Products/CBOM-Secure/export-cbom.md")]: doc(),
+    });
+    expect(articles[0].body).not.toContain("# Export CBOM");
+    expect(articles[0].body).toContain("## Steps");
+  });
+
+  it("puts _index.md into sections and skips _drafts and outside files", () => {
+    const { articles, sections } = parseContent({
+      [K("01-Products/CBOM-Secure/_index.md")]: doc(),
+      [K("01-Products/CBOM-Secure/_draft.md")]: doc(),
+      "/somewhere-else/x.md": doc(),
+    });
+    expect(articles).toHaveLength(0);
+    expect(Object.keys(sections)).toEqual(["products/cbom-secure"]);
+    expect(sections["products/cbom-secure"].parent).toBe("products");
+  });
+
+  it("sets product only for folders under Products", () => {
+    const { articles } = parseContent({
+      [K("01-Products/HSM-as-a-Service/a.md")]: doc(),
+      [K("02-General/PKI/b.md")]: doc(),
+    });
+    expect(articles.map((a) => a.product)).toEqual(["hsmasaservice", null]);
+  });
+});
+
+describe("resolveLink", () => {
+  const from = "01-Products/CBOM-Secure/cbom-secure-faq.md";
+
+  it("turns relative .md links into portal URLs", () => {
+    expect(resolveLink(from, "../../02-General/CBOM/what-is-a-cbom.md#intro")).toBe(
+      "/kb/general/cbom/what-is-a-cbom#intro"
+    );
+    expect(resolveLink(from, "cbom-secure-overview.md")).toBe(
+      "/kb/products/cbom-secure/cbom-secure-overview"
+    );
+    expect(resolveLink(from, "_index.md")).toBe("/kb/products/cbom-secure");
+  });
+
+  it("leaves external links and anchors alone", () => {
+    expect(resolveLink(from, "https://cyclonedx.org")).toBe("https://cyclonedx.org");
+    expect(resolveLink(from, "#steps")).toBe("#steps");
   });
 });
 
 describe("validate", () => {
-  it("accepts a good article", () => {
-    expect(validate({ "/content/cbomsecure/ok.md": GOOD })).toEqual([]);
+  it("accepts good files with working links and images", () => {
+    const errors = validate(
+      {
+        [K("01-Products/CBOM-Secure/a.md")]: doc(
+          META,
+          "See [b](b.md) and ![shot](images/ok.png)."
+        ),
+        [K("01-Products/CBOM-Secure/b.md")]: doc(),
+      },
+      { [K("01-Products/CBOM-Secure/images/ok.png")]: "/assets/ok.png" }
+    );
+    expect(errors).toEqual([]);
   });
 
-  it("reports missing fields, bad category, bad folder and bad slug", () => {
+  it("reports missing fields, unknown article_type and bad dates", () => {
     const errors = validate({
-      "/content/cbomsecure/no-summary.md": article("title: T\ncategory: How-to\nupdated: 2026-09-30"),
-      "/content/cbomsecure/bad-cat.md": article("title: T\nsummary: S\ncategory: Tips\nupdated: 2026-09-30"),
-      "/content/notaproduct/x.md": GOOD,
-      "/content/cbomsecure/Bad Name.md": GOOD,
-    });
-    expect(errors.join("\n")).toMatch(/no-summary\.md.*summary/);
-    expect(errors.join("\n")).toMatch(/bad-cat\.md.*category/);
-    expect(errors.join("\n")).toMatch(/notaproduct/);
-    expect(errors.join("\n")).toMatch(/Bad Name\.md.*file name/);
+      [K("02-General/no-summary.md")]: doc(without("summary")),
+      [K("02-General/bad-type.md")]: doc(replace("article_type", 'article_type: "Tips"')),
+      [K("02-General/bad-date.md")]: doc(
+        replace("last_reviewed", 'last_reviewed: "06/10/2026"')
+      ),
+    }).join("\n");
+    expect(errors).toMatch(/no-summary\.md: missing summary/);
+    expect(errors).toMatch(/bad-type\.md: article_type "Tips"/);
+    expect(errors).toMatch(/bad-date\.md: last_reviewed/);
   });
 
-  it("requires faq.md to have a title and at least one question", () => {
-    const errors = validate({ "/content/cbomsecure/faq.md": "---\n---\n\nno questions" });
-    expect(errors.length).toBeGreaterThan(0);
+  it("reports broken page links and missing images", () => {
+    const errors = validate({
+      [K("02-General/a.md")]: doc(META, "[gone](nope.md) ![x](images/missing.png)"),
+    }).join("\n");
+    expect(errors).toMatch(/broken link nope\.md/);
+    expect(errors).toMatch(/broken link images\/missing\.png/);
+  });
+
+  it("blocks {{TBD}} placeholders unless allowed", () => {
+    const tbdFiles = { [K("02-General/a.md")]: doc(META, "Path: {{TBD: menu}}") };
+    expect(validate(tbdFiles).join("\n")).toMatch(/TBD/);
+    expect(validate(tbdFiles, {}, { allowPlaceholders: true })).toEqual([]);
+  });
+
+  it("reports two files that end up at the same URL", () => {
+    const errors = validate({
+      [K("01-Products/x.md")]: doc(),
+      [K("02-Products/x.md")]: doc(),
+    }).join("\n");
+    expect(errors).toMatch(/same URL \/kb\/products\/x/);
   });
 });
 
 // The real content lint: this is what fails a teammate's bad PR.
-describe("content folder", () => {
-  it("has no validation errors", () => {
-    expect(validate(files)).toEqual([]);
+describe("knowledge-base folder", () => {
+  // Placeholders are tolerated until go-live. Before launch, change this to
+  // validate(files, images) so any {{TBD}} blocks the merge.
+  it("has no errors", () => {
+    expect(validate(files, images, { allowPlaceholders: true })).toEqual([]);
   });
 });
