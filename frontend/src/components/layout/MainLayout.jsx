@@ -9,7 +9,7 @@ const MainLayout = () => {
     <>
       <div className="layout-container">
         <div className="layout-content-wrapper">
-          <div className="layout-topbar border-bottom-2 border-gray-200 surface-overlay flex flex-wrap justify-content-between align-items-center px-6 sticky top-0 z-1">
+          <div className="layout-topbar border-bottom-2 border-gray-200 surface-overlay flex flex-wrap justify-content-between align-items-center px-6 sticky top-0 z-5">
             <Topbar />
           </div>
           <div className="layout-content support-main">

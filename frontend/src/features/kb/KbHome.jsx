@@ -71,7 +71,7 @@ export default function KbHome() {
       </div>
 
       <div className="support-shell support-content">
-        <div className="grid hero-overlap">
+        <div className="grid mt-4">
           {QUICK_LINKS.map((q) => (
             <div key={q.title} className="col-12 md:col-4">
               <Link to={q.to} className="kb-card">
