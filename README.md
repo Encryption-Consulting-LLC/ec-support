@@ -9,7 +9,7 @@ thread stay in step.
 
 | | |
 |---|---|
-| **Public URL** | https://encryption-support.encryptionconsulting.com (Cloudflare Tunnel) |
+| **Public URL** | https://support.encryptionconsulting.com (Cloudflare Tunnel) |
 | **LAN URL** | https://192.168.1.17 (self-signed cert — browser warning is expected) |
 | **Host** | Ubuntu 22.04 VM `192.168.1.17` (VMware, 2 vCPU / 8 GB / 12 GB) |
 | **Repo on host** | `/home/ec/ec-support-portal` |
