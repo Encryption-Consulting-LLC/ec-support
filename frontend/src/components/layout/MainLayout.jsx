@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import Topbar from "./Topbar";
 import Footer from "./Footer";
+import LoadSpinner from "../common/LoadSpinner";
 
 const MainLayout = () => {
   return (
@@ -11,7 +13,11 @@ const MainLayout = () => {
             <Topbar />
           </div>
           <div className="layout-content support-main">
-            <Outlet />
+            {/* Lazy pages (the KB) render a spinner while their chunk loads;
+                topbar and footer stay put. */}
+            <Suspense fallback={<LoadSpinner centered />}>
+              <Outlet />
+            </Suspense>
           </div>
           <div className="footer-wrapper">
             <Footer />

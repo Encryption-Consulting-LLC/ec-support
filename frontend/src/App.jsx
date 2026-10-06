@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, lazy } from "react";
 import Login from "./pages/login/Login";
 import { Toast } from "primereact/toast";
 import { setToastRef } from "./services/notification/notification";
@@ -29,8 +29,11 @@ import "./global.scss";
  * action handoff, session rotation, expired-session dialog) is vendored
  * unchanged from the Client Portal, so credentials and behavior match
  * what clients already know. Everything behind PrivateRouteSelector is
- * the support module.
+ * the support module. The /kb knowledge base is public and sits outside it.
  */
+
+const KbPage = lazy(() => import("./features/kb/kbPage"));
+
 function App() {
   const toast = useRef(null);
 
@@ -66,8 +69,10 @@ function App() {
           <Route path="" element={<SessionGuardSelector />} />
           <Route path={ROUTES.HOME} element={<SessionGuardSelector />} />
           <Route path={ROUTES.LOGIN} element={<Login />} />
-          <Route element={<PrivateRouteSelector />}>
-            <Route element={<MainLayout />}>
+          <Route element={<MainLayout />}>
+            {/* Public: the knowledge base needs no login. */}
+            <Route path={ROUTES.KB_PAGE} element={<KbPage />} />
+            <Route element={<PrivateRouteSelector />}>
               <Route path={ROUTES.SUPPORT} element={<SupportCases />} />
               <Route path={ROUTES.SUPPORT_NEW} element={<NewCase />} />
               <Route path={ROUTES.SUPPORT_GUIDE} element={<SupportGuide />} />
