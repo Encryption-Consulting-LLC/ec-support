@@ -2615,3 +2615,27 @@ html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-error .p-toast
     }
   }
 }
+
+.kb-breadcrumb i {
+  font-size: 0.75rem;
+  color: var(--text-color-secondary);
+}
+
+.kb-breadcrumb a,
+.kb-link-list a {
+  color: var(--primary-color);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.kb-link-list {
+  margin: 0;
+  padding-left: 1.25rem;
+
+  li {
+    margin: 0.4rem 0;
+  }
+}

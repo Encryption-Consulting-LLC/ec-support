@@ -1,26 +1,15 @@
-import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { articles, sections } from "./kbContent";
-import MarkdownView from "./MarkdownView";
-import Toc, { readHeadings } from "./Toc";
+import KbArticle from "./KbArticle";
 
 /**
- * Resolves /kb/* to a KB section or article and renders it.
- * Step 7 splits this into proper home / section / article pages.
+ * Resolves /kb/* to a KB section or article.
+ * Sections render as articles until Step 7b adds KbSection.
  */
 export default function KbPage() {
   // "*" is the splat: everything after /kb/, "" on the KB home.
   const id = (useParams()["*"] ?? "").replace(/\/$/, "");
-  const section = sections[id];
-  const doc = section || articles.find((a) => a.id === id);
-
-  // Hooks must run on every render, so they come before the early return.
-  const bodyRef = useRef(null);
-  const [toc, setToc] = useState([]);
-  useEffect(() => {
-    setToc(readHeadings(bodyRef.current));
-    window.scrollTo(0, 0); // new page starts at the top
-  }, [id]);
+  const doc = sections[id] || articles.find((a) => a.id === id);
 
   if (!doc) {
     return (
@@ -30,16 +19,6 @@ export default function KbPage() {
     );
   }
 
-  return (
-    <div className="support-shell support-content">
-      <h1 className="text-3xl font-semibold mb-2">{doc.title}</h1>
-      <p className="text-color-secondary mt-0">{doc.summary}</p>
-      <div className="kb-layout">
-        <div ref={bodyRef}>
-          <MarkdownView body={doc.body} rel={doc.rel} />
-        </div>
-        <Toc items={toc} />
-      </div>
-    </div>
-  );
+  // key: a new page gets a fresh component (fresh TOC state, scroll reset).
+  return <KbArticle key={id} article={doc} />;
 }

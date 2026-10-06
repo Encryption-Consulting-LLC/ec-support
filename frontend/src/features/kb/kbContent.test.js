@@ -4,6 +4,7 @@ import {
   parseContent,
   resolveLink,
   resolveImage,
+  breadcrumbOf,
   validate,
   files,
   images,
@@ -114,6 +115,28 @@ describe("resolveImage", () => {
   it("leaves external and unknown images unchanged", () => {
     expect(resolveImage(from, "https://x.com/a.png", imgs)).toBe("https://x.com/a.png");
     expect(resolveImage(from, "images/missing.png", imgs)).toBe("images/missing.png");
+  });
+});
+
+describe("breadcrumbOf", () => {
+  const sections = {
+    "": { title: "EC Support Portal Home" },
+    products: { title: "EC Products" },
+    "products/cbom-secure": { title: "CBOM Secure" },
+  };
+
+  it("lists ancestors from home down, home labelled Knowledge base", () => {
+    expect(breadcrumbOf("products/cbom-secure/x", sections)).toEqual([
+      { id: "", title: "Knowledge base" },
+      { id: "products", title: "EC Products" },
+      { id: "products/cbom-secure", title: "CBOM Secure" },
+    ]);
+  });
+
+  it("skips folders without an _index.md", () => {
+    expect(breadcrumbOf("general/pki/x", sections)).toEqual([
+      { id: "", title: "Knowledge base" },
+    ]);
   });
 });
 

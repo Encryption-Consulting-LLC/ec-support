@@ -143,6 +143,18 @@ export function resolveImage(fromRel, src, images) {
   return key ? images[key] : src;
 }
 
+// Ancestors of a page, home first, for the breadcrumb. Folders without an
+// _index.md have no page to link to, so they are skipped.
+export function breadcrumbOf(id, sections) {
+  const crumbs = [];
+  for (let p = parentOf(id); p !== null; p = parentOf(p)) {
+    if (sections[p]) {
+      crumbs.unshift({ id: p, title: p === "" ? "Knowledge base" : sections[p].title });
+    }
+  }
+  return crumbs;
+}
+
 // Content lint. Messages are read by teammates in CI, so say exactly what to fix.
 export function validate(files, images = {}, { allowPlaceholders = false } = {}) {
   const errors = [];
