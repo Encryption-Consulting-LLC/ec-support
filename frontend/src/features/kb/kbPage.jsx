@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { articles, sections } from "./kbContent";
 import KbArticle from "./KbArticle";
 import KbSection from "./KbSection";
+import KbHome from "./KbHome";
 
 /**
  * Resolves /kb/* to a KB section (folder with _index.md) or an article.
@@ -19,6 +20,7 @@ export default function KbPage() {
   }, [id]);
 
   // key: a new page gets a fresh component (fresh TOC state).
+  if (id === "") return <KbHome />;
   if (section) return <KbSection key={id} section={section} />;
   if (article) return <KbArticle key={id} article={article} />;
 

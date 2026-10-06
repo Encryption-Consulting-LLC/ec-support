@@ -2681,3 +2681,24 @@ html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-error .p-toast
     }
   }
 }
+
+// ---- KB home ---------------------------------------------------------
+.kb-search {
+  max-width: 40rem;
+}
+
+.kb-card .kb-card-icon {
+  font-size: 1.25rem;
+  color: var(--primary-color);
+}
+
+.kb-view-all {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--primary-color);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

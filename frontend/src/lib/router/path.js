@@ -13,6 +13,7 @@ export const ROUTES = {
   SUPPORT_GUIDE: "/support/guide",
   SUPPORT_DETAIL: "/support/:case_no",
   KB: "/kb",
+  KB_SEARCH: "/kb/search",
   KB_PAGE: "/kb/*",
 };
 export const kbUrl = (id) => (id ? `${ROUTES.KB}/${id}` : ROUTES.KB);

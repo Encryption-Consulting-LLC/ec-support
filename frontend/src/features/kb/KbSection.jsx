@@ -2,17 +2,17 @@ import { Link } from "react-router-dom";
 import { ARTICLE_TYPES, articles, sections } from "./kbContent";
 import { kbUrl } from "../../lib/router/path";
 import Breadcrumb from "./Breadcrumb";
+import SectionCards from "./SectionCards";
 
 // Section page: lists are generated from the folders, so they never go stale.
 // The section's _index.md only supplies the title and summary.
 export default function KbSection({ section }) {
-  const subsections = Object.values(sections).filter((s) => s.parent === section.id);
+  const hasSubsections = Object.values(sections).some((s) => s.parent === section.id);
   const own = articles.filter((a) => a.parent === section.id);
   const groups = ARTICLE_TYPES.map((type) => ({
     type,
     items: own.filter((a) => a.type === type),
   })).filter((g) => g.items.length > 0);
-  const countUnder = (id) => articles.filter((a) => a.id.startsWith(`${id}/`)).length;
 
   return (
     <>
@@ -26,21 +26,7 @@ export default function KbSection({ section }) {
 
       <div className="support-shell support-content">
         <div className="hero-overlap">
-          {subsections.length > 0 && (
-            <div className="grid">
-              {subsections.map((s) => (
-                <div key={s.id} className="col-12 md:col-6 lg:col-4">
-                  <Link to={kbUrl(s.id)} className="kb-card">
-                    <div className="font-semibold mb-2">{s.title}</div>
-                    <p className="text-sm text-color-secondary m-0 line-height-3">{s.summary}</p>
-                    <div className="kb-card-count text-sm mt-3">
-                      {countUnder(s.id)} articles
-                    </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          )}
+          <SectionCards parentId={section.id} />
 
           {groups.map((g) => (
             <div key={g.type} className="content-card mt-4">
@@ -60,7 +46,7 @@ export default function KbSection({ section }) {
             </div>
           ))}
 
-          {subsections.length === 0 && groups.length === 0 && (
+          {!hasSubsections && groups.length === 0 && (
             <div className="content-card">No articles in this section yet.</div>
           )}
         </div>
