@@ -2502,3 +2502,116 @@ html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-error .p-toast
   padding: 0.2rem 0.6rem;
   white-space: nowrap;
 }
+
+// ---- Knowledge base ----------------------------------------------------
+// Article body + sticky "On this page" sidebar. Colors use theme tokens so
+// dark mode works without extra rules.
+.kb-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  gap: 2.5rem;
+  align-items: start;
+
+  @media (max-width: 991px) {
+    grid-template-columns: minmax(0, 1fr);
+    .kb-toc {
+      display: none;
+    }
+  }
+}
+
+.kb-article {
+  line-height: 1.7;
+
+  h2,
+  h3 {
+    margin-top: 2rem;
+    scroll-margin-top: 90px; // keep anchored headings clear of the sticky topbar
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--surface-border);
+    border-radius: 8px;
+  }
+
+  table {
+    display: block; // lets wide tables scroll instead of breaking the layout
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin: 1rem 0;
+  }
+
+  th,
+  td {
+    border: 1px solid var(--surface-border);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background: var(--surface-ground);
+  }
+
+  code {
+    background: var(--surface-ground);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+
+  pre {
+    background: var(--surface-ground);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+
+    code {
+      background: none;
+      padding: 0;
+    }
+  }
+
+  blockquote {
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    border-left: 4px solid var(--primary-color);
+    color: var(--text-color-secondary);
+  }
+}
+
+.kb-toc {
+  position: sticky;
+  top: 90px;
+  font-size: 0.875rem;
+
+  .kb-toc-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    margin: 0.35rem 0;
+  }
+
+  .kb-toc-sub {
+    padding-left: 1rem;
+  }
+
+  a {
+    color: var(--text-color-secondary);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+}

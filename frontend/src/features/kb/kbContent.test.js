@@ -3,6 +3,7 @@ import {
   routeId,
   parseContent,
   resolveLink,
+  resolveImage,
   validate,
   files,
   images,
@@ -97,6 +98,22 @@ describe("resolveLink", () => {
   it("leaves external links and anchors alone", () => {
     expect(resolveLink(from, "https://cyclonedx.org")).toBe("https://cyclonedx.org");
     expect(resolveLink(from, "#steps")).toBe("#steps");
+  });
+});
+
+describe("resolveImage", () => {
+  const imgs = {
+    [K("04-Featured-Articles/PKI-Runbooks/images/a.png")]: "/assets/a-123.png",
+  };
+  const from = "04-Featured-Articles/PKI-Runbooks/runbook.md";
+
+  it("maps a relative image path to its bundled URL", () => {
+    expect(resolveImage(from, "images/a.png", imgs)).toBe("/assets/a-123.png");
+  });
+
+  it("leaves external and unknown images unchanged", () => {
+    expect(resolveImage(from, "https://x.com/a.png", imgs)).toBe("https://x.com/a.png");
+    expect(resolveImage(from, "images/missing.png", imgs)).toBe("images/missing.png");
   });
 });
 

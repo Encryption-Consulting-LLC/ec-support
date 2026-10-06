@@ -133,6 +133,16 @@ export function resolveLink(fromRel, href) {
   return `/kb/${routeId(decodeURIComponent(url.pathname.slice(1)))}${url.hash}`;
 }
 
+// Relative image path inside an article -> the URL Vite gave the bundled file.
+// Unknown or external images come back unchanged (validate() flags unknown ones).
+export function resolveImage(fromRel, src, images) {
+  const url = new URL(src, `http://kb/${fromRel}`);
+  if (url.host !== "kb") return src;
+  const rel = decodeURIComponent(url.pathname.slice(1));
+  const key = Object.keys(images).find((k) => relPath(k) === rel);
+  return key ? images[key] : src;
+}
+
 // Content lint. Messages are read by teammates in CI, so say exactly what to fix.
 export function validate(files, images = {}, { allowPlaceholders = false } = {}) {
   const errors = [];
