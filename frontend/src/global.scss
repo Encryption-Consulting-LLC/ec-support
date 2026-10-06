@@ -2621,8 +2621,7 @@ html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-error .p-toast
   color: var(--text-color-secondary);
 }
 
-.kb-breadcrumb a,
-.kb-link-list a {
+.kb-breadcrumb a {
   color: var(--primary-color);
   text-decoration: none;
 
@@ -2631,11 +2630,54 @@ html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-error .p-toast
   }
 }
 
-.kb-link-list {
+// Breadcrumb sits on the dark hero band on section pages.
+.page-hero .kb-breadcrumb a,
+.page-hero .kb-breadcrumb i {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+// Clickable sub-section card on section pages.
+.kb-card {
+  display: block;
+  height: 100%;
+  padding: 1.25rem 1.5rem;
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: border-color 0.15s;
+
+  &:hover {
+    border-color: var(--primary-color);
+  }
+
+  .kb-card-count {
+    color: var(--primary-color);
+  }
+}
+
+.kb-article-list {
+  list-style: none;
   margin: 0;
-  padding-left: 1.25rem;
+  padding: 0;
 
   li {
-    margin: 0.4rem 0;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--surface-border);
+
+    &:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
