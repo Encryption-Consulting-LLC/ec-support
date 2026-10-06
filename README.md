@@ -53,7 +53,7 @@ sudo systemctl start ecsupport && sudo systemctl start ecsupport-health.timer
 ## Architecture
 
 ```
-Browser ── https://encryption-support.encryptionconsulting.com
+Browser ── https://support.encryptionconsulting.com
               │  Cloudflare edge (trusted cert for clients)
               ▼
         Cloudflare Tunnel  ── connector currently runs on the Windows
