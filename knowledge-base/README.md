@@ -20,7 +20,7 @@ Search the knowledge base or browse by category below.
 | | |
 |---|---|
 | **Open a support case** | Submit a new request to the EC Support team. See [How to open a support case](00-Working-with-EC-Support/how-to-open-a-support-case.md). |
-| **View my requests** | Check the status of open and past cases. {{TBD: portal link}} |
+| **View my requests** | Check the status of open and past cases. [support.encryptionconsulting.com](https://support.encryptionconsulting.com) |
 | **Working with EC Support** | Onboarding for new customers, severity levels, and support plans. See [Working with EC Support](00-Working-with-EC-Support/_index.md). |
 | **EC news and announcements** | Release notes, maintenance notices, and industry alerts. See [Maintenance windows and release notes](00-Working-with-EC-Support/maintenance-windows-and-release-notes-policy.md). |
 | **EC training** | PKI and HSM training (Thales Luna and Entrust nShield). See [EC training and certification](00-Working-with-EC-Support/ec-training-and-certification.md). |
@@ -85,4 +85,4 @@ Search the knowledge base or browse by category below.
 
 ## Still need help?
 
-Open a case through the portal or contact EC Support at {{TBD: support email}} or {{TBD: support phone}}. For Severity 1 issues, call after opening the case. See [Support severity levels and response targets](00-Working-with-EC-Support/support-severity-levels-and-response-targets.md).
+Open a case through the portal or contact EC Support at [support@encryptionconsulting.com](mailto:support@encryptionconsulting.com) or [+1 469 815 4136](tel:+14698154136). For Severity 1 issues, call after opening the case. See [Support severity levels and response targets](00-Working-with-EC-Support/support-severity-levels-and-response-targets.md).

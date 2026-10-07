@@ -34,7 +34,7 @@ Escalate when one or more of these is true:
 ## How to escalate
 
 1. **Reply in the case** with the word "Escalation" in the first line. State the reason, the business impact, and any deadline.
-2. **Call** {{TBD: support phone number}} and ask for the duty manager. Give the case number.
+2. **Call** [+1 469 815 4136](tel:+14698154136) and ask for the duty manager. Give the case number.
 3. If there is no response within {{TBD: time before moving to the next escalation level}}, contact the next level in the table below.
 
 | Level | Role | Contact |

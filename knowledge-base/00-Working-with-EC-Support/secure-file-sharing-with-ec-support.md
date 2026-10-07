@@ -97,7 +97,7 @@ Send the archive password through a different channel from the file, such as a p
 ## Data retention and deletion
 
 - EC keeps case files for {{TBD: case attachment retention period}} after the case closes, then deletes them.
-- To ask for earlier deletion, reply in the case or email {{TBD: support email address}}.
+- To ask for earlier deletion, reply in the case or email [support@encryptionconsulting.com](mailto:support@encryptionconsulting.com).
 - If a secret was sent by mistake, tell EC right away. EC deletes the file and confirms. Rotate the exposed secret anyway.
 
 ## Verification

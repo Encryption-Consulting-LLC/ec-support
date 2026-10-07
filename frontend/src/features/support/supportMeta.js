@@ -157,35 +157,18 @@ export const PLAN_HOURS = {
 };
 
 /**
- * Knowledge base / documentation lives on encryptionconsulting.com —
- * the portal links out rather than hosting articles. Keyed by the same
- * product values as PRODUCTS.
+ * Product documentation lives in the portal's own knowledge base (/kb).
+ * The case pages still render these as new-tab links, so a half-written
+ * case is never lost. Keyed by the same product values as PRODUCTS; each
+ * url must match a knowledge-base folder (kbContent.test.js checks it).
  */
 export const PRODUCT_RESOURCES = {
-  certsecuremanager: {
-    label: "CertSecure Manager",
-    url: "https://www.encryptionconsulting.com/certificate-management-solution-certsecure-manager/",
-  },
-  codesignsecure: {
-    label: "CodeSign Secure",
-    url: "https://www.encryptionconsulting.com/code-signing-solution/",
-  },
-  sshsecure: {
-    label: "SSH Secure",
-    url: "https://www.encryptionconsulting.com/ssh-key-management-solution/",
-  },
-  hsmasaservice: {
-    label: "HSM As A Service",
-    url: "https://www.encryptionconsulting.com/hsm-as-a-service/",
-  },
-  cbomsecure: {
-    label: "CBOM Secure",
-    url: "https://www.encryptionconsulting.com/cryptographic-discovery-inventory/",
-  },
-  pkiasaservice: {
-    label: "PKI As A Service",
-    url: "https://www.encryptionconsulting.com/pki-as-a-service/",
-  },
+  certsecuremanager: { label: "CertSecure Manager", url: "/kb/products/certsecure-manager" },
+  codesignsecure: { label: "CodeSign Secure", url: "/kb/products/codesign-secure" },
+  sshsecure: { label: "SSH Secure", url: "/kb/products/ssh-secure" },
+  hsmasaservice: { label: "HSM As A Service", url: "/kb/products/hsm-as-a-service" },
+  cbomsecure: { label: "CBOM Secure", url: "/kb/products/cbom-secure" },
+  pkiasaservice: { label: "PKI As A Service", url: "/kb/products/pki-as-a-service" },
 };
 
 export const EDUCATION_CENTER_URL =

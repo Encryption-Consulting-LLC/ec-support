@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
 import { Menubar } from "primereact/menubar";
 import { Menu } from "primereact/menu";
@@ -41,15 +41,29 @@ export default function Topbar() {
   const sessionId = useSelector((state) => state.auth.session);
   const signedIn = Boolean(sessionId || localStorage.getItem("session_id"));
 
+  // Underline the current section. /support/new and /support/guide are their
+  // own items; every other /support path (list, case detail) is Cases.
+  const { pathname } = useLocation();
+  const current = pathname.startsWith(ROUTES.KB)
+    ? ROUTES.KB
+    : [ROUTES.SUPPORT_NEW, ROUTES.SUPPORT_GUIDE].includes(pathname)
+      ? pathname
+      : ROUTES.SUPPORT;
+  const item = (label, to) => ({
+    label,
+    command: () => navigate(to),
+    className: current === to ? "topbar-current" : undefined,
+  });
+
   const menuItems = [
     ...(signedIn
       ? [
-          { label: "Cases", command: () => navigate(ROUTES.SUPPORT) },
-          { label: "Open a case", command: () => navigate(ROUTES.SUPPORT_NEW) },
-          { label: "How support works", command: () => navigate(ROUTES.SUPPORT_GUIDE) },
+          item("Cases", ROUTES.SUPPORT),
+          item("Open a case", ROUTES.SUPPORT_NEW),
+          item("How support works", ROUTES.SUPPORT_GUIDE),
         ]
       : []),
-    { label: "Knowledge base", command: () => navigate(ROUTES.KB) },
+    item("Knowledge base", ROUTES.KB),
   ];
 
   const userMenuItems = [

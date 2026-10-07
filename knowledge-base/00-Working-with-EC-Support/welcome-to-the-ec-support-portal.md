@@ -38,10 +38,10 @@ The number of named support contacts depends on the support plan. See [Support p
 
 ## Getting access
 
-1. Look for the welcome email from EC sent at the start of the contract. It contains the portal link: {{TBD: support portal URL}}.
+1. Look for the welcome email from EC sent at the start of the contract. It contains the portal link: [support.encryptionconsulting.com](https://support.encryptionconsulting.com).
 2. Select the activation link and set a password. Turn on multi-factor authentication (MFA) when prompted {{TBD: confirm MFA options supported by the portal}}.
 3. Sign in and confirm the organization name and support plan shown on the profile page.
-4. If the welcome email never arrived, email {{TBD: support email address}} from a company email address and include the organization name and contract or order number.
+4. If the welcome email never arrived, email [support@encryptionconsulting.com](mailto:support@encryptionconsulting.com) from a company email address and include the organization name and contract or order number.
 
 > **Tip:** Ask the account administrator to keep the list of named contacts current. Cases from people who are not on the list can be delayed while EC confirms authorization.
 
@@ -49,7 +49,7 @@ The number of named support contacts depends on the support plan. See [Support p
 
 1. Read [How to open a support case](how-to-open-a-support-case.md).
 2. Review [Support severity levels and response targets](support-severity-levels-and-response-targets.md) so cases get the correct priority.
-3. Save the support phone number, {{TBD: support phone number}}, for Severity 1 and Severity 2 issues.
+3. Save the support phone number, [+1 469 815 4136](tel:+14698154136), for Severity 1 and Severity 2 issues.
 4. Bookmark [What to include in a support case](what-to-include-in-a-support-case.md) and the diagnostics articles.
 5. Subscribe to release notes and maintenance notices. See [Maintenance windows and release notes policy](maintenance-windows-and-release-notes-policy.md).
 
@@ -63,9 +63,9 @@ The number of named support contacts depends on the support plan. See [Support p
 
 ## Getting help
 
-- **Portal:** {{TBD: support portal URL}}
-- **Email:** {{TBD: support email address}}
-- **Phone (Severity 1 and 2):** {{TBD: support phone number}}
+- **Portal:** [support.encryptionconsulting.com](https://support.encryptionconsulting.com)
+- **Email:** [support@encryptionconsulting.com](mailto:support@encryptionconsulting.com)
+- **Phone (Severity 1 and 2):** [+1 469 815 4136](tel:+14698154136)
 - **Account or contract questions:** {{TBD: account management contact}}
 
 ## Related articles

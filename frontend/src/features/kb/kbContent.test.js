@@ -8,7 +8,9 @@ import {
   validate,
   files,
   images,
+  sections,
 } from "./kbContent";
+import { PRODUCT_RESOURCES } from "../support/supportMeta";
 
 // Fake files: keys mimic the real glob keys, values are raw file text.
 const K = (rel) => `/knowledge-base/${rel}`;
@@ -197,5 +199,12 @@ describe("knowledge-base folder", () => {
   // validate(files, images) so any {{TBD}} blocks the merge.
   it("has no errors", () => {
     expect(validate(files, images, { allowPlaceholders: true })).toEqual([]);
+  });
+
+  // Case pages link here through PRODUCT_RESOURCES; a renamed folder must fail CI.
+  it("has a section for every product documentation link", () => {
+    for (const { url } of Object.values(PRODUCT_RESOURCES)) {
+      expect(sections[url.replace(/^\/kb\//, "")], url).toBeDefined();
+    }
   });
 });

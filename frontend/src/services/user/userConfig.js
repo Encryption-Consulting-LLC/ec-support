@@ -13,6 +13,10 @@
 import api from "../../lib/axios/api";
 import URL from "../../utils/url";
 
+// Signed-out visitors (public knowledge base) have no server-side config.
+// Skip the call: a 401 here would pop the "Session expired" dialog.
+const signedIn = () => Boolean(localStorage.getItem("session_id"));
+
 /**
  * GET /user/me/config — fetch the caller's config blob.
  * Returns `{ config }` on 200, or `null` on any error (including the
@@ -23,6 +27,7 @@ import URL from "../../utils/url";
  * rest. Settings UI reads the full doc + meta.
  */
 export const fetchUserConfig = async () => {
+  if (!signedIn()) return null;
   try {
     const response = await api.get(URL.user.config);
     return response?.data?.config ?? null;
@@ -45,6 +50,7 @@ export const fetchUserConfig = async () => {
  * Shape on success: { config, meta: { vapid_public_key } }
  */
 export const fetchUserConfigEnvelope = async () => {
+  if (!signedIn()) return null;
   try {
     const response = await api.get(URL.user.config);
     return response?.data ?? null;
@@ -70,6 +76,7 @@ export const fetchUserConfigEnvelope = async () => {
  */
 export const patchUserConfig = async (partial) => {
   if (!partial || typeof partial !== "object") return null;
+  if (!signedIn()) return null;
   try {
     const response = await api.patch(URL.user.config, partial);
     return response?.data?.config ?? null;

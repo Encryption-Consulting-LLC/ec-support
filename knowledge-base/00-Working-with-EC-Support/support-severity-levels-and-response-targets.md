@@ -63,7 +63,7 @@ Response target means the time from case creation (or the phone call, for Severi
 
 ## Requirements for Severity 1 and Severity 2
 
-- A named support contact must call {{TBD: support phone number}} after opening the case.
+- A named support contact must call [+1 469 815 4136](tel:+14698154136) after opening the case.
 - A technical contact must stay available for the life of the case. If no contact is available, EC may lower the severity until someone is reachable.
 - EC works Severity 1 cases continuously during covered hours. Under plans with 24x7 coverage, work continues around the clock.
 - Remote access (screen sharing) should be ready, as allowed by the organization's security policy.

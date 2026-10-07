@@ -16,6 +16,8 @@ export default function KbSection({ section }) {
 
   return (
     <>
+      <title>{`${section.title} – EC Support`}</title>
+      <meta name="description" content={section.summary} />
       <div className="page-hero">
         <div className="support-shell">
           <Breadcrumb id={section.id} />

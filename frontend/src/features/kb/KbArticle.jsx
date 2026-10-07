@@ -25,40 +25,46 @@ export default function KbArticle({ article }) {
   }, [article.id]);
 
   return (
-    <div className="support-shell support-content">
-      <div className="page-plain-head">
-        <Breadcrumb id={article.id} />
-        <h1 className="text-3xl font-semibold mt-3 mb-2">{article.title}</h1>
-        <p className="text-color-secondary mt-0 mb-3 line-height-3">{article.summary}</p>
-        <div className="flex flex-wrap align-items-center gap-3 text-sm text-color-secondary">
-          {article.type && <Tag value={article.type} rounded />}
-          {article.updated && <span>Updated {formatDay(article.updated)}</span>}
-          {article.appliesTo && <span>Applies to: {article.appliesTo}</span>}
-        </div>
-      </div>
-
-      <div className="kb-layout">
-        <div>
-          <div ref={bodyRef}>
-            <MarkdownView body={article.body} rel={article.rel} />
+    // White page behind the article (the portal ground is grey), as in the wireframe.
+    <div className="kb-article-page">
+      <div className="support-shell support-content">
+        {/* React 19 moves these into <head>: tab title + search-engine snippet. */}
+        <title>{`${article.title} – EC Support`}</title>
+        <meta name="description" content={article.summary} />
+        <div className="page-plain-head">
+          <Breadcrumb id={article.id} />
+          <h1 className="text-3xl font-semibold mt-3 mb-2">{article.title}</h1>
+          <p className="text-color-secondary mt-0 mb-3 line-height-3">{article.summary}</p>
+          <div className="flex flex-wrap align-items-center gap-3 text-sm text-color-secondary">
+            {article.type && <Tag value={article.type} />}
+            {article.updated && <span>Reviewed {formatDay(article.updated)}</span>}
+            {article.appliesTo && <span>For {article.appliesTo}</span>}
           </div>
-
-          {/* "Related articles" is written by hand at the end of each article. */}
-          <div className="content-card mt-5 flex flex-wrap align-items-center justify-content-between gap-3">
-            <div>
-              <h2 className="text-lg font-semibold mt-0 mb-1">Still need help?</h2>
-              <p className="m-0 text-color-secondary">
-                Open a case and our support team will get back to you.
-              </p>
+        </div>
+  
+        <div className="kb-layout">
+          <div>
+            <div ref={bodyRef}>
+              <MarkdownView body={article.body} rel={article.rel} />
             </div>
-            <Button
-              label="Open a case"
-              icon="pi pi-plus"
-              onClick={() => navigate(ROUTES.SUPPORT_NEW)}
-            />
+  
+            {/* "Related articles" is written by hand at the end of each article. */}
+            <div className="content-card mt-5 flex flex-wrap align-items-center justify-content-between gap-3">
+              <div>
+                <h2 className="text-lg font-semibold mt-0 mb-1">Still need help?</h2>
+                <p className="m-0 text-color-secondary">
+                  Open a case and our support team will get back to you.
+                </p>
+              </div>
+              <Button
+                label="Open a case"
+                icon="pi pi-plus"
+                onClick={() => navigate(ROUTES.SUPPORT_NEW)}
+              />
+            </div>
           </div>
+          <Toc items={toc} />
         </div>
-        <Toc items={toc} />
       </div>
     </div>
   );

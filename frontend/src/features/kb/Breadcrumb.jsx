@@ -9,7 +9,7 @@ export default function Breadcrumb({ id }) {
       {breadcrumbOf(id, sections).map((c) => (
         <span key={c.id}>
           <Link to={kbUrl(c.id)}>{c.title}</Link>
-          <i className="pi pi-angle-right mx-2" aria-hidden="true" />
+          <span className="mx-2" aria-hidden="true">/</span>
         </span>
       ))}
     </nav>

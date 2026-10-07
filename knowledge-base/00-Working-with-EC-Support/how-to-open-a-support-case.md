@@ -44,7 +44,7 @@ All EC products (CertSecure Manager, CodeSign Secure, CBOM Secure, SSH Secure, P
 
 ### Phase 1: Open the case on the portal
 
-1. Sign in to {{TBD: support portal URL}}.
+1. Sign in to [support.encryptionconsulting.com](https://support.encryptionconsulting.com).
 2. Select **{{TBD: portal menu label for opening a request, for example "Open a support request"}}**.
 3. Fill in the mandatory fields:
 
@@ -69,7 +69,7 @@ All EC products (CertSecure Manager, CodeSign Secure, CBOM Secure, SSH Secure, P
 
 ### Phase 2: Call for Severity 1 and Severity 2
 
-1. After submitting the portal case, call {{TBD: support phone number}}.
+1. After submitting the portal case, call [+1 469 815 4136](tel:+14698154136).
 2. Give the case number, the organization name, and a short description of the impact.
 3. Stay available on the phone number in the case. EC may start a bridge call or remote session.
 
@@ -102,7 +102,7 @@ Common case statuses:
 
 | Symptom | Likely cause | Resolution |
 |---|---|---|
-| Cannot see the option to open a case | Account not linked to an active support plan | Email {{TBD: support email address}} with the organization name |
+| Cannot see the option to open a case | Account not linked to an active support plan | Email [support@encryptionconsulting.com](mailto:support@encryptionconsulting.com) with the organization name |
 | Severity 1 is not available in the form | User is not a named support contact | Ask the account administrator to add the user, or call the support line |
 | Attachment upload fails | File too large or blocked type | Compress the file or use secure file sharing |
 | No confirmation email | Email filtered as spam | Allow {{TBD: support email domain}} in the mail filter |

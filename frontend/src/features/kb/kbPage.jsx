@@ -4,6 +4,7 @@ import { articles, sections } from "./kbContent";
 import KbArticle from "./KbArticle";
 import KbSection from "./KbSection";
 import KbHome from "./KbHome";
+import KbSearchPage from "./KbSearchPage";
 
 /**
  * Resolves /kb/* to a KB section (folder with _index.md) or an article.
@@ -21,6 +22,7 @@ export default function KbPage() {
 
   // key: a new page gets a fresh component (fresh TOC state).
   if (id === "") return <KbHome />;
+  if (id === "search") return <KbSearchPage />; // /kb/search?q=...
   if (section) return <KbSection key={id} section={section} />;
   if (article) return <KbArticle key={id} article={article} />;
 
