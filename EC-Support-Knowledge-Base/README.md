@@ -6,7 +6,7 @@ article_type: "Overview"
 applies_to: "All Encryption Consulting products and services"
 summary: "Encryption Consulting support portal: product documentation, PKI and HSM runbooks, PQC guidance, service guides, and how to open a support case."
 keywords: ["Encryption Consulting support", "PKI support", "HSM support", "PQC knowledge base"]
-last_reviewed: "2026-10-06"
+last_reviewed: "2026-10-08"
 ---
 
 # How can we help?
@@ -31,8 +31,8 @@ Search the knowledge base or browse by category below.
 | Category | What it covers | Articles |
 |---|---|---|
 | [Working with EC Support](00-Working-with-EC-Support/_index.md) | Opening cases, severity levels, plans, diagnostics, escalation | 12 |
-| [Products](01-Products/_index.md) | CertSecure Manager, CodeSign Secure, CBOM Secure, PKI-as-a-Service, HSM-as-a-Service, SSH Secure | 46 |
-| [General](02-General/_index.md) | Post-quantum cryptography, CBOM, PKI, HSM, code signing, certificate lifecycle management | 31 |
+| [Products](01-Products/_index.md) | CertSecure Manager, CodeSign Secure, CBOM Secure, PKI-as-a-Service, HSM-as-a-Service, SSH Secure | 55 |
+| [General](02-General/_index.md) | Post-quantum cryptography, CBOM, PKI, HSM, code signing, certificate lifecycle management | 32 |
 | [Services](03-Services/_index.md) | Advisory, assessments, PKI and HSM implementation, PQC readiness, compliance | 13 |
 | [Featured articles](04-Featured-Articles/_index.md) | Step-by-step PKI and HSM runbooks | 24 |
 | [Popular right now](05-Popular-Right-Now/_index.md) | Trending topics: PQC, NIST, Chrome, PKI, HSM | 14 |
