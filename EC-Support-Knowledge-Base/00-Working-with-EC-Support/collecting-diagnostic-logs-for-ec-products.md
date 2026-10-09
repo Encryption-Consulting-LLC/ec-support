@@ -6,7 +6,7 @@ article_type: "How-to"
 applies_to: "CertSecure Manager, CodeSign Secure, CBOM Secure, SSH Secure (on-premises and SaaS)"
 summary: "How to collect application logs, agent logs, and system details from EC products such as CertSecure Manager and CodeSign Secure, and send them to EC safely."
 keywords: ["EC product logs", "CertSecure Manager logs", "CodeSign Secure logs", "debug logging", "support bundle"]
-last_reviewed: "2026-10-06"
+last_reviewed: "2026-10-08"
 ---
 
 # Collecting Diagnostic Logs for EC Products
@@ -20,11 +20,12 @@ Each EC product writes logs on the application server and, where used, on agents
 | Product | Server logs | Agent or client logs |
 |---|---|---|
 | CertSecure Manager | {{TBD: CertSecure Manager server log path on Windows and Linux}} | {{TBD: CertSecure Manager agent log path}} |
-| CodeSign Secure | {{TBD: CodeSign Secure server log path}} | {{TBD: CodeSign Secure signing client log path}} |
+| CodeSign Secure | **Logs** page in the portal: export to CSV or download the system logs. Also included in a support package. | Windows KSP: `C:\ProgramData\Encryption Consulting\SigningKSP\rolling-ecksp.log` (settings in `ECKSP-LogConfig.xml`). PKCS#11 Wrapper: the log defined in `EC_PKCS11_CLIENT-LogConfig.xml`. Installer: **Open Logs** in the wizard. |
 | CBOM Secure | {{TBD: CBOM Secure server log path}} | {{TBD: CBOM Secure scanning agent log path}} |
 | SSH Secure | {{TBD: SSH Secure server log path}} | {{TBD: SSH Secure agent log path}} |
 
-> **Note:** If the product includes a built-in support bundle feature, use it first: {{TBD: menu path for generating a support bundle, if available}}.
+
+> **Tip (CodeSign Secure):** For Windows KSP problems, set the environment variable `EC_SSL_VERBOSE=1`, open a new command prompt, and repeat the signing command to see debugging output. Set it back to `0` afterwards. See [Troubleshooting CodeSign Secure](../01-Products/CodeSign-Secure/troubleshooting-codesign-secure.md).
 
 ## Applies to
 
