@@ -73,6 +73,13 @@ describe("search", () => {
     });
   });
 
+  it("with combineWith AND, needs every word", () => {
+    expect(search("network renew")).toHaveLength(2); // OR: either word
+    expect(ids(search("network renew", { combineWith: "AND" }))).toEqual([
+      "products/certsecure-manager/renew",
+    ]);
+  });
+
   it("respects the limit", () => {
     expect(search("network", { limit: 1 })).toHaveLength(1);
   });

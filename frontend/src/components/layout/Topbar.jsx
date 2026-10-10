@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { lazy, Suspense, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
@@ -16,6 +16,10 @@ import UserIcon from "../../assets/icons/UserIcon";
  * navigation for cases, the theme toggle, and sign-out. The layout
  * wrapper (MainLayout) provides the flex/justify-between shell.
  */
+
+// KB search in the bar on article and section pages. Lazy, so case pages
+// never download the KB bundle; it shares the chunk the KB pages load anyway.
+const KbSearchBox = lazy(() => import("../../features/kb/SearchBox"));
 
 function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
@@ -49,6 +53,8 @@ export default function Topbar() {
     : [ROUTES.SUPPORT_NEW, ROUTES.SUPPORT_GUIDE].includes(pathname)
       ? pathname
       : ROUTES.SUPPORT;
+  // Not on the KB home or search page: they have their own big search box.
+  const showKbSearch = pathname.startsWith(`${ROUTES.KB}/`) && pathname !== ROUTES.KB_SEARCH;
   const item = (label, to) => ({
     label,
     command: () => navigate(to),
@@ -90,6 +96,12 @@ export default function Topbar() {
         </div>
       </div>
       <div className="flex align-items-center gap-2">
+        {showKbSearch && (
+          <Suspense fallback={null}>
+            {/* key: a new page starts with an empty box */}
+            <KbSearchBox key={pathname} suggest compact />
+          </Suspense>
+        )}
         <ThemeToggle />
         {signedIn ? (
           <>

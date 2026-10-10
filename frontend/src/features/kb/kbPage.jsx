@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { articles, sections } from "./kbContent";
+import { ROUTES } from "../../lib/router/path";
 import KbArticle from "./KbArticle";
 import KbSection from "./KbSection";
 import KbHome from "./KbHome";
@@ -21,14 +22,25 @@ export default function KbPage() {
   }, [id]);
 
   // key: a new page gets a fresh component (fresh TOC state).
-  if (id === "") return <KbHome />;
-  if (id === "search") return <KbSearchPage />; // /kb/search?q=...
-  if (section) return <KbSection key={id} section={section} />;
-  if (article) return <KbArticle key={id} article={article} />;
+  let page;
+  if (id === "") page = <KbHome />;
+  else if (id === "search") page = <KbSearchPage />; // /kb/search?q=...
+  else if (section) page = <KbSection key={id} section={section} />;
+  else if (article) page = <KbArticle key={id} article={article} />;
+  else {
+    page = (
+      <div className="kb">
+        <header className="kb-band">
+          <div className="kb-shell kb-band-head">
+            <h1 className="kb-display kb-title">Article not found</h1>
+            <p className="kb-lead">
+              It may have moved. <Link to={ROUTES.KB}>Search the knowledge base</Link>.
+            </p>
+          </div>
+        </header>
+      </div>
+    );
+  }
 
-  return (
-    <div className="support-shell support-content">
-      <h1 className="text-3xl font-semibold">Article not found</h1>
-    </div>
-  );
+  return page;
 }

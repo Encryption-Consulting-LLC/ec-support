@@ -23,10 +23,11 @@ export function createSearch(articles) {
   });
   index.addAll(articles);
 
-  return function search(query, { product, limit = 10 } = {}) {
+  // combineWith "AND": every word must match (default "OR": any word).
+  return function search(query, { product, limit = 10, combineWith } = {}) {
     if (!query || !query.trim()) return [];
     const filter = product ? (r) => r.product === product : undefined;
-    return index.search(query, { filter }).slice(0, limit);
+    return index.search(query, { filter, combineWith }).slice(0, limit);
   };
 }
 

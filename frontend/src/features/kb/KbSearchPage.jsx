@@ -1,136 +1,132 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { Checkbox } from "primereact/checkbox";
-import { Paginator } from "primereact/paginator";
-import { Tag } from "primereact/tag";
 import { ARTICLE_TYPES, articles, sections } from "./kbContent";
 import { search } from "./kbSearch";
 import { ROUTES, kbUrl } from "../../lib/router/path";
 import SearchBox from "./SearchBox";
+import useSignedIn from "./useSignedIn";
 
-const PAGE_SIZE = 10;
-const topOf = (id) => id.split("/")[0]; // "products/cbom-secure/x" -> "products"
+const GROUP_LIMIT = 3; // results shown per section before "N more in X"
 const newestFirst = (a, b) =>
   (b.updated ?? "").localeCompare(a.updated ?? "") || a.title.localeCompare(b.title);
 
 /**
- * Entrust-style search: query + facet filters + pages. All state lives in
- * the URL (?q=&type=&section=&page=), so results are shareable and Back works.
+ * Search results grouped by section. All state lives in the URL
+ * (?q=&type=&section=), so results are shareable and Back works.
  * An empty query lists every article, newest first.
  */
 export default function KbSearchPage() {
+  const signedIn = useSignedIn();
   const [params, setParams] = useSearchParams();
   const q = params.get("q")?.trim() ?? "";
-  const types = params.getAll("type");
-  const picked = params.getAll("section");
-  const page = Math.max(1, Number(params.get("page")) || 1);
+  const type = params.get("type") ?? "";
+  const section = params.get("section") ?? "";
 
-  const pool = q ? search(q, { limit: Infinity }) : [...articles].sort(newestFirst);
-  const results = pool.filter(
-    (r) =>
-      (types.length === 0 || types.includes(r.type)) &&
-      (picked.length === 0 || picked.includes(topOf(r.id)))
-  );
-  const shown = results.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-  const topSections = Object.values(sections).filter((s) => s.parent === "");
-  const sectionTitle = Object.fromEntries(topSections.map((s) => [s.id, s.title]));
+  // Articles matching every word first; any word only when that finds nothing.
+  let pool = [...articles].sort(newestFirst);
+  if (q) {
+    // Articles matching every word; any word only when that finds nothing.
+    pool = search(q, { limit: Infinity, combineWith: "AND" });
+    if (pool.length === 0) pool = search(q, { limit: Infinity });
+  }
+  const inSection = section ? pool.filter((r) => r.id.startsWith(`${section}/`)) : pool;
+  const results = type ? inSection.filter((r) => r.type === type) : inSection;
 
-  // Add or remove one value of a multi-value param; a filter change resets to page 1.
-  const toggle = (key, value) => {
+  // Group by the section an article sits in. Groups keep the order of their
+  // best result, so the strongest match still comes first.
+  const groups = new Map();
+  for (const r of results) {
+    if (!groups.has(r.parent)) groups.set(r.parent, []);
+    groups.get(r.parent).push(r);
+  }
+
+  // Same URL, one param changed (or removed when value is "").
+  const withParam = (key, value) => {
     const next = new URLSearchParams(params);
-    const current = next.getAll(key);
-    next.delete(key);
-    (current.includes(value) ? current.filter((v) => v !== value) : [...current, value])
-      .forEach((v) => next.append(key, v));
-    next.delete("page");
-    setParams(next);
+    if (value) next.set(key, value);
+    else next.delete(key);
+    return `?${next}`;
   };
+  const setType = (value) => setParams(withParam("type", value).slice(1));
 
-  const goToPage = (e) => {
-    const next = new URLSearchParams(params);
-    next.set("page", e.page + 1); // Paginator pages are 0-based
-    setParams(next);
-    window.scrollTo(0, 0);
-  };
-
-  // One checkbox; hidden when no result has it, unless it is already ticked.
-  const facet = (key, value, label, count) => {
-    const checked = params.getAll(key).includes(value);
-    if (count === 0 && !checked) return null;
-    const inputId = `${key}-${value}`.replace(/\s/g, "-");
-    return (
-      <div key={value} className="flex align-items-center gap-2 mb-2">
-        <Checkbox inputId={inputId} checked={checked} onChange={() => toggle(key, value)} />
-        <label htmlFor={inputId} className="text-sm">
-          {label} <span className="text-color-secondary">({count})</span>
-        </label>
-      </div>
-    );
-  };
+  const count = (t) => inSection.filter((r) => r.type === t).length;
+  const sectionTitle = section ? sections[section]?.title : undefined; // sections[""] is the home page
+  const n = results.length;
+  const answers = `${n} ${n === 1 ? "answer" : "answers"}`;
 
   return (
-    <div className="support-shell support-content">
+    <div className="kb">
       <title>{q ? `${q} – Knowledge base search` : "Knowledge base search"}</title>
-      <div className="page-plain-head">
-        <h1 className="text-3xl font-semibold mt-0 mb-3">Search the knowledge base</h1>
-        {/* key: remount when the URL query changes (e.g. Back) so the box shows it */}
-        <SearchBox key={q} initial={q} />
-      </div>
+      <header className="kb-band">
+        <div className="kb-shell kb-band-head kb-narrow">
+          <h1 className="kb-display kb-title-sm">
+            {q ? (
+              <>
+                <span className="kb-accent">{answers}</span> for “{q}”
+              </>
+            ) : (
+              <>
+                <span className="kb-accent">{n}</span> {sectionTitle ? `articles in ${sectionTitle}` : "articles"}
+              </>
+            )}
+          </h1>
+          {/* key: remount when the URL query changes (e.g. Back) so the box shows it */}
+          <SearchBox key={q} initial={q} />
+        </div>
+      </header>
 
-      <div className="grid">
-        <div className="col-12 md:col-3">
-          <div className="content-card">
-            <h2 className="text-base font-semibold mt-0">Content type</h2>
-            {ARTICLE_TYPES.map((t) =>
-              facet("type", t, t, pool.filter((r) => r.type === t).length)
-            )}
-            <h2 className="text-base font-semibold mt-4">Section</h2>
-            {topSections.map((s) =>
-              facet("section", s.id, s.title, pool.filter((r) => topOf(r.id) === s.id).length)
-            )}
-          </div>
+      <div className="kb-shell kb-main kb-narrow">
+        <div className="kb-pills" role="group" aria-label="Content type">
+          <button type="button" aria-pressed={!type} onClick={() => setType("")}>
+            All {inSection.length}
+          </button>
+          {ARTICLE_TYPES.filter((t) => count(t) > 0 || t === type).map((t) => (
+            <button key={t} type="button" aria-pressed={t === type} onClick={() => setType(t)}>
+              {t} {count(t)}
+            </button>
+          ))}
         </div>
 
-        <div className="col-12 md:col-9">
-          <p className="mt-0 text-color-secondary">
-            {results.length} results{q && <> for “{q}”</>}
+        {sectionTitle && (
+          <p className="kb-filter">
+            In {sectionTitle}. <Link to={withParam("section", "")}>Search everything</Link>
           </p>
+        )}
 
-          {shown.length === 0 ? (
-            <div className="content-card">
-              No articles match. Try fewer or different words, or clear the filters.
-              Still stuck? <Link to={ROUTES.SUPPORT_NEW}>Open a case</Link>.
-            </div>
-          ) : (
-            <div className="content-card">
-              <ul className="kb-article-list">
+        {n === 0 && (
+          <p className="kb-muted">
+            No articles match. Try fewer or different words, or another content type.
+          </p>
+        )}
+
+        {[...groups].map(([parent, items]) => {
+          const title = sections[parent]?.title ?? "Knowledge base";
+          const shown = section ? items : items.slice(0, GROUP_LIMIT);
+          return (
+            <section key={parent} className="kb-group" aria-label={title}>
+              <h2 className="kb-h2">{title}</h2>
+              <ul className="kb-list">
                 {shown.map((r) => (
                   <li key={r.id}>
-                    <Link to={kbUrl(r.id)} className="font-medium">
-                      {r.title}
+                    <Link to={kbUrl(r.id)}>
+                      <span className="kb-list-title">{r.title}</span>
+                      {r.summary && <span className="kb-list-text">{r.summary}</span>}
                     </Link>
-                    <p className="kb-snippet text-sm text-color-secondary mt-1 mb-2 line-height-3">
-                      {r.summary}
-                    </p>
-                    <div className="flex align-items-center gap-2 text-xs text-color-secondary">
-                      <Tag value={r.type} rounded />
-                      <span>{sectionTitle[topOf(r.id)]}</span>
-                    </div>
                   </li>
                 ))}
               </ul>
-            </div>
-          )}
+              {shown.length < items.length && (
+                <Link to={withParam("section", parent)} className="kb-link kb-more">
+                  {items.length - shown.length} more in {title}
+                </Link>
+              )}
+            </section>
+          );
+        })}
 
-          {results.length > PAGE_SIZE && (
-            <Paginator
-              className="mt-3"
-              first={(page - 1) * PAGE_SIZE}
-              rows={PAGE_SIZE}
-              totalRecords={results.length}
-              onPageChange={goToPage}
-            />
-          )}
-        </div>
+        <p className="kb-endnote">
+          Not what you need? <Link to={ROUTES.SUPPORT_NEW}>{signedIn ? "Open a case" : "Sign in to open a case"}</Link>{" "}
+          and an EC engineer will help.
+        </p>
       </div>
     </div>
   );

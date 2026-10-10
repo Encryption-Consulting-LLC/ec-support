@@ -2504,74 +2504,812 @@ html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-error .p-toast
 }
 
 // ---- Knowledge base ----------------------------------------------------
-// Article body + sticky "On this page" sidebar. Colors use theme tokens so
-// dark mode works without extra rules.
-.kb-layout {
+// Matches the EC website: near-black bands with one blue accent, Syne
+// headlines, pill buttons, a calm light reading area. Colors are tokens on
+// .kb so dark mode (the portal default) only swaps the light area.
+$kb-body: "Poppins Regular", system-ui, sans-serif;
+$kb-medium: "Poppins Medium", "Poppins Regular", system-ui, sans-serif;
+$kb-semi: "Poppins SemiBold", "Poppins Regular", system-ui, sans-serif;
+$kb-display: Syne, "Poppins SemiBold", system-ui, sans-serif;
+$kb-mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+$kb-band: #05070b;
+
+// Color tokens, shared by the KB (.kb) and the case pages (bottom of file).
+@mixin kb-tokens-light {
+  --kb-bg: #fbfcfe;
+  --kb-paper: #ffffff;
+  --kb-ink: #1c2029;
+  --kb-body: #2a2f3a;
+  --kb-muted: #5f6672;
+  --kb-line: #e3e6ec;
+  --kb-line-strong: #dce0e7;
+  --kb-soft: #f1f4fa;
+  --kb-accent: #3470f0;
+  --kb-accent-hover: #1c4fc4;
+  --kb-current-bg: #05070b;
+  --kb-current-fg: #ffffff;
+}
+
+@mixin kb-tokens-dark {
+  --kb-bg: #0b0e14;
+  --kb-paper: #11151d;
+  --kb-ink: #eef1f6;
+  --kb-body: #c9cfda;
+  --kb-muted: #959dac;
+  --kb-line: #232935;
+  --kb-line-strong: #2c3340;
+  --kb-soft: #151a23;
+  --kb-accent: #6b97f7; // lighter blue keeps link contrast on dark
+  --kb-accent-hover: #9bb9fa;
+  --kb-current-bg: #232b3b;
+  --kb-current-fg: #ffffff;
+}
+
+.kb {
+  @include kb-tokens-light;
+
+  background: var(--kb-bg);
+  color: var(--kb-ink);
+  font-family: $kb-body;
+  min-height: 100%;
+
+  a {
+    color: var(--kb-accent);
+    &:hover {
+      color: var(--kb-accent-hover);
+    }
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--kb-accent);
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2 {
+    text-wrap: balance;
+  }
+}
+
+// Article pages read on white.
+.kb-paper {
+  --kb-bg: #ffffff;
+}
+
+html[data-theme="dark"] .kb {
+  @include kb-tokens-dark;
+}
+
+.kb-shell {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  width: 100%;
+}
+
+.kb-narrow {
+  max-width: 848px; // 800px of text + gutters
+}
+
+.kb-main {
+  padding-top: 4rem;
+  padding-bottom: 5rem;
+}
+
+.kb-muted {
+  color: var(--kb-muted);
+}
+
+.kb-display {
+  margin: 0;
+  font-family: $kb-display;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+.kb-h2 {
+  margin: 0 0 0.5rem;
+  font-family: $kb-display;
+  font-weight: 700;
+  font-size: 1.375rem;
+  letter-spacing: -0.01em;
+  color: var(--kb-ink);
+}
+
+.kb-h2-lg {
+  font-size: clamp(1.75rem, 3vw, 2.125rem);
+}
+
+.kb-link {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.kb-accent {
+  color: #3470f0;
+}
+
+// Blue pill button (links and buttons).
+.kb-btn {
+  display: inline-block;
+  border: 0;
+  border-radius: 999px;
+  background: #3470f0;
+  color: #ffffff !important;
+  font-family: $kb-medium;
+  font-size: 0.95rem;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+
+  &:hover {
+    background: #1c4fc4;
+  }
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+// ---- Dark bands: hero, page headers, "Still stuck?" ---------------------
+.kb-band {
+  background: $kb-band;
+  color: #ffffff;
+
+  .kb-lead,
+  p {
+    color: #b8bfcc;
+  }
+  a {
+    color: #ffffff;
+  }
+}
+
+html[data-theme="dark"] .kb-band {
+  border-bottom: 1px solid #1a1f29;
+}
+
+.kb-band-head {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.kb-title {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  margin-bottom: 1rem;
+}
+
+.kb-title-sm {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  margin-bottom: 1.5rem;
+}
+
+.kb-lead {
+  margin: 0 0 1.25rem;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  max-width: 58ch;
+}
+
+.kb-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0;
+  margin-bottom: 1.25rem;
+  font-size: 0.8125rem;
+
+  a {
+    color: #b8bfcc !important;
+    text-decoration: none;
+    &:hover {
+      color: #ffffff !important;
+    }
+  }
+}
+
+.kb-crumb-sep {
+  margin: 0 0.6rem;
+  color: #8c95a6;
+}
+
+.kb-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #8c95a6 !important;
+}
+
+.kb-type {
+  color: #ffffff;
+  border: 1px solid #3470f0;
+  border-radius: 999px;
+  padding: 0.2rem 0.75rem;
+}
+
+// Home hero: one soft blue glow, centred headline, one search pill.
+.kb-hero {
+  background-image: radial-gradient(
+    ellipse 680px 360px at 50% 68%,
+    rgba(52, 112, 240, 0.28),
+    transparent 70%
+  );
+  padding: clamp(4rem, 10vw, 8rem) 0 clamp(5rem, 10vw, 7.5rem);
+  text-align: center;
+
+  .kb-display {
+    font-size: clamp(2.25rem, 6vw, 3.25rem);
+    margin-bottom: 2.25rem;
+  }
+  .kb-search {
+    margin-inline: auto;
+    text-align: left;
+  }
+}
+
+.kb-common {
+  margin: 1.4rem 0 0;
+  font-size: 0.875rem;
+  color: #8c95a6 !important;
+
+  a {
+    color: #dde3ee !important;
+  }
+}
+
+// ---- Search pill + suggestions --------------------------------------------
+// The suggestion list only shows while focus is inside the box
+// (:focus-within), so it closes itself on click-away.
+.kb-search {
+  position: relative;
+  max-width: 47.5rem;
+}
+
+.kb-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #ffffff;
+  border-radius: 999px;
+  padding: 0.375rem;
+
+  input {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #1c2029;
+    font: inherit;
+    font-size: 1rem;
+    padding: 0.75rem 0 0.75rem 1.1rem;
+  }
+  input::placeholder {
+    color: #7a8291;
+  }
+  &:focus-within {
+    box-shadow: 0 0 0 3px rgba(52, 112, 240, 0.55);
+  }
+}
+
+.kb-search-lg .kb-pill {
+  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  box-shadow: 0 24px 60px rgba(16, 40, 110, 0.45);
+
+  input {
+    font-size: 1.125rem;
+    padding: 0.875rem 0;
+  }
+  .kb-btn {
+    font-size: 1rem;
+    padding: 0.875rem 1.75rem;
+  }
+  &:focus-within {
+    box-shadow:
+      0 0 0 3px rgba(52, 112, 240, 0.55),
+      0 24px 60px rgba(16, 40, 110, 0.45);
+  }
+}
+
+.kb-pill-icon {
+  color: #5f6672;
+  font-size: 1.1rem;
+}
+
+.kb-suggest {
+  position: absolute;
+  z-index: 3; // above page content, below the sticky topbar (z-5)
+  left: 0;
+  right: 0;
+  margin-top: 0.5rem;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(10, 20, 40, 0.35);
+  overflow: hidden;
+  text-align: left;
+}
+
+.kb-search:not(:focus-within) .kb-suggest {
+  display: none;
+}
+
+.kb-suggest-label {
+  margin: 0;
+  padding: 0.9rem 1.4rem 0.35rem;
+  font-size: 0.8rem;
+  color: #5f6672 !important;
+}
+
+.kb-suggest-item {
+  display: block;
+  padding: 0.6rem 1.4rem;
+  color: #1c2029 !important;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    background: #f1f4fa;
+  }
+}
+
+.kb-suggest-title {
+  font-family: $kb-medium;
+}
+
+.kb-suggest-meta {
+  display: block;
+  font-size: 0.8rem;
+  color: #5f6672;
+}
+
+.kb-suggest-case {
+  display: block;
+  padding: 0.9rem 1.4rem;
+  border-top: 1px solid #e3e6ec;
+  color: #3470f0 !important;
+  font-family: $kb-medium;
+  text-decoration: none;
+
+  &:hover {
+    background: #f1f4fa;
+  }
+}
+
+// ---- Home ------------------------------------------------------------------
+.kb-head-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+// Sections as a two-column list of rows with dividers (not cards).
+.kb-rows {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 240px;
-  gap: 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
+  column-gap: 4rem;
+  border-top: 1px solid var(--kb-line);
+}
+
+.kb-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--kb-line);
+  color: var(--kb-ink) !important;
+  text-decoration: none;
+
+  &:hover .kb-row-title {
+    color: var(--kb-accent);
+  }
+}
+
+.kb-row-title {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-family: $kb-display;
+  font-weight: 600;
+  font-size: 1.375rem;
+  transition: color 0.2s;
+}
+
+.kb-row-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.95rem;
+  color: var(--kb-muted);
+}
+
+.kb-row-count {
+  font-size: 0.875rem;
+  color: var(--kb-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.kb-beyond {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.9rem 2.5rem;
+  margin-top: 4.5rem;
+
+  h2 {
+    margin: 0;
+    font-family: $kb-semi;
+    font-weight: normal;
+    font-size: 0.95rem;
+  }
+  a {
+    font-size: 0.95rem;
+  }
+}
+
+.kb-sev1 {
+  margin: 4.5rem 0 0;
+  padding: 1.4rem 1.75rem;
+  border-radius: 20px;
+  background: var(--kb-soft);
+  color: var(--kb-body);
+  font-size: 0.95rem;
+}
+
+// ---- Lists of articles (section page, search results) ---------------------
+.kb-group {
+  margin-top: 2.5rem;
+}
+
+.kb-group:first-child {
+  margin-top: 0;
+}
+
+.kb-rows + .kb-group {
+  margin-top: 3.5rem;
+}
+
+.kb-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--kb-line);
+
+  li {
+    border-bottom: 1px solid var(--kb-line);
+  }
+  a {
+    display: block;
+    padding: 1rem 0;
+    text-decoration: none;
+
+    &:hover .kb-list-title {
+      color: var(--kb-accent);
+    }
+  }
+}
+
+.kb-list-title {
+  display: block;
+  font-family: $kb-medium;
+  font-size: 1.0625rem;
+  color: var(--kb-ink);
+  transition: color 0.2s;
+}
+
+.kb-list-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--kb-muted);
+}
+
+.kb-more {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+}
+
+// Content-type filter pills on the search page.
+.kb-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 2.5rem;
+
+  button {
+    font: inherit;
+    font-size: 0.875rem;
+    border: 1px solid var(--kb-line-strong);
+    border-radius: 999px;
+    padding: 0.45rem 1rem;
+    background: var(--kb-paper);
+    color: var(--kb-ink);
+    cursor: pointer;
+    font-variant-numeric: tabular-nums;
+    transition: border-color 0.2s;
+
+    &:hover {
+      border-color: var(--kb-accent);
+    }
+    &[aria-pressed="true"] {
+      background: var(--kb-current-bg);
+      border-color: var(--kb-current-bg);
+      color: var(--kb-current-fg);
+    }
+  }
+}
+
+.kb-filter {
+  margin: -1.5rem 0 2rem;
+  font-size: 0.875rem;
+  color: var(--kb-muted);
+}
+
+.kb-endnote {
+  margin: 3rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--kb-line-strong);
+  color: var(--kb-muted);
+  font-size: 0.95rem;
+}
+
+// ---- Article: section menu | text | on this page -------------------------
+.kb-three {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 700px) 220px;
+  justify-content: space-between;
+  gap: 3rem;
   align-items: start;
 
+  // The header text lines up with the article column.
+  > .kb-three-mid:only-child {
+    grid-column: 2;
+  }
+
+  @media (max-width: 1199px) {
+    grid-template-columns: minmax(0, 1fr) 200px;
+    > .kb-menu,
+    > div:first-child:not(.kb-three-mid) {
+      display: none;
+    }
+    > .kb-three-mid:only-child {
+      grid-column: 1;
+    }
+  }
   @media (max-width: 991px) {
     grid-template-columns: minmax(0, 1fr);
-    .kb-toc {
+    > .kb-toc {
       display: none;
     }
   }
 }
 
+// Compact search in the dark topbar on KB article and section pages
+// (Topbar.jsx). Enter submits; there is no button.
+.kb-search-nav {
+  width: 18rem;
+
+  .kb-pill {
+    gap: 0.5rem;
+    padding: 0 0.9rem;
+    background: #0e1016;
+    border: 1px solid #343946;
+
+    input {
+      padding: 0.55rem 0;
+      font-size: 0.875rem;
+      color: #ffffff;
+    }
+    input::placeholder {
+      color: #8c95a6;
+    }
+    &:focus-within {
+      border-color: #3470f0;
+      box-shadow: none;
+    }
+  }
+  .kb-pill-icon {
+    color: #8c95a6;
+    font-size: 0.875rem;
+  }
+  // Wider than the box, aligned to its right edge.
+  .kb-suggest {
+    left: auto;
+    right: 0;
+    width: min(26rem, calc(100vw - 2rem));
+  }
+
+  // Phones: take whatever room is left beside the theme and sign-in buttons.
+  @media (max-width: 640px) {
+    width: auto;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+.kb-article-body {
+  padding-top: 3.5rem;
+  padding-bottom: 4.5rem;
+}
+
+.kb-side-title {
+  margin: 0 0 0.75rem;
+  font-family: $kb-semi;
+  font-size: 0.875rem;
+  color: var(--kb-ink);
+}
+
+.kb-menu {
+  position: sticky;
+  top: 96px;
+  font-size: 0.875rem;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  a {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-radius: 10px;
+    color: var(--kb-body);
+    text-decoration: none;
+    line-height: 1.4;
+
+    &:hover {
+      background: var(--kb-soft);
+      color: var(--kb-ink);
+    }
+    &[aria-current="page"] {
+      background: var(--kb-current-bg);
+      color: var(--kb-current-fg);
+    }
+  }
+  .kb-menu-more {
+    color: var(--kb-muted);
+  }
+}
+
+.kb-toc {
+  position: sticky;
+  top: 96px;
+  font-size: 0.8125rem;
+
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 1.1rem;
+    border-left: 1px solid var(--kb-line-strong);
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  li {
+    position: relative;
+  }
+  a {
+    color: var(--kb-muted);
+    text-decoration: none;
+    line-height: 1.4;
+    &:hover {
+      color: var(--kb-ink);
+    }
+  }
+  .is-active a {
+    color: var(--kb-ink);
+    font-family: $kb-medium;
+  }
+  // The blue dot sits on the line beside the current heading.
+  .is-active::before {
+    content: "";
+    position: absolute;
+    left: calc(-1.1rem - 6px);
+    top: 0.2rem;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #3470f0;
+    box-shadow: 0 0 0 4px rgba(52, 112, 240, 0.15);
+  }
+}
+
+// Markdown body.
 .kb-article {
-  max-width: 72ch; // readable line length; wide tables and code scroll inside
   font-size: 1.0625rem;
-  line-height: 1.65;
+  line-height: 1.75;
+  color: var(--kb-body);
+
+  > :first-child {
+    margin-top: 0;
+  }
 
   h2,
+  h3,
+  h4 {
+    color: var(--kb-ink);
+    scroll-margin-top: 96px; // keep anchored headings clear of the sticky topbar
+  }
+  h2 {
+    margin: 2.5rem 0 0.75rem;
+    font-family: $kb-display;
+    font-weight: 600;
+    font-size: 1.625rem;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
   h3 {
-    margin-top: 2rem;
-    scroll-margin-top: 90px; // keep anchored headings clear of the sticky topbar
+    margin: 1.75rem 0 0.5rem;
+    font-family: $kb-semi;
+    font-weight: normal;
+    font-size: 1.125rem;
+  }
+  strong {
+    font-family: $kb-semi;
+    font-weight: normal;
+    color: var(--kb-ink);
   }
 
   img {
     max-width: 100%;
     height: auto;
-    border: 1px solid var(--surface-border);
-    border-radius: 8px;
+    border: 1px solid var(--kb-line);
+    border-radius: 12px;
   }
 
   table {
     display: block; // lets wide tables scroll instead of breaking the layout
     overflow-x: auto;
     border-collapse: collapse;
-    margin: 1rem 0;
+    margin: 1.25rem 0;
+    font-size: 0.9375rem;
   }
-
   th,
   td {
-    border: 1px solid var(--surface-border);
-    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--kb-line);
+    padding: 0.6rem 0.9rem 0.6rem 0;
     text-align: left;
     vertical-align: top;
   }
-
   th {
-    background: var(--surface-ground);
+    font-family: $kb-semi;
+    font-weight: normal;
+    color: var(--kb-ink);
+    border-bottom-color: var(--kb-line-strong);
   }
 
   code {
-    font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
-    background: var(--surface-ground);
+    font-family: $kb-mono;
+    background: var(--kb-soft);
     padding: 0.1rem 0.35rem;
-    border-radius: 4px;
-    font-size: 0.9em;
+    border-radius: 6px;
+    font-size: 0.875em;
   }
 
+  // Black in both themes: commands read like a terminal.
   pre {
-    // Dark band in both themes, as in the wireframe: commands stand out
-    // from prose and read like a terminal.
-    background: #16233a;
+    background: #000000;
     color: #e6eaf2;
-    padding: 1rem 1.25rem;
-    border-radius: 8px;
+    padding: 1.1rem 1.4rem;
+    border-radius: 14px;
     overflow-x: auto;
     font-size: 0.875rem;
     line-height: 1.6;
@@ -2583,262 +3321,139 @@ html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-error .p-toast
       font-size: inherit;
     }
   }
+  html[data-theme="dark"] & pre {
+    border: 1px solid var(--kb-line);
+  }
 
   blockquote {
-    margin: 1rem 0;
-    padding: 0.5rem 1rem;
-    border-left: 4px solid var(--primary-color);
-    color: var(--text-color-secondary);
-  }
-}
+    margin: 1.25rem 0;
+    padding: 0.9rem 1.25rem;
+    border-radius: 14px;
+    background: var(--kb-soft);
+    color: var(--kb-body);
 
-.kb-toc {
-  position: sticky;
-  top: 90px;
-  font-size: 0.875rem;
-
-  .kb-toc-title {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  li {
-    margin: 0.35rem 0;
-  }
-
-  .kb-toc-sub {
-    padding-left: 1rem;
-  }
-
-  a {
-    color: var(--text-color-secondary);
-    text-decoration: none;
-
-    &:hover {
-      color: var(--primary-color);
+    > :first-child {
+      margin-top: 0;
     }
-  }
-}
-
-.kb-breadcrumb [aria-hidden] {
-  color: var(--text-color-secondary);
-}
-
-.kb-breadcrumb a {
-  color: var(--primary-color);
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-// Breadcrumb sits on the dark hero band on section pages.
-.page-hero .kb-breadcrumb a,
-.page-hero .kb-breadcrumb [aria-hidden] {
-  color: rgba(255, 255, 255, 0.72);
-}
-
-// Clickable sub-section card on section pages.
-.kb-card {
-  display: block;
-  height: 100%;
-  padding: 1.25rem 1.5rem;
-  background: var(--surface-card);
-  border: 1px solid var(--surface-border);
-  border-radius: 12px;
-  color: var(--text-color);
-  text-decoration: none;
-  transition: border-color 0.15s;
-
-  &:hover {
-    border-color: var(--primary-color);
-  }
-
-  .kb-card-count {
-    color: var(--primary-color);
-  }
-}
-
-.kb-article-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  li {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--surface-border);
-
-    &:last-child {
-      border-bottom: 0;
-      padding-bottom: 0;
+    > :last-child {
+      margin-bottom: 0;
     }
   }
 
-  a {
-    color: var(--primary-color);
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
+  hr {
+    border: 0;
+    border-top: 1px solid var(--kb-line);
+    margin: 2.5rem 0;
   }
 }
 
-// ---- KB home ---------------------------------------------------------
-// Search box with as-you-type suggestions. The list only shows while focus
-// is inside the box (:focus-within), so it closes itself on click-away.
-.kb-search {
-  position: relative;
-  max-width: 47.5rem;
-}
-
-.kb-suggest {
-  position: absolute;
-  z-index: 3; // above page content, below the sticky topbar (z-5)
-  left: 0;
-  right: 0;
-  margin-top: 0.5rem;
-  background: var(--surface-card);
-  color: var(--text-color);
-  border: 1px solid var(--surface-border);
-  border-radius: 8px;
-  box-shadow: 0 16px 40px rgba(10, 20, 40, 0.35);
-  overflow: hidden;
-}
-
-.kb-search:not(:focus-within) .kb-suggest {
-  display: none;
-}
-
-.kb-suggest-label {
-  margin: 0;
-  padding: 0.85rem 1.1rem 0.35rem;
-  font-size: 0.8rem;
-  color: var(--text-color-secondary);
-}
-
-.kb-suggest-item {
-  display: block;
-  padding: 0.6rem 1.1rem;
-  color: var(--text-color);
-  text-decoration: none;
-
-  &:hover,
-  &:focus-visible {
-    background: var(--surface-hover);
-  }
-}
-
-.kb-suggest-meta {
-  display: block;
-  font-size: 0.8rem;
-  color: var(--text-color-secondary);
-}
-
-.kb-suggest-case {
-  display: block;
-  padding: 0.85rem 1.1rem;
-  border-top: 1px solid var(--surface-border);
-  color: var(--primary-color);
-  font-weight: 600;
-  text-decoration: none;
-
-  &:hover {
-    background: var(--surface-hover);
-  }
-}
-
-.page-hero .kb-hero-link {
-  color: #ffffff;
-}
-
-// Top-level sections as a two-column list with dividers (not cards).
-.kb-hub {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
-  column-gap: 3rem;
-  border-top: 1px solid var(--surface-border);
-}
-
-.kb-hub-row {
+// "Still stuck?" band at the end of articles and section pages.
+.kb-stuck {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 1.1rem 0;
-  border-bottom: 1px solid var(--surface-border);
-  color: var(--text-color);
-  text-decoration: none;
+  align-items: center;
+  gap: 1.25rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 
-  &:hover .kb-hub-title {
-    text-decoration: underline;
+  .kb-h2 {
+    color: #ffffff;
+    font-size: 1.75rem;
+    margin-bottom: 0.4rem;
+  }
+  p {
+    margin: 0;
+    font-size: 0.95rem;
   }
 }
 
-.kb-hub-title {
-  display: block;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--primary-color);
+// overflow-x: auto on .layout-content makes it a scroll container, which
+// breaks position: sticky (KB section menu, On this page). clip does not.
+// KB only: case pages keep their original scrolling behavior.
+.layout-container.kb-chrome .layout-content {
+  overflow-x: clip;
 }
 
-.kb-hub-text {
-  display: block;
-  margin-top: 0.25rem;
-  font-size: 0.95rem;
-  color: var(--text-color-secondary);
-  line-height: 1.5;
-}
+// ---- Topbar on every portal page -----------------------------------------
+// MainLayout adds .site-chrome. The same Topbar component paints dark and
+// sits in a floating pill, so it joins each page's dark band.
+.layout-container.site-chrome {
+  .layout-topbar {
+    background: $kb-band !important;
+    border-bottom-width: 0 !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
 
-.kb-hub-count {
-  font-size: 0.875rem;
-  color: var(--text-color-secondary);
-  white-space: nowrap;
-}
+    // The pill outline, drawn behind the topbar's own items.
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0.6rem 1.5rem;
+      z-index: -1;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      pointer-events: none;
+    }
 
-.kb-link-list {
-  margin: 0;
-  padding-left: 1.4rem;
+    .sidebar-logo img {
+      filter: brightness(0) invert(1);
+    }
+    .p-button.p-button-text {
+      color: #ffffff;
+    }
+    // The account button's UserIcon is rendered without a size and
+    // collapses to 0x0, hiding Sign out. Give it one here.
+    .p-button.p-button-text svg {
+      width: 22px;
+      height: 22px;
+    }
+    .p-button:not(.p-button-text) {
+      background: #3470f0;
+      border-color: #3470f0;
+      border-radius: 999px;
+      padding-inline: 1.1rem;
+      white-space: nowrap;
+    }
+    .p-menubar-button {
+      color: #ffffff;
+    }
 
-  li {
-    margin: 0.6rem 0;
-    line-height: 1.45;
-  }
-
-  a {
-    color: var(--primary-color);
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
+    @media (max-width: 640px) {
+      padding-inline: 1.25rem !important;
+      &::before {
+        inset: 0.5rem;
+        border-radius: 24px; // the bar can wrap to two rows on phones
+      }
+      .sidebar-logo {
+        margin-right: 1rem !important;
+      }
+      // The right-hand group (search, theme, sign in) gets its own full row.
+      > div:last-child {
+        flex: 1 1 100%;
+      }
     }
   }
-}
 
-
-.kb-view-all {
-  display: inline-block;
-  margin-top: 0.5rem;
-  color: var(--primary-color);
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
+  // Desktop menu items: light text on the dark bar. (Below 960px the
+  // Menubar folds into a white popup, which keeps its own colors.)
+  @media (min-width: 961px) {
+    .layout-topbar .p-menubar .p-menubar-root-list > .p-menuitem .p-menuitem-text {
+      color: #a9b1c0 !important;
+    }
+    .layout-topbar .p-menubar .p-menubar-root-list > .p-menuitem.topbar-current .p-menuitem-text,
+    .layout-topbar .p-menubar .p-menubar-root-list > .p-menuitem:hover .p-menuitem-text {
+      color: #ffffff !important;
+    }
+    .layout-topbar .p-menubar .p-menuitem-content {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+    .layout-topbar .p-menubar .p-menuitem-content:hover {
+      background: rgba(255, 255, 255, 0.06) !important;
+    }
   }
-}
-
-// Search results: summary capped at two lines, like Entrust's snippets.
-.kb-snippet {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 // Topbar: underline the section you are in (Topbar.jsx sets the class).
@@ -2847,7 +3462,182 @@ html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-error .p-toast
   font-weight: 600;
 }
 
-// Article pages sit on a white sheet (dark mode: the card surface).
-.kb-article-page {
-  background: var(--surface-card);
+// ---- Case pages in the new design ----------------------------------------
+// Cases list, New case, Case detail and How support works restyled to match
+// the KB: near-black bands, Syne headlines, EC blue pill buttons, calm
+// cards. CSS only: the pages' markup and behavior are untouched.
+.site-chrome .support-main {
+  @include kb-tokens-light;
+  background: var(--kb-bg);
+
+  h1 {
+    font-family: $kb-display;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  // Card titles in Syne; small labels stay Poppins.
+  .content-card h2,
+  .content-card .text-xl,
+  .content-card .text-2xl {
+    font-family: $kb-display;
+    letter-spacing: -0.01em;
+  }
+
+  // Buttons: EC blue pills. Severity colors (danger etc.) keep their hue.
+  .p-button {
+    border-radius: 999px;
+  }
+  .p-button:not(.p-button-text):not(.p-button-link):not(.p-button-outlined):not(.p-button-danger):not(.p-button-secondary):not(.p-button-success):not(.p-button-warning):not(.p-button-help) {
+    background: #3470f0;
+    border-color: #3470f0;
+    color: #ffffff;
+
+    &:enabled:hover {
+      background: #1c4fc4;
+      border-color: #1c4fc4;
+    }
+  }
+  .p-button.p-button-outlined:not(.p-button-danger):not(.p-button-secondary):not(.p-button-success),
+  .p-button.p-button-text:not(.p-button-danger):not(.p-button-secondary):not(.p-button-success),
+  .p-button.p-button-link {
+    color: var(--kb-accent);
+  }
+  .p-button.p-button-outlined:not(.p-button-danger):not(.p-button-secondary):not(.p-button-success) {
+    border-color: var(--kb-line-strong);
+    &:enabled:hover {
+      border-color: var(--kb-accent);
+      background: transparent;
+    }
+  }
+  .p-button:focus {
+    box-shadow: 0 0 0 3px rgba(52, 112, 240, 0.4);
+  }
+
+  // Form fields: softer corners, EC blue focus.
+  .p-inputtext,
+  .p-dropdown,
+  .p-multiselect,
+  .p-chips-multiple-container {
+    border-radius: 12px;
+  }
+  .p-inputtext:enabled:focus,
+  .p-dropdown.p-focus,
+  .p-multiselect.p-focus,
+  .p-chips.p-focus .p-chips-multiple-container {
+    border-color: #3470f0;
+    box-shadow: 0 0 0 3px rgba(52, 112, 240, 0.25);
+  }
+
+  .case-link {
+    color: var(--kb-accent);
+  }
+}
+
+html[data-theme="dark"] .site-chrome .support-main {
+  @include kb-tokens-dark;
+}
+
+// Full-width dark band behind a page title (cases list, guide).
+.site-chrome .page-hero {
+  background-color: $kb-band;
+  background-image: radial-gradient(
+    ellipse 640px 300px at 85% 110%,
+    rgba(52, 112, 240, 0.24),
+    transparent 70%
+  );
+  padding: 3.5rem 0 4rem;
+
+  h1 {
+    font-size: clamp(2rem, 4vw, 2.75rem) !important;
+    font-weight: 700 !important;
+  }
+  .hero-sub {
+    color: #b8bfcc;
+  }
+}
+
+// Plain page heads (New case, Case detail) become the same dark band. The
+// head sits inside the centered column, so the band is painted past its
+// edges with a spread shadow and clipped to the page width.
+.site-chrome .support-main .page-plain-head {
+  background: $kb-band;
+  box-shadow: 0 0 0 100vmax $kb-band;
+  clip-path: inset(0 -100vmax);
+  color: #ffffff;
+  padding-top: 2.5rem;
+  padding-bottom: 3rem !important; // beats PrimeFlex pb-0 on Case detail
+  margin-bottom: 2.5rem;
+
+  h1 {
+    color: #ffffff;
+    font-size: clamp(2rem, 4vw, 2.75rem) !important;
+    font-weight: 700 !important;
+  }
+  .text-color-secondary {
+    color: #b8bfcc !important;
+  }
+  .p-button.p-button-link {
+    color: #b8bfcc;
+    &:enabled:hover {
+      color: #ffffff;
+    }
+  }
+  // Same :not() chain as the page-wide button rules, so these win on the
+  // dark band. Success/danger buttons keep their own colors.
+  .p-button.p-button-outlined:not(.p-button-danger):not(.p-button-secondary):not(.p-button-success),
+  .p-button.p-button-text:not(.p-button-danger):not(.p-button-secondary):not(.p-button-success) {
+    color: #ffffff;
+  }
+  .p-button.p-button-outlined:not(.p-button-danger):not(.p-button-secondary):not(.p-button-success) {
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+}
+
+// Cards: one calm surface, rounder, almost no shadow.
+.site-chrome .support-main {
+  .content-card,
+  .contact-card {
+    background: var(--kb-paper);
+    border-color: var(--kb-line);
+    border-radius: 20px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  }
+  .content-card--flush {
+    .card-toolbar {
+      border-bottom-color: var(--kb-line);
+    }
+    .p-datatable .p-datatable-thead > tr > th {
+      background: var(--kb-soft);
+    }
+  }
+  .guide-table th {
+    background: var(--kb-soft);
+  }
+  .coverage-tile {
+    background: var(--kb-soft);
+    border-color: var(--kb-line);
+    border-radius: 14px;
+  }
+  .step-badge {
+    background: #3470f0;
+    color: #ffffff;
+  }
+  .contact-card .contact-icon {
+    background: rgba(52, 112, 240, 0.12);
+    color: var(--kb-accent);
+  }
+}
+
+html[data-theme="dark"] .site-chrome .support-main {
+  .content-card,
+  .contact-card {
+    box-shadow: none;
+  }
+}
+
+// Slim dark footer, as on the EC site.
+.site-chrome .footer-wrapper {
+  background: $kb-band;
+  border-top: 1px solid #1a1f29;
 }
