@@ -41,9 +41,9 @@ CBOM Secure console reports and CycloneDX 1.6 exports. CycloneDX 1.7 exports use
 
 ### Phase 1: Start with the summary dashboard
 
-1. Open the dashboard: {{TBD: console menu path for CBOM Secure dashboard}}.
+1. Open the **Dashboard** in the console.
 2. Note totals by asset type: algorithms, certificates, keys, protocols.
-3. Note counts by risk band. CBOM Secure uses a four-band scale: {{TBD: CBOM Secure risk band names and definitions}}.
+3. Note counts by risk band. CBOM Secure uses a four-band scale: **Critical**, **High**, **Medium**, and **Low**, from most to least urgent.
 4. Note the PQC readiness score for keys, certificates, and protocol cipher suites.
 
 ### Phase 2: Understand the asset types
@@ -108,7 +108,7 @@ This says: RSA with a 2048-bit key, used for encryption in software memory, abou
 
 ### Phase 5: Follow dependencies
 
-The `dependencies` section links components with `ref`, `dependsOn`, and (new in 1.6) `provides`. For example, an application `dependsOn` a library, and the library `provides` RSA and AES. Use these links to find which applications are affected by one weak algorithm. In the console, the dependency map view shows the same links: {{TBD: console name of dependency map view}}.
+The `dependencies` section links components with `ref`, `dependsOn`, and (new in 1.6) `provides`. For example, an application `dependsOn` a library, and the library `provides` RSA and AES. Use these links to find which applications are affected by one weak algorithm. In the console, the dependency map view shows the same links.
 
 CBOM Secure also marks whether a code finding is reachable from an application entry point. Reachable findings come first.
 

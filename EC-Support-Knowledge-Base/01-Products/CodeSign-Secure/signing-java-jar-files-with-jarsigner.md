@@ -21,12 +21,12 @@ This article explains how to sign Java Archive (JAR) files with the standard `ja
 
 - JDK 8 and JDK 9 or later (the command differs slightly, see Phase 2).
 - Linux, macOS, and Windows build agents.
-- CodeSign Secure PKCS#11 library: {{TBD: official file name and install path of the CodeSign Secure PKCS#11 library per platform}}.
+- CodeSign Secure PKCS#11 library: `<path to CodeSign Secure PKCS#11 library>`, shown in the client installer.
 
 ## Prerequisites
 
 - JDK installed, with `jarsigner` and `keytool` on the PATH.
-- CodeSign Secure client and PKCS#11 library installed and configured: {{TBD: client configuration file location and settings}}.
+- CodeSign Secure client and PKCS#11 library installed and configured (`<CodeSign Secure client configuration file>`, provided by EC).
 - A code signing key and certificate in CodeSign Secure, with permission for the build identity to use it.
 - A Time Stamping Authority (TSA) URL from the certificate issuer.
 
@@ -66,7 +66,7 @@ keytool -list -keystore NONE -storetype PKCS11 \
   -providerClass sun.security.pkcs11.SunPKCS11 -providerArg pkcs11.cfg
 ```
 
-Enter the token PIN when asked. Note the alias of the signing key. How CodeSign Secure maps keys to aliases: {{TBD: CodeSign Secure key alias naming}}.
+Enter the token PIN when asked. Note the alias of the signing key.
 
 ### Phase 3: Sign the JAR
 

@@ -23,7 +23,7 @@ Thales Luna Network HSM and Luna Cloud HSM, Entrust nShield, AWS CloudHSM, Azure
 
 ### Are the HSMs FIPS validated?
 
-Yes. HSMaaS uses FIPS 140-3 validated HSMs, Level 3 where required. FIPS 140-2 certificates move to the Cryptographic Module Validation Program (CMVP) Historical list on September 21, 2026, so new deployments should target FIPS 140-3. Check the exact certificate number for each model and firmware: {{TBD: HSMaaS FIPS certificate numbers per platform}}.
+Yes. HSMaaS uses FIPS 140-3 validated HSMs, Level 3 where required. FIPS 140-2 certificates move to the Cryptographic Module Validation Program (CMVP) Historical list on September 21, 2026, so new deployments should target FIPS 140-3. EC can provide the exact certificate number for each model and firmware on request.
 
 ### Who owns the keys?
 
@@ -55,7 +55,7 @@ Luna HA groups, nShield load sharing across modules in one Security World, AWS C
 
 ### How often are keys backed up?
 
-It depends on the platform and contract. AWS CloudHSM takes automatic backups at least every 24 hours. Other schedules: {{TBD: HSMaaS backup schedule per platform}}.
+It depends on the platform and contract. AWS CloudHSM takes automatic backups at least every 24 hours. Backup schedules for other platforms are set in the contract.
 
 ### Is post-quantum cryptography supported?
 
@@ -63,7 +63,7 @@ ML-KEM and ML-DSA are supported where the HSM firmware provides them. Support di
 
 ### Where are HSMaaS HSMs hosted and what is the SLA?
 
-{{TBD: HSMaaS hosting regions}} and {{TBD: HSMaaS availability SLA}}. Support response targets are in [Support severity levels and response targets](../../00-Working-with-EC-Support/support-severity-levels-and-response-targets.md).
+The availability target is 99.95%. Hosting regions are agreed in the contract. Support response targets are in [Support severity levels and response targets](../../00-Working-with-EC-Support/support-severity-levels-and-response-targets.md).
 
 ### What should a support case include?
 

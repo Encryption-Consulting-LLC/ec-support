@@ -83,7 +83,7 @@ Topics often in scope:
 
 ## Typical timeline
 
-Duration depends on the number of clouds, accounts, and data stores. Typical duration: {{TBD: typical duration for a cloud data protection engagement}}.
+Duration depends on the number of clouds, accounts, and data stores. EC confirms the timeline during scoping.
 
 ## How to request
 

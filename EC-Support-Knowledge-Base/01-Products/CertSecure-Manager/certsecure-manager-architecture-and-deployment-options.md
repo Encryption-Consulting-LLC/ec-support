@@ -40,29 +40,29 @@ The general flow between components is:
 6. **Integrations** send alerts and tickets to IT Service Management (ITSM) tools such as ServiceNow, and send events to monitoring tools such as Splunk and Datadog.
 7. **The audit log** records each action with the user or service identity that performed it.
 
-In networks that the central platform cannot reach directly (for example, a SaaS platform and an internal AD CS CA), a component installed inside the private network performs the CA and endpoint work and talks to the central platform over outbound HTTPS. Component name, sizing, and supported operating systems: {{TBD: name and system requirements of the CertSecure Manager on-premises connector or agent}}.
+In networks that the central platform cannot reach directly (for example, a SaaS platform and an internal AD CS CA), a component installed inside the private network performs the CA and endpoint work and talks to the central platform over outbound HTTPS.
 
 ## Deployment options
 
 | Option | Who runs the platform | Typical fit | Points to plan |
 |---|---|---|---|
-| SaaS | EC hosts and operates it | Fast start, limited internal infrastructure staff | Outbound connectivity from internal components, data residency region {{TBD: available SaaS regions}} |
+| SaaS | EC hosts and operates it | Fast start, limited internal infrastructure staff | Outbound connectivity from internal components, data residency region (provided by EC during onboarding) |
 | Cloud | Deployed in the customer's own cloud account | Organizations that require platform control but prefer cloud hosting | Cloud network design, database backups, upgrade schedule |
 | Hybrid | Central platform in the cloud, components on-premises | Mixed estates with internal CAs and cloud workloads | Firewall rules between zones, component high availability |
 | On-premises | Customer data center | Regulated or isolated (air-gapped) environments | Server sizing, database, high availability and disaster recovery, patching |
 
-High availability (HA) and disaster recovery (DR) configurations are supported. Reference designs: {{TBD: CertSecure Manager HA and DR reference architecture}}.
+High availability (HA) and disaster recovery (DR) configurations are supported.
 
 ## Network paths to plan
 
 | From | To | Purpose | Protocol and port |
 |---|---|---|---|
-| Users and API clients | Central platform | Console and REST API | HTTPS, port {{TBD: console and API port}} |
+| Users and API clients | Central platform | Console and REST API | HTTPS, port 443 (default) |
 | Platform or on-premises component | AD CS issuing CA | Certificate requests | RPC endpoint mapper TCP 135, plus the dynamic RPC range (TCP 49152 to 65535 by default on Windows Server 2008 and later) unless the CA has a fixed port |
 | Platform or on-premises component | Public or cloud CA | Requests and renewals | HTTPS TCP 443 |
 | Discovery component | Scanned hosts | Read presented certificates | The TLS ports in scope (for example TCP 443, 8443, 636) |
 | Automation component | F5 BIG-IP | Deploy certificates | HTTPS to the management interface |
-| Automation component | Windows servers | Deploy certificates | Windows Remote Management (WinRM) TCP 5985 or 5986, or the method set in {{TBD: CertSecure Manager Windows deployment method}} |
+| Automation component | Windows servers | Deploy certificates | Windows Remote Management (WinRM) TCP 5985 or 5986 |
 | Automation component | Linux servers | Deploy certificates | Secure Shell (SSH) TCP 22 |
 | Platform | ITSM and monitoring tools | Tickets and events | HTTPS TCP 443 |
 
@@ -79,7 +79,7 @@ High availability (HA) and disaster recovery (DR) configurations are supported. 
 
 ## Common questions
 
-**Does the SaaS option require inbound firewall rules?** The usual design uses an internal component that makes outbound HTTPS connections to the SaaS platform. Confirm the exact requirement with {{TBD: CertSecure Manager SaaS connectivity guide}}.
+**Does the SaaS option require inbound firewall rules?** The usual design uses an internal component that makes outbound HTTPS connections to the SaaS platform.
 
 **Can the deployment model change later?** Moving between models is a planned migration. Contact EC support or the account team to scope it.
 

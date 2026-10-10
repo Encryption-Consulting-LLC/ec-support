@@ -51,8 +51,6 @@ For full details, see [PKIaaS architecture and shared responsibility](pkiaas-arc
 | Certificate lifecycle | EC CertSecure Manager |
 | Use cases | mTLS, Wi-Fi and VPN client auth, S/MIME, device identity (IEEE 802.1AR IDevID and LDevID) |
 
-Exact connector versions and supported platforms: {{TBD: PKIaaS supported integrations and version matrix}}.
-
 ## Deployment options
 
 | Model | Description |
@@ -61,13 +59,12 @@ Exact connector versions and supported platforms: {{TBD: PKIaaS supported integr
 | On-premises managed | CAs and HSMs run in the customer data center. EC operates them remotely. |
 | Managed PKIaaS (custom) | A tailored hierarchy and service scope for complex enterprises. |
 
-Hosting regions, availability targets, and pricing are agreed in the contract: {{TBD: PKIaaS hosting regions}}, {{TBD: PKIaaS availability SLA}}, {{TBD: PKIaaS pricing model}}. A 15-day free trial is offered on the EC website.
+The availability target is 99.95%. Hosting regions and pricing are agreed in the contract. A 15-day free trial is offered on the EC website.
 
 ## Getting help
 
 - Open a case through the support portal. See [How to open a support case](../../00-Working-with-EC-Support/how-to-open-a-support-case.md).
 - For outages such as an expired CRL or failed issuance, use the highest fitting severity. See [Support severity levels and response targets](../../00-Working-with-EC-Support/support-severity-levels-and-response-targets.md).
-- PKIaaS support contact: {{TBD: PKIaaS support queue or contact}}.
 
 ## Related articles
 

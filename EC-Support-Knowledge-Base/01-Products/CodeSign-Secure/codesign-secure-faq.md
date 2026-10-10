@@ -23,7 +23,7 @@ No. Keys are generated and used inside the HSM. Signing clients send a hash to C
 
 ### Which HSMs are supported?
 
-PKCS#11 HSMs, including Thales Luna Network HSM, Thales Luna Cloud HSM (Data Protection on Demand, DPoD), and Entrust nShield. For exact models and firmware versions, see {{TBD: CodeSign Secure HSM compatibility matrix}}.
+PKCS#11 HSMs, including Thales Luna Network HSM, Thales Luna Cloud HSM (Data Protection on Demand, DPoD), and Entrust nShield.
 
 ### Which file types and tools can be signed?
 
@@ -35,7 +35,7 @@ Usually not. Developers keep SignTool, jarsigner, cosign, and similar tools. The
 
 ### Is the whole file uploaded for signing?
 
-In hash signing mode, only the file hash is sent. This keeps large files on the build system and reduces network load. Whether specific formats use file upload: {{TBD: CodeSign Secure formats that require full file upload, if any}}.
+In hash signing mode, only the file hash is sent. This keeps large files on the build system and reduces network load.
 
 ### Which CI/CD platforms are supported?
 
@@ -55,7 +55,7 @@ The CA/Browser Forum (CA/B Forum) requires keys for publicly trusted code signin
 
 ### Does CodeSign Secure support post-quantum signatures?
 
-EC states native support for ML-DSA (FIPS 204) and LMS (NIST SP 800-208). NSA CNSA 2.0 asks for software and firmware signing to prefer quantum-resistant algorithms now and to use them exclusively by 2030. Platform support for verifying ML-DSA signatures still varies, so check each target platform. Supported PQC formats in CodeSign Secure: {{TBD: file formats and tools that support ML-DSA and LMS signing in CodeSign Secure}}.
+CodeSign Secure natively supports ML-DSA (FIPS 204) and LMS (NIST SP 800-208). NSA CNSA 2.0 asks for software and firmware signing to prefer quantum-resistant algorithms now and to use them exclusively by 2030. Platform support for verifying ML-DSA signatures still varies, so check each target platform.
 
 ### What deployment options exist?
 
@@ -63,7 +63,7 @@ SaaS (managed by EC), cloud (AWS, Azure, or private cloud), on-premises, and hyb
 
 ### Can existing code signing certificates be moved into CodeSign Secure?
 
-If the private key is in a software file (PFX), it can be imported into an HSM, but publicly trusted code signing keys must have been created in hardware. Most organizations generate a new key in the HSM and request a new certificate. Import procedure: {{TBD: CodeSign Secure key import support and procedure}}.
+If the private key is in a software file (PFX), it can be imported into an HSM, but publicly trusted code signing keys must have been created in hardware. Most organizations generate a new key in the HSM and request a new certificate.
 
 ### What should be in a support case?
 

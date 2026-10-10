@@ -94,7 +94,7 @@ certutil -v -template > templates.txt
 
 ## Typical timeline
 
-Duration depends on the number of CAs, forests, and sites. Typical duration: {{TBD: typical duration for a PKI assessment}}.
+Duration depends on the number of CAs, forests, and sites. EC confirms the timeline during scoping.
 
 ## How to request
 

@@ -25,8 +25,8 @@ CodeSign Secure separates the place where code is built from the place where key
 
 ## How it works
 
-1. **Request starts.** A developer or a CI/CD job runs a native signing tool. The tool is configured to use the CodeSign Secure Key Storage Provider (KSP) on Windows or the CodeSign Secure PKCS#11 library on Linux and macOS ({{TBD: official client component names}}).
-2. **Client authenticates.** The client authenticates to the CodeSign Secure server using {{TBD: supported client authentication methods, for example API token or client certificate}}.
+1. **Request starts.** A developer or a CI/CD job runs a native signing tool. The tool is configured to use the CodeSign Secure Key Storage Provider (KSP) on Windows or the CodeSign Secure PKCS#11 library on Linux and macOS.
+2. **Client authenticates.** The client authenticates to the CodeSign Secure server.
 3. **Hash is computed locally.** The signing tool computes a digest (hash) of the file, for example SHA-256. Only this hash is sent to the server, so large binaries stay on the build system.
 4. **Policy check.** The server checks the request against the signing policy: user or service identity, project, key, allowed file types, allowed hash algorithms, time windows, and source network.
 5. **Approval (if required).** If the policy needs approval, the request waits until the required approvers accept it. Policies can require M of N quorum approval.
@@ -53,7 +53,7 @@ CodeSign Secure separates the place where code is built from the place where key
 ## Common questions
 
 **Does the file get uploaded to CodeSign Secure?**
-In hash signing mode, no. Only the hash goes to the server. Some workflows may support full file upload: {{TBD: confirm whether CodeSign Secure offers file upload signing and for which formats}}.
+In hash signing mode, no. Only the hash goes to the server.
 
 **Where do certificates come from?**
 Certificates are issued by a public Certificate Authority (CA) for publicly trusted signing, or by an internal CA for internal software. The Certificate Signing Request (CSR) is generated from a key created inside the HSM.

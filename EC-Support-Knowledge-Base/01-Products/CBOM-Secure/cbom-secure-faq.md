@@ -31,11 +31,11 @@ No. It collects metadata such as algorithm, key size, labels, dates, and protect
 
 ### Are scanning agents required?
 
-Agents run inside the customer network to reach internal sources. Some cloud sources may be scanned through API connectors. Agent requirements: {{TBD: CBOM Secure agent requirements and which sources need an agent}}.
+Agents run inside the customer network to reach internal sources. Some cloud sources may be scanned through API connectors. Agent host requirements, and which sources need an agent, are listed in the CBOM Secure installation guide for your version.
 
 ### Can it scan air-gapped networks?
 
-EC states that discovery works from hyperscale cloud to air-gapped infrastructure. How results are moved out of an air-gapped network: {{TBD: CBOM Secure offline or air-gapped result transfer method}}.
+Discovery works from hyperscale cloud to air-gapped infrastructure. For air-gapped networks, contact EC support to agree how scan results are moved out of the isolated network.
 
 ### Which export formats are supported?
 
@@ -43,7 +43,7 @@ CycloneDX 1.6 and 1.7. See [Exporting CBOM in CycloneDX format](exporting-cbom-i
 
 ### How is risk scored?
 
-Assets are placed in one of four risk bands based on algorithm strength, key size, quantum exposure, NIST alignment, sensitivity, key reuse, and whether keys are in an HSM or in software. Band definitions: {{TBD: CBOM Secure risk band names and thresholds}}.
+Assets are placed in one of four risk bands based on algorithm strength, key size, quantum exposure, NIST alignment, sensitivity, key reuse, and whether keys are in an HSM or in software. The bands are **Critical**, **High**, **Medium**, and **Low**, from most to least urgent.
 
 ### How does CBOM Secure help with post-quantum readiness?
 
@@ -79,7 +79,7 @@ The source type, the agent name, the time of the scan, the error shown in the co
 
 ### Is there a free way to estimate value before buying?
 
-EC offers a free CBOM ROI calculator and a 20-question PQC Readiness Assessment. See [Free EC tools](../../00-Working-with-EC-Support/free-ec-tools-csr-generator-and-decoders.md).
+EC offers a free CBOM ROI calculator. See [Free EC tools](../../00-Working-with-EC-Support/free-ec-tools-csr-generator-and-decoders.md).
 
 ## Related articles
 

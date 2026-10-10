@@ -23,11 +23,11 @@ CBOM Secure in all deployment models. For SaaS, EC operates the server, and the 
 
 ## Prerequisites
 
-- Access to the CBOM Secure console with a role that can manage sources and scans: {{TBD: CBOM Secure role names}}.
+- Access to the CBOM Secure console with a role that can manage sources and scans.
 - A host for the scanning agent:
-  - Operating system: {{TBD: supported agent operating systems}}.
-  - Sizing: {{TBD: agent CPU, memory, and disk sizing}}.
-  - Outbound network access from agent to server on {{TBD: CBOM Secure agent to server port}}.
+  - A supported operating system, as listed in the CBOM Secure installation guide for your version.
+  - CPU, memory, and disk sized per the installation guide.
+  - Outbound network access from agent to server on the port listed in the installation guide.
 - Network reach from the agent to each source (for example HSM, database, Git server).
 - Read-only credentials for each source. See [CBOM Secure supported scan sources](cbom-secure-supported-scan-sources.md).
 - Approval from the owners of each system to be scanned.
@@ -54,9 +54,9 @@ CBOM Secure in all deployment models. For SaaS, EC operates the server, and the 
 
 ### Phase 2: Install the scanning agent
 
-1. Download the agent package from the console: {{TBD: console location of agent download}}.
-2. Install the agent on the chosen host: {{TBD: agent install command and service name}}.
-3. Register the agent with the server using the registration token or certificate: {{TBD: agent registration method}}.
+1. Download the agent package from the **Agents** page in the console.
+2. Install the agent on the chosen host, following the instructions provided with the agent package.
+3. Register the agent with the server using the registration token or certificate shown in the console.
 4. Confirm the agent shows as online in the console.
 
 Check that the agent host can reach the server and sources:
@@ -72,7 +72,7 @@ Test-NetConnection <source-host> -Port <source-port>
 
 ### Phase 3: Add sources
 
-For each source, open the source configuration page ({{TBD: console menu path for adding scan sources}}) and enter:
+For each source, open the **Sources** page in the console and enter:
 
 1. Source type (for example GitHub, Thales Luna, AWS KMS).
 2. Connection details (URL, host, slot, region, or path).
@@ -82,8 +82,8 @@ For each source, open the source configuration page ({{TBD: console menu path fo
 
 ### Phase 4: Configure and start the scan
 
-1. Create a scan job and select the sources: {{TBD: console menu path for scan jobs}}.
-2. Choose the scan options, for example code branches to include, file path filters, and depth of binary analysis: {{TBD: available scan options}}.
+1. Open the **Scan Jobs** page, create a scan job, and select the sources.
+2. Choose the scan options, for example code branches to include, file path filters, and depth of binary analysis. Available options depend on the source type.
 3. Run the scan once manually.
 4. Watch progress and errors in the scan status view.
 
@@ -112,7 +112,7 @@ For each source, open the source configuration page ({{TBD: console menu path fo
 
 | Symptom | Likely cause | Resolution |
 |---|---|---|
-| Agent stays offline | Firewall or proxy blocking agent to server traffic | Open the agent port. Configure the proxy for the agent: {{TBD: agent proxy setting}}. |
+| Agent stays offline | Firewall or proxy blocking agent to server traffic | Open the agent port. Configure the agent proxy setting as described in the installation guide. |
 | Source connection test fails | Wrong host, port, or credential | Check network reach and credentials. Check account lockout. |
 | Code scan finds nothing | Wrong branch or path filter, or unsupported language | Check filters. Confirm the language is supported. |
 | HSM scan shows fewer keys than expected | Credential role cannot see all objects, or wrong slot | Use a role that can list all objects. Confirm the slot. |

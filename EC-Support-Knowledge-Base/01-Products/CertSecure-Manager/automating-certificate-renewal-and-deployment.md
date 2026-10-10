@@ -41,14 +41,14 @@ An automated renewal has four stages:
 
 ### Phase 1: Set the renewal policy
 
-1. Go to {{TBD: CertSecure Manager menu path for renewal policies}}.
+1. Go to the **Renewal Policies** page.
 2. Set the renewal window. A common rule is to renew when one third of the lifetime remains, with a minimum number of days. For short-lived certificates, use a percentage rather than a fixed number of days.
 3. Choose whether to reuse the key or create a new key on renewal. Creating a new key is the safer default.
 4. Set approval rules. Renewals of unchanged certificates often skip approval. New Subject Alternative Names (SANs) should require approval.
 
 ### Phase 2: Connect endpoints
 
-Use the endpoint connection screen at {{TBD: CertSecure Manager menu path for endpoint connections}}. Endpoint specific basics:
+Use the **Endpoint Connections** page. Endpoint specific basics:
 
 **F5 BIG-IP**
 - The platform uses the iControl REST API on the management interface.
@@ -60,7 +60,7 @@ Use the endpoint connection screen at {{TBD: CertSecure Manager menu path for en
 **Microsoft IIS**
 - The certificate is installed in the Local Computer Personal store (`Cert:\LocalMachine\My`).
 - The HTTPS binding (usually port 443, often with SNI) is updated to the new certificate thumbprint.
-- Remote deployment commonly uses Windows Remote Management (WinRM). The account needs local administrator rights on the server, or the rights set in {{TBD: Windows endpoint permission guide}}.
+- Remote deployment commonly uses Windows Remote Management (WinRM). The account needs local administrator rights on the server.
 
 **NGINX**
 - The `ssl_certificate` file must contain the leaf certificate followed by the intermediate certificates. `ssl_certificate_key` points to the private key.

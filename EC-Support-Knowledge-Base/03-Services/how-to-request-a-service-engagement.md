@@ -69,15 +69,15 @@ Collect the following details. Rough estimates are fine at this stage.
 
 ### Phase 1: Contact EC
 
-1. Submit a request through {{TBD: services request form URL or portal menu}}, or email {{TBD: services or sales email address}}.
+1. Submit a request through https://www.encryptionconsulting.com/contact-us/, or email info@encryptionconsulting.com.
 2. Include the details from the table above.
-3. Existing customers can also ask their account manager: {{TBD: account management contact}}.
+3. Existing customers can also ask their account manager: info@encryptionconsulting.com.
 
 ### Phase 2: Scoping call
 
-1. EC schedules a scoping call within {{TBD: target time to schedule a scoping call}}.
+1. EC schedules a scoping call within 2 business days.
 2. On the call, EC and the customer confirm goals, scope, stakeholders, and constraints.
-3. If needed, the parties sign a Non-Disclosure Agreement (NDA) before sharing detailed architecture: {{TBD: confirm NDA process}}.
+3. If needed, the parties sign a Non-Disclosure Agreement (NDA) before sharing detailed architecture. EC provides its standard mutual NDA.
 
 ### Phase 3: Proposal and SOW
 
@@ -108,7 +108,7 @@ The request is complete when:
 
 | Symptom | Likely cause | Resolution |
 |---|---|---|
-| No reply after submitting a request | Request went to the wrong channel or a spam filter | Resend to {{TBD: services or sales email address}} or contact the account manager |
+| No reply after submitting a request | Request went to the wrong channel or a spam filter | Resend to info@encryptionconsulting.com or contact the account manager |
 | Scope keeps growing during scoping | Goals not agreed internally | Agree on the top goal first. Start with an assessment and add phases later. |
 | Engagement start is delayed | Missing approvals, access, or stakeholders | Confirm sponsors, interviewees, and access before kickoff |
 | Problem with a live system needs urgent help | A support case is needed, not a new engagement | Open a support case. See [How to open a support case](../00-Working-with-EC-Support/how-to-open-a-support-case.md). |

@@ -27,7 +27,7 @@ HA keeps applications running when one HSM fails. Backup lets keys be restored a
 
 ## Applies to
 
-All HSMaaS subscriptions with HA or backup in scope. Recovery targets: {{TBD: HSMaaS RTO and RPO targets}}. Backup retention: {{TBD: HSMaaS default backup retention}}.
+All HSMaaS subscriptions with HA or backup in scope. Recovery targets (RTO and RPO) and backup retention are set in the contract.
 
 ## Prerequisites
 
@@ -124,7 +124,7 @@ az keyvault backup start --hsm-name <hsm_name> --storage-account-name <account> 
 - **nShield:** `enquiry` shows every module "operational". `nfkminfo` lists all modules in the Security World.
 - **CloudHSM:** the AWS console or `aws cloudhsmv2 describe-clusters` shows two or more HSMs in "ACTIVE" state in different AZs, and recent backups in `aws cloudhsmv2 describe-backups`.
 - **Managed HSM:** `az keyvault backup start` returns a job that ends in "Succeeded".
-- EC runs restore tests on a schedule: {{TBD: HSMaaS restore test frequency}}.
+- EC runs restore tests on a regular schedule agreed in the contract.
 
 ## Rollback
 

@@ -27,7 +27,7 @@ cosign can use a hardware key through a PKCS#11 Uniform Resource Identifier (URI
 
 ## Prerequisites
 
-- CodeSign Secure PKCS#11 library installed on the build agent: {{TBD: CodeSign Secure PKCS#11 library name and path per platform}}.
+- CodeSign Secure PKCS#11 library installed on the build agent (`<path to CodeSign Secure PKCS#11 library>`, shown in the client installer).
 - A key in CodeSign Secure that is allowed for container signing, and permission to use it.
 - A cosign binary with PKCS#11 support. Standard cosign release binaries do not include PKCS#11 support; build cosign with the `pkcs11key` build tag (for example `go build -tags=pkcs11key ./cmd/cosign`). Verify against the cosign documentation for the installed version.
 - Push access to the registry (`docker login` or the registry credential helper).
@@ -87,7 +87,7 @@ cosign public-key --key "<pkcs11-uri>" > cosign.pub
 
 ### Phase 3: Sign with Notation (optional)
 
-Notation uses plugins to reach external key stores. If CodeSign Secure provides a Notation plugin ({{TBD: whether a CodeSign Secure Notation plugin exists and its name}}):
+Notation uses plugins to reach external key stores. If CodeSign Secure provides a Notation plugin:
 
 ```bash
 notation plugin install --file <plugin-archive>

@@ -27,7 +27,7 @@ Typical support activities include:
 - **Documentation:** keeping runbooks and the operations guide current.
 - **Advice:** guidance on industry changes, such as shorter certificate lifetimes and post-quantum cryptography (PQC).
 
-The exact list of tasks, hours, and coverage is set in the support agreement: {{TBD: PKI managed support service tiers and included tasks}}.
+The exact list of tasks, hours, and coverage is set in the support agreement.
 
 ## Who it is for
 
@@ -77,7 +77,7 @@ The exact list of tasks, hours, and coverage is set in the support agreement: {{
 
 ## Typical timeline
 
-Onboarding duration: {{TBD: typical onboarding duration for PKI managed support}}. Contract term: {{TBD: standard contract term for PKI managed support}}. Response targets follow the support plan. See [Support severity levels and response targets](../00-Working-with-EC-Support/support-severity-levels-and-response-targets.md).
+Onboarding duration and contract term are set in the support agreement. Response targets follow the support plan. See [Support severity levels and response targets](../00-Working-with-EC-Support/support-severity-levels-and-response-targets.md).
 
 ## How to request
 

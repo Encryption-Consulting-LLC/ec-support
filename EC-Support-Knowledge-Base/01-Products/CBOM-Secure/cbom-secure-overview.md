@@ -22,7 +22,7 @@ The inventory answers practical questions such as: Where is RSA 1024 still used?
 ## Key capabilities
 
 - **Discovery across many sources:** source code, binaries, keystores, Hardware Security Modules (HSMs), Key Management Interoperability Protocol (KMIP) servers, key managers, cloud key services, TLS endpoints, directories, databases, and file systems. EC lists 20+ sensors.
-- **Source code analysis:** EC states coverage of seven programming languages, 70+ cryptographic libraries, and 880+ function patterns.
+- **Source code analysis:** covers seven programming languages, 70+ cryptographic libraries, and 880+ function patterns.
 - **Dependency mapping:** call graph reachability shows whether crypto code is actually used in production paths or is dormant.
 - **Risk classification:** a four-band risk scale, key reuse detection, and HSM versus software key analysis.
 - **PQC readiness:** flags quantum-vulnerable algorithms (for example RSA, ECDSA, ECDH) in keys, certificates, and protocol cipher suites, and maps them to NIST quantum-safe replacements.

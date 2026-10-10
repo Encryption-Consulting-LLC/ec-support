@@ -19,7 +19,7 @@ CertSecure Manager is the Encryption Consulting (EC) certificate lifecycle manag
 
 ### Which Certificate Authorities (CAs) does it support?
 
-Microsoft Active Directory Certificate Services (AD CS), DigiCert, Sectigo, Let's Encrypt, Google Public CA, AWS Certificate Manager (ACM), and AWS Private CA. Version details: {{TBD: CertSecure Manager compatibility matrix}}.
+Microsoft Active Directory Certificate Services (AD CS), DigiCert, Sectigo, Let's Encrypt, Google Public CA, AWS Certificate Manager (ACM), and AWS Private CA.
 
 ### Which endpoints can it deploy certificates to?
 
@@ -43,7 +43,7 @@ Yes. It supports ACME (RFC 8555), as well as SCEP, EST, and a REST API. Standard
 
 ### Where are private keys created and stored?
 
-By default, keys should be created on the endpoint and stay there. Some deployment methods need an exportable key (for example a PFX file for a system that cannot generate its own key). Policy decides which method is allowed. Key storage details for the platform: {{TBD: CertSecure Manager key storage and encryption at rest details}}.
+By default, keys should be created on the endpoint and stay there. Some deployment methods need an exportable key (for example a PFX file for a system that cannot generate its own key). Policy decides which method is allowed.
 
 ### How does it help with 47-day certificates?
 

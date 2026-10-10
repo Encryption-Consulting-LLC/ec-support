@@ -27,7 +27,7 @@ This model removes the common problem of signing keys stored on developer laptop
 - **Role-Based Access Control (RBAC):** separate roles for administrators, approvers, and signers.
 - **Audit trails and alerts:** every request, approval, and signature is logged. Unauthorized signing attempts can raise real-time alerts.
 - **Trusted timestamping:** signatures stay valid after the signing certificate expires, using RFC 3161 timestamps.
-- **Post-Quantum Cryptography (PQC) support:** EC states native support for ML-DSA and LMS signature algorithms.
+- **Post-Quantum Cryptography (PQC) support:** native support for ML-DSA and LMS signature algorithms.
 - **Reproducible build verification:** checks that a build produced from the same source gives the same output before it is signed.
 
 ## Supported signing formats
@@ -51,7 +51,7 @@ CodeSign Secure has three main parts:
 
 1. **CodeSign Secure server:** the web console and API. It stores policies, users, roles, projects, and certificates, and it holds the audit log.
 2. **HSM:** an on-premises, cloud, or EC-managed HSM that holds the private keys and performs every signing operation.
-3. **Signing clients:** components installed on developer machines or build agents. They connect native tools (such as SignTool or jarsigner) to CodeSign Secure through standard interfaces such as a Key Storage Provider (KSP) on Windows or a PKCS#11 library on Linux and macOS. Client component names: {{TBD: official names of CodeSign Secure KSP, PKCS#11 library, and any CLI}}.
+3. **Signing clients:** components installed on developer machines or build agents. They connect native tools (such as SignTool or jarsigner) to CodeSign Secure through standard interfaces such as a Key Storage Provider (KSP) on Windows or a PKCS#11 library on Linux and macOS.
 
 Most deployments use hash signing: the client computes the file hash locally and sends only the hash to the server. The large file never leaves the build system. See [How CodeSign Secure works](how-codesign-secure-works.md) for the full flow.
 

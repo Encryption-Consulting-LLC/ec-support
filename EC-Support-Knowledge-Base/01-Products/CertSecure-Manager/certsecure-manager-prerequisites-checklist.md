@@ -15,15 +15,15 @@ This checklist lists what an organization should prepare before CertSecure Manag
 
 ## How to use this checklist
 
-Work through each table and mark every item as done, not applicable, or blocked. Share blocked items with the EC project team early. Exact server sizing and software versions for on-premises installs are in {{TBD: CertSecure Manager system requirements document}}.
+Work through each table and mark every item as done, not applicable, or blocked. Share blocked items with the EC project team early.
 
 ## 1. Platform and hosting
 
 | Item | Details | Done |
 |---|---|---|
 | Deployment model chosen | SaaS, cloud, hybrid, or on-premises. See [architecture and deployment options](certsecure-manager-architecture-and-deployment-options.md). | |
-| Servers or cloud resources | Built to the sizing guide {{TBD: sizing guide}} | |
-| Database | Supported database engine and version {{TBD: supported databases}} | |
+| Servers or cloud resources | Sized for the expected certificate volume | |
+| Database | Supported database engine and version | |
 | TLS certificate for the console | Issued by a CA that admin browsers trust | |
 | Time sync | All servers use Network Time Protocol (NTP). Clock drift breaks Kerberos and TLS checks. | |
 | Backup plan | Database and configuration backups scheduled (on-premises and cloud models) | |
@@ -32,7 +32,7 @@ Work through each table and mark every item as done, not applicable, or blocked.
 
 | Item | Details | Done |
 |---|---|---|
-| Admin sign-in method | Single sign-on (SSO) provider or local accounts {{TBD: supported SSO protocols}} | |
+| Admin sign-in method | Single sign-on (SSO) provider or local accounts | |
 | Role design | Who are administrators, approvers, requesters, and auditors | |
 | Service accounts created | One per purpose (CA access, Windows endpoints, Linux endpoints, discovery). Avoid shared personal accounts. | |
 | Password policy for service accounts | Managed service accounts, or a documented rotation process. An expired service account password is a common cause of failed renewals. | |
@@ -66,14 +66,14 @@ Details: [Connecting CertSecure Manager to Microsoft AD CS](connecting-certsecur
 
 | From | To | Port | Done |
 |---|---|---|---|
-| Admin workstations | Console | HTTPS {{TBD: console port}} | |
+| Admin workstations | Console | HTTPS 443 (default) | |
 | Platform or on-premises component | AD CS CAs | TCP 135 plus dynamic RPC (TCP 49152 to 65535 by default) | |
 | Platform or on-premises component | Public CA APIs | TCP 443 outbound | |
 | Discovery component | Target ranges | TLS ports in scope (for example 443, 8443, 636, 993) | |
-| Automation component | Windows endpoints | WinRM 5985 or 5986 {{TBD: confirm Windows deployment method}} | |
+| Automation component | Windows endpoints | WinRM 5985 or 5986 | |
 | Automation component | Linux endpoints | SSH 22 | |
 | Automation component | F5 BIG-IP | HTTPS to management interface | |
-| On-premises component | SaaS platform (hybrid or SaaS) | TCP 443 outbound {{TBD: SaaS hostnames to allow}} | |
+| On-premises component | SaaS platform (hybrid or SaaS) | TCP 443 outbound (hostnames provided by EC during onboarding) | |
 
 Also allow the platform through any proxy and add an exception to TLS inspection if the proxy breaks certificate pinning.
 
@@ -83,7 +83,7 @@ Also allow the platform through any proxy and add an exception to TLS inspection
 |---|---|---|
 | Endpoint list | Hostnames, platforms, and owners for the first automation wave | |
 | F5 BIG-IP account | User with the **Certificate Manager** role (or higher) on the required partitions | |
-| Windows (IIS) account | Local administrator rights or the minimum rights set in {{TBD: Windows endpoint permission guide}} | |
+| Windows (IIS) account | Local administrator rights | |
 | Linux (Apache, NGINX, Tomcat) account | Write access to certificate and key paths, and rights to reload the service (for example a scoped sudo rule) | |
 | Change process | Change windows agreed for automated deployments | |
 

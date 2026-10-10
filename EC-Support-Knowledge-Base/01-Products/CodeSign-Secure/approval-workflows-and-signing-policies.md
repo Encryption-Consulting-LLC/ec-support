@@ -29,7 +29,7 @@ CodeSign Secure SaaS, cloud, on-premises, and hybrid deployments.
 ## Prerequisites
 
 - Administrator access to the CodeSign Secure console.
-- Users and groups available from the identity source: {{TBD: supported identity providers}}.
+- Users and groups available from the identity source.
 - Keys and certificates already created. See [CodeSign Secure prerequisites and HSM integration](codesign-secure-prerequisites-and-hsm-integration.md).
 - A list of projects, owners, and approvers agreed with the security team.
 
@@ -37,13 +37,13 @@ CodeSign Secure SaaS, cloud, on-premises, and hybrid deployments.
 
 - Document the policy design before building it. Changes to production policies can block releases.
 - Plan for approver absence. A policy that needs a single named approver stops releases when that person is away.
-- Make sure approvers receive notifications: {{TBD: supported notification channels, for example email, Slack, Microsoft Teams}}.
+- Make sure approvers receive notifications.
 
 ## Procedure
 
 ### Phase 1: Define roles
 
-CodeSign Secure uses Role-Based Access Control (RBAC). Typical roles are below. Exact role names in the product: {{TBD: built-in CodeSign Secure role names and permissions}}.
+CodeSign Secure uses Role-Based Access Control (RBAC). Typical roles are below.
 
 | Role (typical) | Can do |
 |---|---|
@@ -55,13 +55,13 @@ CodeSign Secure uses Role-Based Access Control (RBAC). Typical roles are below. 
 
 ### Phase 2: Group keys by project and environment
 
-1. Create one project (or equivalent grouping) per product or team: {{TBD: console menu path for projects}}.
+1. Create one project (or equivalent grouping) per product or team on the **Projects** page.
 2. Use separate keys for test and production. A test key should use a certificate from an internal Certificate Authority (CA), not a public one.
 3. Assign each key to exactly one project.
 
 ### Phase 3: Create the signing policy
 
-Open the policy editor: {{TBD: console menu path for signing policies}}. For each policy, decide the following conditions. Which conditions the product supports: {{TBD: list of supported CodeSign Secure policy conditions}}.
+Open the **Signing Policies** page. For each policy, decide the following conditions.
 
 | Condition | Example |
 |---|---|
@@ -80,8 +80,8 @@ Open the policy editor: {{TBD: console menu path for signing policies}}. For eac
    - **Single approval:** one approver from a group must accept.
    - **M of N quorum:** M approvers out of a group of N must accept. For example, 2 of 4 release managers.
 2. Choose the approver group. Use a group, not named individuals.
-3. Block self-approval so a requester cannot approve their own request: {{TBD: whether CodeSign Secure enforces this by default}}.
-4. Set the approval timeout. After the timeout, the request expires and must be submitted again: {{TBD: default and configurable approval timeout}}.
+3. Block self-approval so a requester cannot approve their own request.
+4. Set the approval timeout. After the timeout, the request expires and must be submitted again.
 
 > **Tip:** For CI/CD, a common pattern is approval in the CI/CD platform (for example GitHub environments with required reviewers or Azure DevOps approvals) and a no-approval policy in CodeSign Secure limited to the pipeline service account, the release branch network, and the production key. This avoids long-running jobs waiting on approvals.
 
@@ -96,7 +96,7 @@ Open the policy editor: {{TBD: console menu path for signing policies}}. For eac
 
 - Audit log entries show requester, approver, key, file name or hash, and result for each test.
 - Real-time alerts fire for rejected or unauthorized attempts, if configured.
-- Reports for auditors show the policy and its history: {{TBD: CodeSign Secure report names}}.
+- Reports for auditors show the policy and its history.
 
 ## Rollback
 

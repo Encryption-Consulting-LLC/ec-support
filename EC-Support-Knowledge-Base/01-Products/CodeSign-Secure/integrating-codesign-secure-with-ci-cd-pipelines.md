@@ -34,11 +34,10 @@ The private key never reaches the build agent. If the pipeline is compromised, t
 
 ## Prerequisites
 
-- CodeSign Secure client installed on the agent, or installed at job start: {{TBD: CodeSign Secure client package names and silent install options}}.
-- A dedicated service identity in CodeSign Secure for each pipeline, with access only to the keys it needs: {{TBD: how to create a CodeSign Secure service account or API credential}}.
+- CodeSign Secure client (`<CodeSign Secure client package>`) installed on the agent, or installed at job start.
+- A dedicated service identity in CodeSign Secure for each pipeline, with access only to the keys it needs.
 - The credential stored as a secret in the CI/CD platform.
-- Network access from agents to the CodeSign Secure API ({{TBD: CodeSign Secure API port}}) and to the Time Stamping Authority (TSA).
-- Any EC-provided plugin or extension, if used: {{TBD: names of official CodeSign Secure plugins for GitHub Actions, GitLab, Jenkins, Azure DevOps, if any}}.
+- Network access from agents to the CodeSign Secure API (HTTPS 443 by default) and to the Time Stamping Authority (TSA).
 
 ## Before starting
 
@@ -74,8 +73,6 @@ jobs:
         shell: cmd
         run: signtool verify /pa /v <path-to-output.exe>
 ```
-
-How the client reads the credential (environment variable name or configuration file): {{TBD: CodeSign Secure client credential input method}}.
 
 ### GitLab CI/CD
 

@@ -23,7 +23,7 @@ Encryption Consulting (EC) offers training for teams that run PKI, Hardware Secu
 | EC product onboarding | Setup and daily administration of CertSecure Manager, CodeSign Secure, CBOM Secure, and SSH Secure |
 | Post-quantum cryptography (PQC) awareness | NIST PQC standards (FIPS 203, 204, 205), crypto-agility, building a migration roadmap |
 
-Course catalog and schedule: {{TBD: training catalog URL}}.
+Course catalog and schedule: https://www.encryptionconsulting.com/training/.
 
 ## Who it is for
 
@@ -47,9 +47,9 @@ Course catalog and schedule: {{TBD: training catalog URL}}.
 ## Deliverables
 
 - Instructor-led sessions, live online or on-site.
-- Lab exercises in an EC-provided lab environment {{TBD: confirm lab environment details}}.
+- Lab exercises in an EC-provided lab environment.
 - Course materials and reference guides.
-- Certificate of completion for each attendee {{TBD: confirm certification or completion credential name}}.
+- Certificate of completion for each attendee.
 
 ## What EC needs from the customer
 
@@ -62,18 +62,18 @@ Course catalog and schedule: {{TBD: training catalog URL}}.
 
 | Item | Typical value |
 |---|---|
-| Lead time to schedule | {{TBD: training scheduling lead time}} |
-| PKI course length | {{TBD: PKI course duration}} |
-| HSM course length | {{TBD: HSM course duration}} |
-| Product onboarding length | {{TBD: product onboarding duration}} |
+| Lead time to schedule | Agreed during scoping |
+| PKI course length | Agreed during scoping |
+| HSM course length | Agreed during scoping |
+| Product onboarding length | Agreed during scoping |
 
 ## How to request
 
-1. Review the catalog at {{TBD: training catalog URL}}.
-2. Contact {{TBD: training contact email}}, or open a Severity 4 case with the subject "Training request".
+1. Review the catalog at https://www.encryptionconsulting.com/training/.
+2. Contact info@encryptionconsulting.com, or open a Severity 4 case with the subject "Training request".
 3. Include the course, number of attendees, and preferred dates.
 
-Some support plans include training credits: {{TBD: confirm whether any support plan includes training}}. See [Support plans and coverage](support-plans-and-coverage.md).
+The Premium Plus support plan includes training credits. See [Support plans and coverage](support-plans-and-coverage.md).
 
 > **Note:** Training is not delivered through support cases. Support engineers can answer specific product questions, but full courses are scheduled as a separate engagement.
 

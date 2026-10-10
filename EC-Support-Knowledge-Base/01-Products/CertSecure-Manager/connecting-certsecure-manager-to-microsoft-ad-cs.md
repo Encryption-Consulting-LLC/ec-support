@@ -46,7 +46,7 @@ CertSecure Manager sends certificate requests to AD CS through the Microsoft cer
 ### Phase 1: Create the service account
 
 1. In Active Directory Users and Computers, create a dedicated account, for example `svc-certsecure`.
-2. Set a long, random password. Use a group Managed Service Account (gMSA) only if the CertSecure Manager component supports it: {{TBD: gMSA support for CertSecure Manager connector}}.
+2. Set a long, random password.
 3. Record the password expiry date, or put the account under a password rotation process. An expired password stops all issuance.
 4. Do not add the account to Domain Admins or Enterprise Admins.
 
@@ -94,12 +94,12 @@ certutil -config "<CAHostFQDN>\<CA Common Name>" -ping
 ### Phase 6: Add the CA connector in CertSecure Manager
 
 1. Sign in to the CertSecure Manager console as an administrator.
-2. Go to {{TBD: CertSecure Manager menu path for adding a CA connector}}.
+2. Go to the **CA Connectors** page and add a new connector.
 3. Select Microsoft AD CS as the CA type.
 4. Enter the CA configuration string and the service account credentials.
 5. Select the component that will reach the CA (for SaaS or hybrid deployments).
 6. Select the templates to make available, and map them to policies and teams.
-7. Save, then run the built-in connection test if available: {{TBD: connection test option name}}.
+7. Save, then run the built-in connection test if available.
 
 ## Verification
 

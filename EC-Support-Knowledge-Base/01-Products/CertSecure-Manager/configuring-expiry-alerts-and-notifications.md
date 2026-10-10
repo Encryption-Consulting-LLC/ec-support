@@ -22,7 +22,7 @@ Alerts in CertSecure Manager answer three questions: **what** triggers a notice,
 - Discovery finds a new, unknown, or non-compliant certificate (for example, a weak key or a self-signed certificate).
 - A request is waiting for approval.
 
-Delivery channels include email, IT Service Management (ITSM) tickets (ServiceNow, Jira, Zendesk), and monitoring or Security Information and Event Management (SIEM) tools such as Splunk, Datadog, and OpenTelemetry. Chat channels: {{TBD: whether CertSecure Manager supports Microsoft Teams or Slack notifications}}.
+Delivery channels include email, IT Service Management (ITSM) tickets (ServiceNow, Jira, Zendesk), and monitoring or Security Information and Event Management (SIEM) tools such as Splunk, Datadog, and OpenTelemetry.
 
 ## Prerequisites
 
@@ -41,7 +41,7 @@ Delivery channels include email, IT Service Management (ITSM) tickets (ServiceNo
 
 ### Phase 1: Configure the mail server
 
-1. Go to {{TBD: CertSecure Manager menu path for SMTP settings}}.
+1. Go to the **SMTP Settings** page.
 2. Enter the SMTP host, port, encryption setting (STARTTLS or implicit TLS), and credentials if required.
 3. Send a test message.
 
@@ -55,7 +55,7 @@ Suggested starting points:
 | Automated renewal enabled | Only on renewal failure | Renewal failure plus 7 days to expiry | 2 days to expiry |
 | Short-lived (100 days or less) | 33 percent of lifetime left | 15 percent left | 3 days left |
 
-1. Go to {{TBD: CertSecure Manager menu path for alert rules}}.
+1. Go to the **Alert Rules** page.
 2. Create a rule for each certificate group (by tag, team, issuer, or environment).
 3. Set the thresholds and the repeat interval.
 

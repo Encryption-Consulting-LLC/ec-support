@@ -33,7 +33,7 @@ CBOM Secure is a discovery and analysis pipeline. Scanning agents and connectors
    - Endpoints and protocols: TLS versions and cipher suites, SSH settings.
 3. **Normalize.** Different names for the same thing (for example "SHA256withRSA" and "RSA-SHA256") are mapped to one standard entry with an Object Identifier (OID) where possible.
 4. **Correlate and map dependencies.** Findings are linked: certificate to key, key to algorithm, algorithm to library, library to application. For source code, call graph reachability separates code that runs in production paths from dormant code.
-5. **Classify and score.** Each asset is scored on a four-band risk scale using algorithm strength, key size, quantum exposure, NIST alignment, sensitivity, key reuse, and storage (HSM or software). Band names: {{TBD: CBOM Secure risk band names and thresholds}}.
+5. **Classify and score.** Each asset is scored on a four-band risk scale using algorithm strength, key size, quantum exposure, NIST alignment, sensitivity, key reuse, and storage (HSM or software). The bands are **Critical**, **High**, **Medium**, and **Low**, from most to least urgent.
 6. **Report.** Dashboards and reports show trends, compliance status, and PQC readiness.
 7. **Export.** The inventory is exported as a CycloneDX 1.6 (or 1.7) CBOM for audits, tools, and partners.
 8. **Repeat.** Scheduled scans keep the inventory current and show change over time.
@@ -58,7 +58,7 @@ CBOM Secure is a discovery and analysis pipeline. Scanning agents and connectors
 Scans are read-only, but some sources (for example HSMs and databases) should be scanned in quiet hours at first. See [Running a first cryptographic scan](running-a-first-cryptographic-scan.md).
 
 **Can it find cryptography inside third-party binaries?**
-Yes, binary scanning looks for known crypto libraries and patterns. Coverage depends on the format: {{TBD: supported binary formats}}.
+Yes, binary scanning looks for known crypto libraries and patterns. Coverage depends on the binary format. Check the release notes for the formats your version supports.
 
 **How is this different from an SBOM?**
 A Software Bill of Materials (SBOM) lists software components. A CBOM lists the cryptography inside and around them. See [CBOM vs SBOM](../../02-General/CBOM/cbom-vs-sbom.md).

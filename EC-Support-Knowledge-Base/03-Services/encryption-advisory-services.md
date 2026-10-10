@@ -85,7 +85,7 @@ The customer and EC agree on which phases are in scope during scoping. Many enga
 
 ## Typical timeline
 
-Duration depends on the number of business units, data stores, and phases in scope. Typical duration: {{TBD: typical duration for an encryption advisory engagement}}.
+Duration depends on the number of business units, data stores, and phases in scope. EC confirms the timeline during scoping.
 
 ## How to request
 

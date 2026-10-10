@@ -19,7 +19,7 @@ PKIaaS is a private Public Key Infrastructure (PKI) that EC builds and runs. It 
 
 ### Who owns the CA and its private keys?
 
-The customer owns the CA. The private keys are generated and kept inside FIPS 140-3 Level 3 validated HSMs operated by EC. Terms for key ownership and transfer at contract end are in the service agreement: {{TBD: PKIaaS key ownership and exit terms}}.
+The customer owns the CA. The private keys are generated and kept inside FIPS 140-3 Level 3 validated HSMs operated by EC. Terms for key ownership and transfer at contract end are in the service agreement.
 
 ### Is the CA shared with other customers?
 
@@ -43,7 +43,7 @@ Yes. Intune uses the Certificate Connector for Microsoft Intune to deliver SCEP 
 
 ### How is revocation handled?
 
-EC publishes Certificate Revocation Lists (CRLs) on a fixed schedule to highly available endpoints. Online Certificate Status Protocol (OCSP) responders are available when in scope. The customer requests revocation through the portal or support: {{TBD: PKIaaS revocation request method and turnaround}}.
+EC publishes Certificate Revocation Lists (CRLs) on a fixed schedule to highly available endpoints. Online Certificate Status Protocol (OCSP) responders are available when in scope. The customer requests revocation through the portal or support.
 
 ### Can PKIaaS issue certificates for public websites?
 
@@ -55,7 +55,7 @@ PKIaaS supports hybrid and composite certificates that pair ML-DSA (FIPS 204) wi
 
 ### Where is PKIaaS hosted?
 
-PKIaaS can run as SaaS in EC-managed infrastructure or on-premises in the customer data center with EC managing it. Available regions: {{TBD: PKIaaS hosting regions}}.
+PKIaaS can run as SaaS in EC-managed infrastructure or on-premises in the customer data center with EC managing it. Available regions are agreed in the contract.
 
 ### What compliance does PKIaaS support?
 
@@ -63,7 +63,7 @@ The service is preconfigured to help with NIST, HIPAA, PCI DSS, GDPR, FIPS, and 
 
 ### What is the availability target?
 
-The availability target and support response times are in the service agreement: {{TBD: PKIaaS availability SLA}}. Support response targets are described in [Support severity levels and response targets](../../00-Working-with-EC-Support/support-severity-levels-and-response-targets.md).
+The availability target and support response times are in the service agreement. The availability target is 99.95%. Support response targets are described in [Support severity levels and response targets](../../00-Working-with-EC-Support/support-severity-levels-and-response-targets.md).
 
 ### Is there a trial?
 

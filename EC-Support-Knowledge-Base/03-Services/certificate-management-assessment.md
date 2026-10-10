@@ -77,7 +77,7 @@ This article describes the Certificate Management Assessment from Encryption Con
 
 ## Typical timeline
 
-Duration depends on network size and the number of CAs. Typical duration: {{TBD: typical duration for a certificate management assessment}}.
+Duration depends on network size and the number of CAs. EC confirms the timeline during scoping.
 
 ## How to request
 

@@ -71,7 +71,6 @@ A "Status: Granted." line shows the TSA is working.
 - Use the TSA provided by the Certificate Authority (CA) that issued the signing certificate, or another TSA trusted on the target platforms.
 - Configure at least two TSA URLs in build scripts so a TSA outage does not stop releases. Retry with the second URL on failure.
 - For internal-only software, an internal TSA can be used if all verifiers trust its root.
-- Whether CodeSign Secure provides or proxies a TSA: {{TBD: CodeSign Secure built-in or proxied TSA support and URL}}.
 
 ## Key terms
 
@@ -96,7 +95,7 @@ The token is itself signed by a TSA certificate, which also expires. Verifier be
 The TSA is unreachable, often because of a proxy or firewall. See [Troubleshooting CodeSign Secure](troubleshooting-codesign-secure.md).
 
 **Is timestamping required by CodeSign Secure policy?**
-It can be enforced in signing practice. Whether a policy can require it: {{TBD: CodeSign Secure policy option to require timestamps}}.
+It can be enforced in signing practice.
 
 ## Related articles
 

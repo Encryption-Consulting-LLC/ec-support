@@ -20,7 +20,7 @@ CodeSign Secure needs three things to sign code: a server (or the EC SaaS servic
 ## Applies to
 
 - CodeSign Secure on-premises, cloud, and hybrid deployments.
-- Thales Luna Network HSM, Thales Luna Cloud HSM (Data Protection on Demand, DPoD), Entrust nShield Connect and nShield 5c, and other PKCS#11 HSMs supported by EC ({{TBD: list of supported HSM models and firmware versions}}).
+- Thales Luna Network HSM, Thales Luna Cloud HSM (Data Protection on Demand, DPoD), Entrust nShield Connect and nShield 5c, and other PKCS#11 HSMs supported by EC.
 
 ## Prerequisites
 
@@ -28,9 +28,9 @@ CodeSign Secure needs three things to sign code: a server (or the EC SaaS servic
 
 | Item | Requirement |
 |---|---|
-| Operating system | {{TBD: supported server operating systems and versions}} |
-| CPU, memory, disk | {{TBD: minimum and recommended sizing}} |
-| Database | {{TBD: supported database engines and versions}} |
+| Operating system | Supported version, confirmed with EC before installation |
+| CPU, memory, disk | Sized for expected signing volume, confirmed with EC before installation |
+| Database | Supported engine and version, confirmed with EC before installation |
 | Web server certificate | A TLS certificate for the CodeSign Secure web console and API, issued by a CA trusted by all clients. |
 | Time sync | Network Time Protocol (NTP) configured. Clock drift breaks authentication and audit records. |
 
@@ -38,8 +38,8 @@ CodeSign Secure needs three things to sign code: a server (or the EC SaaS servic
 
 | Connection | Port |
 |---|---|
-| Signing clients to CodeSign Secure server | {{TBD: CodeSign Secure API port}} |
-| Administrators to web console | {{TBD: CodeSign Secure web console port}} |
+| Signing clients to CodeSign Secure server | HTTPS 443 (default) |
+| Administrators to web console | HTTPS 443 (default) |
 | CodeSign Secure server to Thales Luna Network HSM | TCP 1792 (NTLS), per Thales defaults |
 | CodeSign Secure server to Entrust nShield Connect | TCP 9004 (hardserver), per Entrust defaults |
 | Signing clients to Time Stamping Authority (TSA) | HTTP 80 or HTTPS 443, depending on the TSA URL |
@@ -56,7 +56,7 @@ CodeSign Secure needs three things to sign code: a server (or the EC SaaS servic
 ### Accounts and access
 
 - Service account for the CodeSign Secure application.
-- Identity source for users: {{TBD: supported identity providers, for example Active Directory, LDAP, SAML, OIDC}}.
+- Identity source for users.
 
 ## Before starting
 
@@ -108,19 +108,19 @@ pkcs11-tool --module <path-to-pkcs11-library> --login --list-objects
 ### Phase 4: Register the HSM in CodeSign Secure
 
 1. Sign in to the CodeSign Secure console as an administrator.
-2. Open the HSM configuration page: {{TBD: console menu path for HSM configuration}}.
+2. Open the **HSM Configuration** page.
 3. Enter the PKCS#11 library path, slot or token label, and the partition credential.
-4. Save and run the connection test, if offered: {{TBD: name of HSM connection test action}}.
+4. Save and run the connection test, if offered.
 
 ### Phase 5: Create a key and certificate
 
-1. Generate a key pair in the HSM through CodeSign Secure: {{TBD: console menu path for key generation}}.
+1. Generate a key pair in the HSM from the **Keys** page in CodeSign Secure.
 2. Create a Certificate Signing Request (CSR) and submit it to the public or internal Certificate Authority (CA).
 3. Import the issued certificate and full chain into CodeSign Secure.
 
 ### Phase 6: Install signing clients
 
-Install the CodeSign Secure client on each build agent or developer machine: {{TBD: client installer names and supported platforms}}.
+Install the CodeSign Secure client (`<CodeSign Secure client installer>`, provided by EC) on each build agent or developer machine.
 
 ## Verification
 

@@ -19,12 +19,10 @@ Each EC product writes logs on the application server and, where used, on agents
 
 | Product | Server logs | Agent or client logs |
 |---|---|---|
-| CertSecure Manager | {{TBD: CertSecure Manager server log path on Windows and Linux}} | {{TBD: CertSecure Manager agent log path}} |
-| CodeSign Secure | {{TBD: CodeSign Secure server log path}} | {{TBD: CodeSign Secure signing client log path}} |
-| CBOM Secure | {{TBD: CBOM Secure server log path}} | {{TBD: CBOM Secure scanning agent log path}} |
-| SSH Secure | {{TBD: SSH Secure server log path}} | {{TBD: SSH Secure agent log path}} |
-
-> **Note:** If the product includes a built-in support bundle feature, use it first: {{TBD: menu path for generating a support bundle, if available}}.
+| CertSecure Manager | Provided by your EC support engineer for your version | Provided by your EC support engineer for your version |
+| CodeSign Secure | `<install folder>\logs` | `<client install folder>\logs` |
+| CBOM Secure | `<install folder>/logs` | `<agent install folder>/logs` |
+| SSH Secure | `<install folder>/logs` | `<agent install folder>/logs` |
 
 ## Applies to
 
@@ -33,7 +31,7 @@ On-premises and SaaS deployments of CertSecure Manager, CodeSign Secure, CBOM Se
 ## Prerequisites
 
 - Local administrator (Windows) or root or sudo rights (Linux) on the server or agent host.
-- Permission to change the product log level: {{TBD: role required to change log level}}.
+- Permission to change the product log level: a console role with permission to change system settings.
 - An open case number to name the archive.
 
 ## Before starting
@@ -47,8 +45,7 @@ On-premises and SaaS deployments of CertSecure Manager, CodeSign Secure, CBOM Se
 ### Phase 1: Raise the log level
 
 1. Sign in to the product console as an administrator.
-2. Open {{TBD: menu path to logging settings}} and set the level to **{{TBD: debug level name}}**.
-3. If logging is set in a file instead, edit {{TBD: logging configuration file path}} and restart the service: {{TBD: service name}}.
+2. Open the logging or system settings page and set the level to **DEBUG**.
 
 ### Phase 2: Reproduce the problem
 
@@ -141,7 +138,7 @@ grep -rniE "password|passwd|secret|token|BEGIN (RSA |EC |ENCRYPTED )?PRIVATE KEY
 | Log folder is empty | Wrong path or service runs as another account | Check the service configuration for the log path |
 | Debug entries do not appear | Service not restarted after a file change | Restart the service and reproduce again |
 | Archive too large to upload | Old rotated logs included | Include only logs from the problem window, or use secure file sharing |
-| Agent logs missing on SaaS | Agent installed in a non-default folder | Check the agent install folder {{TBD: how to find agent install location}} |
+| Agent logs missing on SaaS | Agent installed in a non-default folder | Check the agent install folder (see the agent service properties: Services on Windows, or `systemctl status` on Linux) |
 
 ## Related articles
 

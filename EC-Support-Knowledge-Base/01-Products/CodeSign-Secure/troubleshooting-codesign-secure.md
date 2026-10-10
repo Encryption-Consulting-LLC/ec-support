@@ -31,7 +31,7 @@ All CodeSign Secure deployments, with SignTool, jarsigner, cosign, and other sup
 
 ## Quick checks
 
-- Is the server reachable from the client? Test the API URL: {{TBD: CodeSign Secure health check URL or endpoint}}.
+- Is the server reachable from the client? Test the API URL.
 
 ```powershell
 Test-NetConnection <codesign-secure-host> -Port <api-port>
@@ -44,7 +44,7 @@ curl -sS -o /dev/null -w "%{http_code}\n" https://<codesign-secure-host>:<api-po
 - Is the client clock correct? Large clock drift breaks token and TLS authentication.
 - Is the server TLS certificate trusted by the client and not expired?
 - Is the signing certificate still valid and not revoked?
-- Is the HSM online? Check the HSM status in the console: {{TBD: console location of HSM status}}.
+- Is the HSM online? Check the HSM status on the **HSM Configuration** page in the console.
 
 ## Client and connection problems
 
@@ -52,7 +52,7 @@ curl -sS -o /dev/null -w "%{http_code}\n" https://<codesign-secure-host>:<api-po
 |---|---|---|
 | TLS or "could not establish trust relationship" error | Client does not trust the server certificate | Install the issuing CA chain in the client trust store. |
 | 401 or authentication failure | Expired or wrong credential, or clock drift | Renew the credential. Sync time with NTP. |
-| Provider not listed in Windows | KSP not registered | Reinstall the Windows client as administrator: {{TBD: client repair command}}. |
+| Provider not listed in Windows | KSP not registered | Reinstall the Windows client as administrator. |
 | PKCS#11 library fails to load | Wrong path, missing dependency, or 32-bit and 64-bit mismatch | Fix the path. On Linux run `ldd <library>` to find missing dependencies. |
 
 ## Server, policy, and approval problems
@@ -99,7 +99,7 @@ Include the following in the case:
 
 - Time of failure (with time zone), user or service identity, key name, and file name.
 - Full signing tool command (remove secrets) and complete output.
-- CodeSign Secure server and client versions: {{TBD: how to find CodeSign Secure version numbers}}.
+- CodeSign Secure server and client versions.
 - Client logs and server logs. See [Collecting diagnostic logs for EC products](../../00-Working-with-EC-Support/collecting-diagnostic-logs-for-ec-products.md).
 - HSM diagnostics if the HSM is involved. See [Collecting HSM and PKI diagnostics for support](../../00-Working-with-EC-Support/collecting-hsm-and-pki-diagnostics-for-support.md).
 

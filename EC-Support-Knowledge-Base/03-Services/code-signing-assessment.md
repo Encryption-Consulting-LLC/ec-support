@@ -80,7 +80,7 @@ A stolen or misused code signing key lets attackers ship malware that looks trus
 
 ## Typical timeline
 
-Duration depends on the number of products, pipelines, and signing tools. Typical duration: {{TBD: typical duration for a code signing assessment}}.
+Duration depends on the number of products, pipelines, and signing tools. EC confirms the timeline during scoping.
 
 ## How to request
 

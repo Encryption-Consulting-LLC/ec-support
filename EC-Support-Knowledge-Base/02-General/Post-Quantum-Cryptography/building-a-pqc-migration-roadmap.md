@@ -25,7 +25,7 @@ Any organization that uses public key cryptography. The depth of each phase scal
 
 - An executive sponsor and a named program owner.
 - Access to system owners across IT, application development, network, PKI and HSM teams.
-- A baseline maturity score. The free EC PQC Readiness Assessment (20 questions) is a quick start. See [PQC maturity model](pqc-maturity-model.md).
+- A baseline maturity score. See [PQC maturity model](pqc-maturity-model.md).
 
 ## Before starting
 

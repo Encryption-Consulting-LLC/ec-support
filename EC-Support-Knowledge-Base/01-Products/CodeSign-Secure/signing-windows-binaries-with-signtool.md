@@ -21,12 +21,12 @@ SignTool is the Microsoft command-line tool for Authenticode signing. It ships w
 
 - Microsoft SignTool from the Windows SDK (64-bit version recommended).
 - Windows 10, Windows 11, Windows Server 2016 and later build machines.
-- CodeSign Secure Windows client: {{TBD: official name of CodeSign Secure Windows KSP or client package}}.
+- CodeSign Secure Windows client: `<CodeSign Secure Windows client package>`, provided by EC.
 
 ## Prerequisites
 
 - Windows SDK installed. SignTool is usually under `C:\Program Files (x86)\Windows Kits\10\bin\<sdk-version>\x64\signtool.exe`.
-- CodeSign Secure Windows client installed and configured with the server URL and credentials: {{TBD: client configuration file or registry location}}.
+- CodeSign Secure Windows client installed and configured with the server URL and credentials (`<CodeSign Secure client configuration location>`).
 - A signing key and certificate in CodeSign Secure, and permission for this user or service account to use it.
 - The signing certificate (public part, `.cer`) available locally, or published to the certificate store by the client.
 - Outbound access to a Time Stamping Authority (TSA) URL supplied by the certificate issuer.
@@ -70,9 +70,9 @@ signtool sign /sha1 <certificate-thumbprint> /fd SHA256 /tr <tsa-url> /td SHA256
 signtool sign /f <path-to-certificate.cer> /csp "<provider-name>" /kc "<key-container-or-key-alias>" /fd SHA256 /tr <tsa-url> /td SHA256 /v <file-to-sign>
 ```
 
-The provider name is {{TBD: CodeSign Secure KSP provider name as registered in Windows}}, and the key container is {{TBD: how CodeSign Secure exposes key names or aliases}}.
+The provider name is `<CodeSign Secure KSP name>` (run `certutil -csplist` to see it), and the key container is `<key alias>` as shown for the key in the CodeSign Secure console.
 
-**Option C: digest signing library.** SignTool also supports a digest signing library with `/dlib` and `/dmdf`. Use this only if CodeSign Secure ships such a library: {{TBD: whether CodeSign Secure provides a /dlib digest signing DLL and its metadata file format}}.
+**Option C: digest signing library.** SignTool also supports a digest signing library with `/dlib` and `/dmdf`. Use this only if CodeSign Secure ships such a library.
 
 ```cmd
 signtool sign /fd SHA256 /tr <tsa-url> /td SHA256 /dlib <path-to-digest-library.dll> /dmdf <path-to-metadata.json> <file-to-sign>
@@ -121,7 +121,7 @@ Also check the CodeSign Secure audit log for the matching signing record.
 |---|---|---|
 | "No certificates were found that met all the given criteria" | Wrong thumbprint, wrong store, or the certificate has no linked private key | Check the store and thumbprint. Re-run client setup to publish the certificate. |
 | "The specified algorithm is invalid" or error 0x80090008 | Digest or key algorithm not supported by the provider | Use `/fd SHA256`. Confirm the key type in CodeSign Secure. |
-| Signing hangs, then times out | Request waiting for approval, or network block to the server | Check pending approvals. Check the API port {{TBD: CodeSign Secure API port}}. |
+| Signing hangs, then times out | Request waiting for approval, or network block to the server | Check pending approvals. Check the API port (HTTPS 443 by default). |
 | "Access denied" from provider | User lacks permission for the key in the signing policy | Ask an administrator to grant access. |
 | Timestamp error (for example 0x80072ee7) | TSA URL unreachable through proxy or firewall | Allow outbound access or use another TSA. Retry later. |
 | SignTool error about missing `/td` | `/tr` used without `/td` | Add `/td SHA256`. |

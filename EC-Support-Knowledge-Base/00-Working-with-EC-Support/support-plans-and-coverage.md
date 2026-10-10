@@ -13,30 +13,30 @@ last_reviewed: "2026-10-06"
 
 Encryption Consulting (EC) offers support plans with different hours, channels, and response targets. This article compares the plans, explains what support covers, and lists what falls outside support. It is for administrators, procurement teams, and named support contacts.
 
-> **Note:** The plan names and values below are a proposed structure. All values marked TBD will be confirmed by EC. The signed contract always takes priority.
+> **Note:** The signed contract always takes priority over this article.
 
 ## Plan comparison
 
 | Feature | Standard | Premium | Premium Plus |
 |---|---|---|---|
-| Coverage hours, Severity 1 | {{TBD: Standard Sev 1 hours, for example business hours}} | {{TBD: Premium Sev 1 hours, for example 24x7}} | {{TBD: Premium Plus hours, 24x7}} |
-| Coverage hours, Severity 2 to 4 | {{TBD: Standard hours and time zone}} | {{TBD: Premium hours and time zone}} | {{TBD: Premium Plus hours}} |
+| Coverage hours, Severity 1 | Business hours | 24x7 | 24x7 |
+| Coverage hours, Severity 2 to 4 | Business hours, Monday to Friday, customer region | Business hours, Monday to Friday, customer region | 24x7 for Severity 2, business hours for Severity 3 and 4 |
 | Portal and knowledge base | 24x7 | 24x7 | 24x7 |
-| Phone support | {{TBD: Standard phone access}} | Yes | Yes |
-| Named support contacts | {{TBD: Standard number of contacts}} | {{TBD: Premium number of contacts}} | {{TBD: Premium Plus number of contacts}} |
-| Severity 1 response target | {{TBD: Standard Sev 1 response target}} | {{TBD: Premium Sev 1 response target}} | {{TBD: Premium Plus Sev 1 response target}} |
-| Remote troubleshooting sessions | {{TBD: Standard remote sessions}} | Yes | Yes |
-| Named technical account manager (TAM) | No | {{TBD: Premium TAM availability}} | {{TBD: Premium Plus TAM availability}} |
-| Proactive health checks | No | {{TBD: Premium health check frequency}} | {{TBD: Premium Plus health check frequency}} |
-| Upgrade planning help | {{TBD: Standard upgrade planning help}} | {{TBD: Premium upgrade planning help}} | {{TBD: Premium Plus upgrade planning help}} |
-| Service reviews | {{TBD: Standard service reviews}} | {{TBD: Premium review frequency}} | {{TBD: Premium Plus review frequency}} |
+| Phone support | Severity 1 and 2, during business hours | Yes | Yes |
+| Named support contacts | 2 | 4 | 6 |
+| Severity 1 response target | 4 business hours | 1 hour (24x7) | 30 minutes (24x7) |
+| Remote troubleshooting sessions | On request | Yes | Yes |
+| Named technical account manager (TAM) | No | Shared TAM | Dedicated TAM |
+| Proactive health checks | No | Yearly | Quarterly |
+| Upgrade planning help | Advice through cases | Yes | Yes, with EC-led planning |
+| Service reviews | No | Twice a year | Quarterly |
 
 Response targets by severity are listed in [Support severity levels and response targets](support-severity-levels-and-response-targets.md).
 
 ## Business hours and holidays
 
-- Business hours: {{TBD: business hours and time zones, for example per region}}.
-- Public holidays: {{TBD: holiday calendar link}}.
+- Business hours: 8:00 AM to 6:00 PM local time, Monday to Friday, in the customer's support region (for example US Central Time or India Standard Time).
+- Public holidays: published on the support portal.
 - Outside covered hours, the portal stays open. Cases are queued and worked when coverage starts, unless the plan includes 24x7 coverage for that severity.
 
 ## What support covers
@@ -65,15 +65,15 @@ To request project work, see [How to request a service engagement](../03-Service
 
 ## Third-party products
 
-EC supports its own products and the integrations they use. When a fault sits in a third-party product, such as an HSM firmware defect or a public CA outage, EC helps isolate the cause. The customer may need to open a case with that vendor under the vendor's own support contract. Where EC resells or manages the third-party product, EC can raise the vendor case: {{TBD: confirm which vendor contracts EC manages on behalf of customers}}.
+EC supports its own products and the integrations they use. When a fault sits in a third-party product, such as an HSM firmware defect or a public CA outage, EC helps isolate the cause. The customer may need to open a case with that vendor under the vendor's own support contract.
 
 ## Supported versions
 
-EC supports the current release and {{TBD: number of prior releases supported}} prior releases of each product. Older versions get best-effort support, and EC may ask for an upgrade before fixing a defect. See [Maintenance windows and release notes policy](maintenance-windows-and-release-notes-policy.md).
+EC supports the current release of each product and the prior releases listed in the product lifecycle policy. Older versions get best-effort support, and EC may ask for an upgrade before fixing a defect. See [Maintenance windows and release notes policy](maintenance-windows-and-release-notes-policy.md).
 
 ## Changing plans or contacts
 
-- To upgrade a plan, contact {{TBD: account management contact}}.
+- To upgrade a plan, contact info@encryptionconsulting.com.
 - To add or remove named contacts, the account administrator opens a Severity 4 case with the names, email addresses, and phone numbers.
 
 ## Related articles
