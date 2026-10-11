@@ -1,0 +1,19 @@
+# Repo-wide ignores. frontend/.gitignore keeps covering the frontend build.
+
+# Secrets and per-machine settings. Commit only the *.example templates.
+.env
+*.local
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Case attachments saved by a locally running backend
+backend/.attachments/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

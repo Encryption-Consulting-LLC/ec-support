@@ -29,7 +29,9 @@ const SessionGuardSelector = () => {
       if (localSession) {
         navigate(ROUTES.SUPPORT);
       } else {
-        navigate("/login");
+        // Signed-out visitors start on the public knowledge base; Sign in is in
+        // the top bar. Signed-in users still land on Cases (above).
+        navigate(ROUTES.KB);
       }
     }
   }, [location, navigate, dispatch]);

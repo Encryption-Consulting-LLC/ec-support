@@ -22,13 +22,16 @@
 #     public IP that forwards ports 80+443 to this VM):
 #     sudo bash deploy/enable-https.sh --certbot
 #
-# LAN access at http://192.168.1.17 keeps working either way — the dev
+# LAN access at http://<this VM IP> keeps working either way — the dev
 # server block still answers requests addressed to the bare IP.
 
 set -euo pipefail
 
 SRC="/home/ec/ec-support-portal"
-DOMAIN="support-ec.encryptionconsulting.com"
+# Override per host, e.g. on the test VM:
+#   sudo DOMAIN=support-test.encryptionconsulting.com HOST_IP=192.168.1.40 bash deploy/enable-https.sh --self-signed
+DOMAIN="${DOMAIN:-support-ec.encryptionconsulting.com}"
+HOST_IP="${HOST_IP:-192.168.1.17}"
 CRT="/etc/ssl/ec/support-portal.crt"
 KEY="/etc/ssl/ec/support-portal.key"
 
@@ -49,8 +52,8 @@ if [ "${1:-}" = "--self-signed" ]; then
         echo "delete them first if you really want a fresh self-signed pair."
         exit 1
     fi
-    openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:prime256v1         -keyout "$KEY" -out "$CRT" -days 730 -nodes         -subj "/O=Encryption Consulting LLC/CN=$DOMAIN"         -addext "subjectAltName=DNS:$DOMAIN,IP:192.168.1.17"         -addext "basicConstraints=CA:FALSE" 2>/dev/null
-    echo "generated self-signed pair (2y, SAN: $DOMAIN + 192.168.1.17)"
+    openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:prime256v1         -keyout "$KEY" -out "$CRT" -days 730 -nodes         -subj "/O=Encryption Consulting LLC/CN=$DOMAIN"         -addext "subjectAltName=DNS:$DOMAIN,IP:$HOST_IP"         -addext "basicConstraints=CA:FALSE" 2>/dev/null
+    echo "generated self-signed pair (2y, SAN: $DOMAIN + $HOST_IP)"
     # fall through to the normal install path below
 elif [ "${1:-}" = "--certbot" ]; then
     apt-get install -y -qq certbot python3-certbot-nginx
@@ -97,7 +100,7 @@ echo "  curl -sk --resolve $DOMAIN:443:127.0.0.1 https://$DOMAIN/api/v1/healthz"
 echo
 echo "Still needed on YOUR side:"
 echo "  1. DNS: point $DOMAIN at this origin (Cloudflare proxied record"
-echo "     -> your edge must forward 443 to 192.168.1.17, or use a"
+echo "     -> your edge must forward 443 to $HOST_IP, or use a"
 echo "     cloudflared tunnel if no inbound port can be opened)."
 echo "  2. Auth backend: allow https://$DOMAIN as a post-login redirect"
 echo "     origin, or TOTP-setup/WebAuthn/SSO flows will bounce users to"
