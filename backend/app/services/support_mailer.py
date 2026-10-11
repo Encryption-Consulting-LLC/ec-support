@@ -82,6 +82,7 @@ PRODUCT_LABEL = {
     "hsmasaservice": "HSM As A Service",
     "cbomsecure": "CBOM Secure",
     "pkiasaservice": "PKI As A Service",
+    "pkisupport": "PKI Support",
     "other": "Other",
 }
 

@@ -137,6 +137,21 @@ export const downloadAttachment = async (case_no, index, filename) => {
     window.URL.revokeObjectURL(blobUrl);
     return { ok: true };
   } catch (error) {
+    // responseType "blob" applies to error responses too, so the JSON
+    // {"error": "..."} body arrives as a Blob and extractError's
+    // data.error/data.message lookups both miss — the user would see
+    // "Request failed with status code 404" instead of the real reason.
+    const body = error?.response?.data;
+    if (body instanceof Blob) {
+      try {
+        const parsed = JSON.parse(await body.text());
+        if (parsed?.error || parsed?.message) {
+          return { ok: false, error: parsed.error || parsed.message };
+        }
+      } catch {
+        /* not JSON — fall through to the generic message */
+      }
+    }
     return { ok: false, error: extractError(error) };
   }
 };

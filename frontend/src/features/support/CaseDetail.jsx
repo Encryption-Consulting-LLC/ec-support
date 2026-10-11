@@ -6,6 +6,7 @@ import { Divider } from "primereact/divider";
 import { InputTextarea } from "primereact/inputtextarea";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { showToast } from "../../services/notification/notification";
+import { useNowTick } from "../../hooks/useNowTick";
 import { confirmDialog } from "primereact/confirmdialog";
 import {
   getCase,
@@ -38,6 +39,9 @@ export default function CaseDetail() {
   const [comment, setComment] = useState("");
   const [posting, setPosting] = useState(false);
   const [changingStatus, setChangingStatus] = useState(false);
+
+  // Keeps relative timestamps in the activity thread current.
+  useNowTick();
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -260,10 +264,19 @@ export default function CaseDetail() {
             ) : (
               <div
                 key={i}
-                className="border-1 border-round p-3 surface-border"
+                className={`border-1 border-round p-3 surface-border${
+                  c.is_internal ? " comment-internal" : ""
+                }`}
               >
                 <div className="flex justify-content-between flex-wrap gap-2 mb-2">
-                  <span className="font-medium">{c.author || c.author_email}</span>
+                  <span className="flex align-items-center gap-2">
+                    <span className="font-medium">
+                      {c.author || c.author_email}
+                    </span>
+                    {c.is_internal && (
+                      <Tag value="Internal" severity="warning" rounded />
+                    )}
+                  </span>
                   <span className="text-color-secondary text-sm">
                     {rel(c.created_at)}
                   </span>

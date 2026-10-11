@@ -8,7 +8,8 @@ import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
 import { ProgressSpinner } from "primereact/progressspinner";
-import { showToast } from "../../services/notification/notification";
+import { Message } from "primereact/message";
+import { useNowTick } from "../../hooks/useNowTick";
 import { listMyCases } from "../../services/support/supportCases";
 import { ROUTES } from "../../lib/router/path";
 import {
@@ -34,18 +35,31 @@ export default function SupportCases() {
   const navigate = useNavigate();
   const [cases, setCases] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [total, setTotal] = useState(0);
+  const [truncated, setTruncated] = useState(false);
   const [search, setSearch] = useState("");
+
+  // Keeps the relative "5m ago" text current on a long-open page.
+  useNowTick();
 
   const refresh = useCallback(async () => {
     setLoading(true);
     const result = await listMyCases();
     setLoading(false);
     if (!result.ok) {
-      showToast("error", "Load failed", result.error);
-      setCases([]);
+      // Do NOT fall through to setCases([]) — the table's empty template
+      // says "No cases yet / open your first case", which is a lie to a
+      // user with a dozen open cases when the API merely blipped (a 503
+      // from the auth service isn't even a session expiry, so the axios
+      // interceptor stays silent and only a toast would have shown).
+      setError(result.error || "Could not load your cases.");
       return;
     }
+    setError(null);
     setCases(result.data?.cases || []);
+    setTotal(result.data?.total ?? (result.data?.cases || []).length);
+    setTruncated(Boolean(result.data?.truncated));
   }, []);
 
   useEffect(() => {
@@ -118,13 +132,31 @@ export default function SupportCases() {
               />
             </IconField>
             <span className="text-color-secondary text-sm">
-              {filtered.length} case{filtered.length === 1 ? "" : "s"}
+              {search.trim()
+                ? `${filtered.length} of ${cases.length} shown`
+                : truncated
+                ? `${cases.length} of ${total} cases`
+                : `${total} case${total === 1 ? "" : "s"}`}
             </span>
           </div>
 
           {loading ? (
             <div className="flex justify-content-center py-8">
               <ProgressSpinner style={{ width: 48, height: 48 }} />
+            </div>
+          ) : error ? (
+            <div className="p-4">
+              <Message
+                severity="error"
+                className="w-full justify-content-start mb-3"
+                text={`Couldn't load your cases. ${error}`}
+              />
+              <Button
+                label="Try again"
+                icon="pi pi-refresh"
+                outlined
+                onClick={refresh}
+              />
             </div>
           ) : (
         <DataTable
