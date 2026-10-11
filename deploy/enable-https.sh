@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Enable HTTPS for support-ec.encryptionconsulting.com on this host.
+# Enable HTTPS for support.encryptionconsulting.com on this host.
 #
 #   sudo bash deploy/enable-https.sh            # uses certs already in place
 #   sudo bash deploy/enable-https.sh --certbot  # Let's Encrypt instead
@@ -14,7 +14,7 @@
 #  A) Cloudflare Origin CA (recommended: matches how resourcehub* is
 #     fronted, works even though this VM has a private address).
 #     Cloudflare dashboard -> SSL/TLS -> Origin Server -> Create
-#     Certificate (hostname support-ec.encryptionconsulting.com, 15y).
+#     Certificate (hostname support.encryptionconsulting.com, 15y).
 #     Save the two PEM blocks to the paths above, set the zone's SSL
 #     mode to "Full (strict)", and proxy the DNS record (orange cloud).
 #
@@ -30,7 +30,7 @@ set -euo pipefail
 SRC="/home/ec/ec-support-portal"
 # Override per host, e.g. on the test VM:
 #   sudo DOMAIN=support-test.encryptionconsulting.com HOST_IP=192.168.1.40 bash deploy/enable-https.sh --self-signed
-DOMAIN="${DOMAIN:-support-ec.encryptionconsulting.com}"
+DOMAIN="${DOMAIN:-support.encryptionconsulting.com}"
 HOST_IP="${HOST_IP:-192.168.1.17}"
 CRT="/etc/ssl/ec/support-portal.crt"
 KEY="/etc/ssl/ec/support-portal.key"

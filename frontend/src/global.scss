@@ -2503,6 +2503,14 @@ html[data-theme="dark"] .p-toast .p-toast-message.p-toast-message-error .p-toast
   white-space: nowrap;
 }
 
+// Internal EC notes in the activity thread — client-invisible (stripped
+// server-side for non-admins), but an agent must be able to tell at a
+// glance what the client can actually see.
+.comment-internal {
+  background: color-mix(in srgb, var(--yellow-500, #eab308) 8%, transparent);
+  border-color: color-mix(in srgb, var(--yellow-500, #eab308) 35%, transparent) !important;
+}
+
 // ---- Knowledge base ----------------------------------------------------
 // Matches the EC website: near-black bands with one blue accent, Syne
 // headlines, pill buttons, a calm light reading area. Colors are tokens on

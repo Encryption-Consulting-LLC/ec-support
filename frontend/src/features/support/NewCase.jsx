@@ -19,10 +19,12 @@ import {
   SEVERITY_MATRIX,
   SUPPORT_CONTACT,
   PRODUCT_RESOURCES,
+  MAX_CC,
   MAX_FILES,
   MAX_FILE_BYTES,
   MAX_TOTAL_BYTES,
   ACCEPTED_EXTENSIONS,
+  isAcceptedFile,
 } from "./supportMeta";
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -43,9 +45,9 @@ const schema = Yup.object({
     otherwise: (s) => s.nullable(),
   }),
   subject: Yup.string().trim().max(200, "Keep the subject under 200 characters.").required("Subject is required."),
-  cc: Yup.array().of(
-    Yup.string().matches(EMAIL_RE, "CC entries must be valid email addresses.")
-  ),
+  cc: Yup.array()
+    .of(Yup.string().matches(EMAIL_RE, "CC entries must be valid email addresses."))
+    .max(MAX_CC, `At most ${MAX_CC} CC addresses are allowed.`),
   description: Yup.string()
     .trim()
     .max(20000, "Description is too long — attach a file for full logs.")
@@ -138,11 +140,14 @@ export default function NewCase() {
     const fileItems = items.filter((item) => item.kind === "file");
     if (fileItems.length === 0) return;
 
-    const stamp = new Date()
-      .toISOString()
-      .replace(/[-:]/g, "")
-      .replace("T", "-")
-      .slice(0, 15);
+    // Local time, not toISOString(): the stamp becomes the filename shown
+    // in the portal and on the email attachment, and a UTC stamp made a
+    // 19:30 screenshot read as the next day for anyone west of GMT.
+    const now = new Date();
+    const pad = (n) => String(n).padStart(2, "0");
+    const stamp =
+      `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}` +
+      `-${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
 
     const files = [];
     fileItems.forEach((item, i) => {
@@ -165,7 +170,40 @@ export default function NewCase() {
     event.preventDefault();
 
     const existing = uploadRef.current?.getFiles?.() || [];
-    if (existing.length + files.length > MAX_FILES) {
+
+    // Predict what FileUpload will actually keep, rather than announcing
+    // success for the whole batch. Its internal validate() only checks
+    // size, and isFileSelected() dedupes on name+size — so without this
+    // a 12 MB paste produced PrimeReact's "invalid size" message AND our
+    // "Screenshot attached" toast, and the case shipped with no file.
+    const rejectedType = files.filter((f) => !isAcceptedFile(f));
+    const rejectedSize = files.filter(
+      (f) => isAcceptedFile(f) && f.size > MAX_FILE_BYTES
+    );
+    const accepted = files.filter(
+      (f) =>
+        isAcceptedFile(f) &&
+        f.size <= MAX_FILE_BYTES &&
+        !existing.some((e) => e.name === f.name && e.size === f.size)
+    );
+
+    if (rejectedType.length) {
+      showToast(
+        "error",
+        "File type not accepted",
+        `${rejectedType.map((f) => f.name).join(", ")} — zip it if you need to send it.`
+      );
+    }
+    if (rejectedSize.length) {
+      showToast(
+        "error",
+        "File too large",
+        `${rejectedSize.map((f) => f.name).join(", ")} — 10 MB per file.`
+      );
+    }
+    if (!accepted.length) return;
+
+    if (existing.length + accepted.length > MAX_FILES) {
       showToast(
         "error",
         "Too many files",
@@ -176,11 +214,11 @@ export default function NewCase() {
 
     // Synthetic event shaped the way onFileSelect reads it: it checks
     // dataTransfer first, then target.files.
-    uploadRef.current?.onFileSelect?.({ dataTransfer: { files } });
+    uploadRef.current?.onFileSelect?.({ dataTransfer: { files: accepted } });
     showToast(
       "success",
-      files.length > 1 ? "Screenshots attached" : "Screenshot attached",
-      files.map((f) => f.name).join(", ")
+      accepted.length > 1 ? "Screenshots attached" : "Screenshot attached",
+      accepted.map((f) => f.name).join(", ")
     );
   }, []);
 
@@ -348,6 +386,22 @@ export default function NewCase() {
                 // ignores unknown props, so a dead Upload button rendered
                 // and clicking it did nothing); hiding via the button
                 // options is the supported way in this version.
+                // `accept` only filters the native picker dialog, and
+                // PrimeReact's validate() checks size only — so a file
+                // DROPPED on the dropzone reached the server unchecked
+                // and the backend 400'd the entire case. Strip anything
+                // off-allowlist here instead.
+                onSelect={(e) => {
+                  const picked = e.files || [];
+                  const bad = picked.filter((f) => !isAcceptedFile(f));
+                  if (!bad.length) return;
+                  showToast(
+                    "error",
+                    "File type not accepted",
+                    `${bad.map((f) => f.name).join(", ")} — zip it if you need to send it.`
+                  );
+                  uploadRef.current?.setFiles?.(picked.filter(isAcceptedFile));
+                }}
                 uploadOptions={{ style: { display: "none" } }}
                 cancelOptions={{ style: { display: "none" } }}
                 chooseLabel="Add file"

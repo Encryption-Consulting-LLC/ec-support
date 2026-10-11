@@ -81,6 +81,7 @@ PRODUCTS = {
     "hsmasaservice",
     "cbomsecure",
     "pkiasaservice",
+    "pkisupport",
     "other",
 }
 
@@ -114,6 +115,10 @@ ALLOWED_EXTENSIONS = {
 # Cases a single user may open per rolling hour. Generous for humans,
 # a wall for a stuck retry loop or an abusive script.
 RATE_LIMIT_PER_HOUR = 20
+
+# Cases returned per list request. Client-side search/paging works on this
+# window, so the response also reports the true total.
+LIST_LIMIT = 200
 
 _EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
@@ -346,6 +351,10 @@ def create_case():
     caller = _caller()
     if not caller["email"]:
         return jsonify({"error": "Your session has no email address; contact support."}), 400
+    # A caller with no subject id would share one rate-limit bucket with
+    # every other sub-less caller (and own no cases). Fail loudly instead.
+    if not caller["sub"]:
+        return jsonify({"error": "Your session is missing a user id; contact support."}), 400
 
     # -- rate limit ---------------------------------------------------------
     window_start = _now() - timedelta(hours=1)
@@ -480,14 +489,25 @@ def list_cases():
         # deleting this branch if a client asks for stricter visibility.
         query = {"org_id": caller["org_id"]}
     else:
+        # WITHOUT this guard a sub-less caller queries
+        # {"requester.sub": None}, which in Mongo matches every case whose
+        # requester.sub is null — i.e. other users' cases.
+        if not caller["sub"]:
+            return jsonify({"error": "Your session is missing a user id; contact support."}), 400
         query = {"requester.sub": caller["sub"]}
 
+    # Sort by the field the SPA defaults to, so a truncated list can't omit
+    # a recently-updated case from a list ordered by "Last update".
+    # total/truncated let the UI say "200 of 250" rather than presenting
+    # the cap as the whole truth.
+    total = db.support_cases.count_documents(query)
     cursor = (
         db.support_cases.find(query)
-        .sort("created_at", -1)
-        .limit(200)
+        .sort("updated_at", -1)
+        .limit(LIST_LIMIT)
     )
-    return jsonify({"cases": [_serialize(c, caller) for c in cursor]})
+    cases = [_serialize(c, caller) for c in cursor]
+    return jsonify({"cases": cases, "total": total, "truncated": total > len(cases)})
 
 
 @support_bp.route("/cases/<case_no>", methods=["GET"])

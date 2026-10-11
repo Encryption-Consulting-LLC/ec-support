@@ -19,6 +19,7 @@ export const PRODUCTS = [
   { label: "HSM As A Service", value: "hsmasaservice" },
   { label: "CBOM Secure", value: "cbomsecure" },
   { label: "PKI As A Service", value: "pkiasaservice" },
+  { label: "PKI Support", value: "pkisupport" },
   { label: "Other", value: "other" },
 ];
 
@@ -93,6 +94,7 @@ export const labelFor = (options, value) =>
 
 // Client-side mirrors of the backend attachment limits, so the user
 // finds out in the browser instead of after a full upload round-trip.
+export const MAX_CC = 10;
 export const MAX_FILES = 5;
 export const MAX_FILE_BYTES = 10 * 1024 * 1024;
 export const MAX_TOTAL_BYTES = 20 * 1024 * 1024;
@@ -191,18 +193,45 @@ export const formatDateTime = (iso) => {
   });
 };
 
+const startOfLocalDay = (d) =>
+  new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+
 export const formatRelative = (iso) => {
   if (!iso) return "\u2014";
   const d = new Date(iso);
-  const diff = Date.now() - d.getTime();
-  const min = Math.floor(diff / 60000);
+  if (Number.isNaN(d.getTime())) return "\u2014";
+  const now = new Date();
+  const min = Math.floor((now.getTime() - d.getTime()) / 60000);
+  // Negative (server clock ahead of the browser) falls in here too, so a
+  // duration can never render negative.
   if (min < 1) return "just now";
   if (min < 60) return `${min}m ago`;
   const hrs = Math.floor(min / 60);
   if (hrs < 24) return `${hrs}h ago`;
-  const days = Math.floor(hrs / 24);
-  if (days < 7) return days === 1 ? "yesterday" : `${days}d ago`;
+  // Past 24h, count CALENDAR days rather than 24-hour blocks: elapsed-hour
+  // buckets make a calendar claim they can't keep — 47h ago rendered
+  // "yesterday" when it was two dates back, wrong about half the band.
+  const dayDiff = Math.round(
+    (startOfLocalDay(now) - startOfLocalDay(d)) / 86400000
+  );
+  if (dayDiff <= 1) return "yesterday";
+  if (dayDiff < 7) return `${dayDiff}d ago`;
   const opts = { month: "short", day: "numeric" };
-  if (d.getFullYear() !== new Date().getFullYear()) opts.year = "numeric";
+  if (d.getFullYear() !== now.getFullYear()) opts.year = "numeric";
   return d.toLocaleDateString(undefined, opts);
+};
+
+/**
+ * Client-side mirror of the backend's extension allowlist. PrimeReact's
+ * `accept` prop only filters the native file-picker dialog — its internal
+ * validate() checks size and nothing else — so files arriving by DROP or
+ * PASTE reach the server unchecked and the backend rejects the WHOLE
+ * case with a 400. Checking here keeps a bad file from costing the user
+ * their whole submission.
+ */
+export const isAcceptedFile = (file) => {
+  const name = (file?.name || "").toLowerCase();
+  const dot = name.lastIndexOf(".");
+  const ext = dot === -1 ? "" : name.slice(dot);
+  return ACCEPTED_EXTENSIONS.split(",").includes(ext);
 };
