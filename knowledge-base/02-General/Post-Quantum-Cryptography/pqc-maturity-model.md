@@ -66,7 +66,6 @@ The model has six levels, numbered 0 to 5. Each level describes a stage in the j
 - A named owner and an executive sponsor exist.
 - A scope for discovery is agreed (systems, data, business units).
 - Budget for discovery is approved.
-- A baseline score from the EC PQC Readiness Assessment is recorded.
 
 ### Level 2: Inventoried
 
@@ -119,12 +118,9 @@ The model has six levels, numbered 0 to 5. Each level describes a stage in the j
 
 | EC offering | Where it helps | How |
 |---|---|---|
-| PQC Readiness Assessment (free, 20 questions) | Levels 0 to 2, all dimensions | Gives a quick baseline. Questions cover governance, inventory, risk, technology, vendors and skills. The result points to a starting level. See [Free EC tools](../../00-Working-with-EC-Support/free-ec-tools-csr-generator-and-decoders.md). |
 | CBOM Secure | Levels 2 to 5, Cryptographic inventory and Technology readiness | Discovers algorithms, keys and certificates across code, binaries, keystores, HSMs, key managers and cloud. Flags quantum-vulnerable assets and exports a CycloneDX 1.6 CBOM. Continuous scans support Levels 4 and 5. See [Using CBOM Secure for PQC readiness](../../01-Products/CBOM-Secure/using-cbom-secure-for-pqc-readiness.md). |
 | PQC Advisory Services | Levels 1 to 4, Governance, Risk, Vendor and People | Quantum risk assessment, NIST algorithm selection and a phased migration roadmap. See [PQC Advisory and readiness assessment](../../03-Services/pqc-advisory-and-readiness-assessment.md). |
 | CertSecure Manager and CodeSign Secure | Levels 4 and 5, Technology readiness | Central certificate and signing services make algorithm change a policy decision. |
-
-> **Note:** The mapping of specific Readiness Assessment answers to model levels is {{TBD: confirm scoring bands for the 20 question PQC Readiness Assessment}}.
 
 ## Common questions
 

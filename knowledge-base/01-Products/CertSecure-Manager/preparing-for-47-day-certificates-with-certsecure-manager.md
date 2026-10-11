@@ -68,7 +68,7 @@ For each public certificate, record:
 | Is the certificate pinned anywhere (mobile apps, partner systems)? | Pinning to a leaf breaks on every renewal |
 | Is the certificate copied to many places by hand? | Every copy needs automated deployment |
 
-Use reports and tags in CertSecure Manager to track the share of certificates that are fully automated. Report name: {{TBD: CertSecure Manager automation coverage report name}}.
+Use reports and tags in CertSecure Manager to track the share of certificates that are fully automated.
 
 ### Phase 3: Automate validation
 

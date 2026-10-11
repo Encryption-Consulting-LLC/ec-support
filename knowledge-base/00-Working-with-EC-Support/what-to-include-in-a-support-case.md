@@ -49,7 +49,7 @@ Include these points in the case description:
 
 | Item | Example |
 |---|---|
-| EC product and version | CertSecure Manager {{TBD: version format}} |
+| EC product and version | CertSecure Manager, with the exact version shown in the console |
 | Deployment type | SaaS, on-premises, or EC-managed |
 | Operating system | Windows Server 2022, Red Hat Enterprise Linux 9 |
 | Database | SQL Server 2019, PostgreSQL 15 |

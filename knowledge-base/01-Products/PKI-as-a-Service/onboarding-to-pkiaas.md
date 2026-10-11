@@ -43,8 +43,8 @@ Onboarding has five phases: scope, design, build, integrate, and go-live. EC bui
 ### Phase 1: Scope
 
 1. Join the kickoff call with EC. Share use cases, volumes, and compliance needs (for example PCI DSS, HIPAA, eIDAS).
-2. Fill in the onboarding questionnaire: {{TBD: PKIaaS onboarding questionnaire name and location}}.
-3. Agree the deployment model (SaaS or on-premises managed) and hosting region: {{TBD: PKIaaS hosting regions}}.
+2. Fill in the onboarding questionnaire.
+3. Agree the deployment model (SaaS or on-premises managed) and hosting region.
 
 ### Phase 2: Design
 
@@ -85,9 +85,9 @@ sudo update-ca-certificates
 On RHEL, copy the file to `/etc/pki/ca-trust/source/anchors/` and run `sudo update-ca-trust`.
 
 4. **Distribute to Intune devices** with a Trusted certificate profile per platform.
-5. **Open the network.** Allow clients to reach the CRL, AIA, OCSP, and enrollment endpoints: {{TBD: PKIaaS endpoint URLs and ports}}.
+5. **Open the network.** Allow clients to reach the CRL, AIA, OCSP, and enrollment endpoints.
 6. **Set up enrollment** for each use case. See [Enrolling certificates with PKIaaS: ACME, SCEP, and Intune](enrolling-certificates-with-pkiaas-acme-scep-intune.md).
-7. **Grant access.** Request customer admin accounts in the PKIaaS portal: {{TBD: PKIaaS portal name and role names}}.
+7. **Grant access.** Request customer admin accounts in the PKIaaS portal.
 
 ### Phase 5: Go-live
 

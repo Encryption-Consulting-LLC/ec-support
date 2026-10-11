@@ -3,9 +3,9 @@ title: "Free EC Tools: CSR Generator and Decoders"
 category: "Working with EC Support"
 section: "Learning and Resources"
 article_type: "How-to"
-applies_to: "EC free online tools: CSR Generator, ASN.1 decoder, OpenSSL decoder, CBOM ROI calculator, PQC Readiness Assessment"
-summary: "How to use EC free tools (CSR Generator, ASN.1 and OpenSSL decoders, CBOM ROI calculator, PQC Readiness Assessment) safely, with local command equivalents."
-keywords: ["CSR generator", "ASN.1 decoder", "OpenSSL decoder", "PQC readiness assessment", "decode certificate"]
+applies_to: "EC free online tools: CSR Generator, ASN.1 decoder, OpenSSL decoder, CBOM ROI calculator"
+summary: "How to use EC free tools (CSR Generator, ASN.1 and OpenSSL decoders, CBOM ROI calculator) safely, with local command equivalents."
+keywords: ["CSR generator", "ASN.1 decoder", "OpenSSL decoder", "CBOM ROI calculator", "decode certificate"]
 last_reviewed: "2026-10-06"
 ---
 
@@ -17,15 +17,14 @@ Encryption Consulting (EC) offers free online tools for everyday certificate and
 
 | Tool | What it does | Link |
 |---|---|---|
-| CSR Generator | Builds the command or request needed for a Certificate Signing Request (CSR) | {{TBD: CSR Generator URL}} |
-| ASN.1 decoder | Shows the Abstract Syntax Notation One (ASN.1) structure of a certificate, CSR, or other encoded object | {{TBD: ASN.1 decoder URL}} |
-| OpenSSL decoder | Decodes a certificate or CSR into readable fields | {{TBD: OpenSSL decoder URL}} |
-| CBOM ROI calculator | Estimates the value of building a Cryptographic Bill of Materials (CBOM) | {{TBD: CBOM ROI calculator URL}} |
-| PQC Readiness Assessment | A 20 question self-assessment of post-quantum cryptography (PQC) readiness | {{TBD: PQC Readiness Assessment URL}} |
+| CSR Generator | Builds the command or request needed for a Certificate Signing Request (CSR) | https://www.encryptionconsulting.com/csr-generator-create-certificate-signing-requests-online/ |
+| ASN.1 decoder | Shows the Abstract Syntax Notation One (ASN.1) structure of a certificate, CSR, or other encoded object | https://www.encryptionconsulting.com/asn1-decoder/ |
+| OpenSSL decoder | Decodes a certificate or CSR into readable fields | https://www.encryptionconsulting.com/openssl-decoder/ |
+| CBOM ROI calculator | Estimates the value of building a Cryptographic Bill of Materials (CBOM) | https://www.encryptionconsulting.com/cbom-cryptographic-roi-calculator/ |
 
 ## Applies to
 
-All EC customers and the public. No account is needed {{TBD: confirm whether any tool requires sign-in}}.
+All EC customers and the public. No account is needed.
 
 ## Prerequisites
 
@@ -96,12 +95,6 @@ openssl pkey -in <server-name>.key -pubout | openssl sha256
 
 The two hashes must match.
 
-### Run the PQC Readiness Assessment
-
-1. Open the assessment and answer the 20 questions.
-2. Review the score and suggested next steps.
-3. Use the results with [PQC maturity model](../02-General/Post-Quantum-Cryptography/pqc-maturity-model.md) to plan the next stage.
-
 ## Verification
 
 - The decoded output shows the expected subject, SANs, and dates.
@@ -121,5 +114,4 @@ The two hashes must match.
 - [PKI fundamentals](../02-General/PKI/pki-fundamentals.md)
 - [What to include in a support case](what-to-include-in-a-support-case.md)
 - [Certutil command reference](../04-Featured-Articles/PKI-Runbooks/certutil-command-reference.md)
-- [PQC readiness checklist 2026](../05-Popular-Right-Now/pqc-readiness-checklist-2026.md)
 - [Using CBOM Secure for PQC readiness](../01-Products/CBOM-Secure/using-cbom-secure-for-pqc-readiness.md)

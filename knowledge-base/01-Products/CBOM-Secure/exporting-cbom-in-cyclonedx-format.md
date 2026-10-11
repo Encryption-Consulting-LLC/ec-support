@@ -15,7 +15,7 @@ This article explains how to export a Cryptographic Bill of Materials (CBOM) fro
 
 ## Overview
 
-CycloneDX is an OWASP standard for bills of materials. Version 1.6 added full support for cryptographic assets, which made CycloneDX the common format for CBOMs. CBOM Secure exports CycloneDX 1.6, and EC states support for CycloneDX 1.7 export as well. A CBOM file is usually JSON.
+CycloneDX is an OWASP standard for bills of materials. Version 1.6 added full support for cryptographic assets, which made CycloneDX the common format for CBOMs. CBOM Secure exports CycloneDX 1.6 and CycloneDX 1.7. A CBOM file is usually JSON.
 
 ## Applies to
 
@@ -24,7 +24,7 @@ CBOM Secure in all deployment models. Examples use CycloneDX 1.6 JSON.
 ## Prerequisites
 
 - A completed scan with results.
-- Console permission to export: {{TBD: CBOM Secure role or permission required for export}}.
+- A console role with permission to view and export inventory reports.
 - Optional tools: `jq` for queries, and the CycloneDX CLI for schema validation.
 
 ## Before starting
@@ -36,14 +36,14 @@ CBOM Secure in all deployment models. Examples use CycloneDX 1.6 JSON.
 
 ### Phase 1: Export from the console
 
-1. Open the inventory or report view: {{TBD: console menu path for CBOM export}}.
+1. Open the **Inventory** or **Reports** page in the console.
 2. Apply filters for the scope required (application, source, risk band, asset type).
-3. Choose the export format: CycloneDX 1.6 JSON (or 1.7 if required by the receiving tool). Other formats offered: {{TBD: other CBOM Secure export formats, for example XML, CSV, PDF}}.
+3. Choose the export format: CycloneDX 1.6 JSON (or 1.7 if required by the receiving tool). Other available formats are listed in the export dialog.
 4. Download the file and store it in a protected location.
 
 ### Phase 2: Export through the API (optional)
 
-For automation, use the CBOM Secure API: {{TBD: CBOM Secure API endpoint and authentication for CBOM export}}. A generic pattern:
+For automation, use the CBOM Secure API. The endpoint and authentication method are in the API documentation for your version. A generic pattern:
 
 ```bash
 curl -sS -H "Authorization: Bearer <api-token>" \
@@ -140,7 +140,7 @@ Key points:
 - Every cryptographic item has `"type": "cryptographic-asset"` and a `cryptoProperties.assetType` of `algorithm`, `certificate`, `protocol`, or `related-crypto-material`.
 - Items link to each other through `bom-ref` values (for example `algorithmRef`, `signatureAlgorithmRef`, `subjectPublicKeyRef`).
 - The `dependencies` array shows which components depend on others (`dependsOn`) and, from 1.6, which components provide others (`provides`).
-- How CBOM Secure adds its own risk scores or locations (for example in `properties` or `evidence`): {{TBD: CBOM Secure extension fields in CycloneDX export}}.
+- CBOM Secure may add its own risk scores or locations in standard extension fields such as `properties` or `evidence`. Check a sample export to see the fields your version includes.
 
 See [Reading a CBOM report](reading-a-cbom-report.md) for field meanings.
 

@@ -3,112 +3,101 @@ title: "Troubleshooting CodeSign Secure"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "Troubleshooting"
-applies_to: "CodeSign Secure server, Windows and PKCS#11 signing clients, and connected HSMs (all deployment models)"
-summary: "Common CodeSign Secure problems and fixes: client connection, HSM and PKCS#11 errors, SignTool and jarsigner failures, approvals, timestamps, and verification."
-keywords: ["CodeSign Secure troubleshooting", "signtool error", "PKCS11 error", "code signing timestamp error", "HSM signing failure"]
-last_reviewed: "2026-10-06"
+applies_to: "CodeSign Secure v3.2.1  and later, the portal, all signing clients, and connected HSMs (all deployment models)"
+summary: "Start here for CodeSign Secure problems: find where a signing request fails, collect the right diagnostics, fix common issues, and know what to send EC support."
+keywords: ["CodeSign Secure troubleshooting", "signtool error", "PKCS11 Wrapper error", "code signing timestamp error", "HSM signing failure", "support package"]
+last_reviewed: "2026-10-08"
 ---
 
 # Troubleshooting CodeSign Secure
 
-This article lists common CodeSign Secure problems, their likely causes, and how to fix them. It is organized by where the failure happens: client, server, Hardware Security Module (HSM), signing tool, timestamp, or verification. It is for administrators, build engineers, and EC support.
+This article is the starting point for CodeSign Secure problems. It shows how to find where a signing request fails, how to collect the diagnostics EC support needs, and which article fixes each kind of problem. It is for administrators, build engineers, and EC support.
 
-## Overview
-
-A signing request passes through several parts. Find the failing part first:
-
-1. **Client:** the signing tool loads the CodeSign Secure provider or library and authenticates.
-2. **Server:** CodeSign Secure checks the policy and approvals.
-3. **HSM:** the HSM signs the hash.
-4. **Timestamp:** the signing tool contacts the Time Stamping Authority (TSA).
-5. **Verification:** the platform validates the result.
-
-The CodeSign Secure audit log is the fastest way to tell whether the request reached the server. If there is no audit record, the problem is on the client side or the network.
+> **Tip:** If you have an exact error message, search the [CodeSign Secure error message index](codesign-secure-error-message-index.md) first.
 
 ## Applies to
 
-All CodeSign Secure deployments, with SignTool, jarsigner, cosign, and other supported tools.
+CodeSign Secure v3.2.1  and later, all deployment models.
 
-## Quick checks
+## Step 1: find where the request fails
 
-- Is the server reachable from the client? Test the API URL: {{TBD: CodeSign Secure health check URL or endpoint}}.
+A signing request passes through these parts in order. Find the first one that fails.
 
-```powershell
-Test-NetConnection <codesign-secure-host> -Port <api-port>
-```
-
-```bash
-curl -sS -o /dev/null -w "%{http_code}\n" https://<codesign-secure-host>:<api-port>/
-```
-
-- Is the client clock correct? Large clock drift breaks token and TLS authentication.
-- Is the server TLS certificate trusted by the client and not expired?
-- Is the signing certificate still valid and not revoked?
-- Is the HSM online? Check the HSM status in the console: {{TBD: console location of HSM status}}.
-
-## Client and connection problems
-
-| Symptom | Likely cause | Resolution |
+| Part | What happens | How to check it |
 |---|---|---|
-| TLS or "could not establish trust relationship" error | Client does not trust the server certificate | Install the issuing CA chain in the client trust store. |
-| 401 or authentication failure | Expired or wrong credential, or clock drift | Renew the credential. Sync time with NTP. |
-| Provider not listed in Windows | KSP not registered | Reinstall the Windows client as administrator: {{TBD: client repair command}}. |
-| PKCS#11 library fails to load | Wrong path, missing dependency, or 32-bit and 64-bit mismatch | Fix the path. On Linux run `ldd <library>` to find missing dependencies. |
+| 1. Client | The signing tool loads the KSP, PKCS#11 Wrapper, EC KSP for Mac, or ec-signer | Client debugging output and logs (see Step 2) |
+| 2. Network and TLS | The client connects to the server with mutual TLS | `Test-NetConnection <your-domain> -Port 443`, or open the portal from the same machine |
+| 3. Authentication | The server checks the authentication certificate and API user credentials | Client verbose output |
+| 4. Access | The server checks the role permission and team mapping | **Reports > Audit Trail** and **Logs** |
+| 5. Policy | The environment decides whether approval is needed | **Signing Request** page |
+| 6. HSM | The HSM signs the hash | **Dashboard > HSM Health Check** |
+| 7. Timestamp | The signing tool contacts the TSA directly | Signing tool output |
 
-## Server, policy, and approval problems
+Two quick rules:
 
-| Symptom | Likely cause | Resolution |
+- **No record in the Audit Trail or Logs** means the request never reached the server. Look at the client, network, or authentication.
+- **HSM Health Check shows Inactive** means every signing fails. Fix that first.
+
+## Step 2: collect diagnostics
+
+| Source | How to get it |
+|---|---|
+| Support package | **Profile > Maintenance > Support Packages**: create a package, then download it. Requires the System Admin role. |
+| System logs | **Logs** page: filter by date and time zone, export to CSV, or download the system logs. Right-click an entry and select **View Details**. |
+| Audit Trail | **Reports > Audit Trail**, filtered by date, application, and category (Crypto Operations, Application Operations, User Management, System Settings). |
+| Windows KSP | Set `EC_SSL_VERBOSE=1`, open a new command prompt, and repeat the command. For more detail, read `rolling-ecksp.log` in `C:\ProgramData\Encryption Consulting\SigningKSP`. Its settings are in `ECKSP-LogConfig.xml` in the same folder. Set `EC_SSL_VERBOSE` back to `0` afterwards. |
+| PKCS#11 Wrapper | The log defined by `EC_PKCS11_CLIENT-LogConfig.xml`, which `[logconfig_file]` in `ec_pkcs11client.ini` points to. |
+| Installer | Select **Open Logs** in the installation wizard. |
+
+## Step 3: fix the problem
+
+| Area | Common symptoms | Article |
 |---|---|---|
-| Request rejected with policy message | Identity, key, file type, hash algorithm, or time window not allowed | Read the audit entry. Adjust the request or the policy. |
-| Request pending for a long time | Waiting for approvers | Check approver notifications and group membership. |
-| Request expired | Approval timeout reached | Submit again. Consider a longer timeout or CI/CD approval gates. |
-| Key not found | Key disabled, deleted, or assigned to another project | Check key status and project mapping. |
+| SignTool and the Windows KSP | Provider not found, "No certificates were found…", `SignerSign() failed` (`0x80090016`, `0x8007000B`), works interactively but not in CI | [Troubleshooting SignTool and Encryption Consulting KSP errors](troubleshooting-signtool-and-ec-ksp-errors.md) |
+| PKCS#11 Wrapper | Provider won't load, `EC_INI_FILE_PATH` not set, "Certificate chain not found", wrong key after renewal, Luna slot | [Troubleshooting PKCS#11 Wrapper errors](troubleshooting-pkcs11-wrapper-errors.md) |
+| Connection and authentication | Can't connect, TLS errors, untrusted portal certificate, proxy or load balancer issues, expired authentication certificate | [Troubleshooting client authentication and connection errors](troubleshooting-client-authentication-and-connection-errors.md) |
+| Access and permissions | New user can't sign, certificate missing from team mapping, inactive or expired certificate, breakage after renewal | [Troubleshooting certificate access and permission issues](troubleshooting-certificate-access-and-permission-issues.md) |
+| Approvals | Job fails after about 100 seconds, approver can't see a request, MFA codes don't arrive | [Troubleshooting signing request timeouts and approvals](troubleshooting-signing-request-timeouts-and-approvals.md) |
+| Timestamps | TSA unreachable, file signed without a timestamp, Java proxy | [Troubleshooting timestamping errors](troubleshooting-timestamping-errors.md) |
+| HSM | HSM Health Check Inactive, all signing fails | [Troubleshooting HSM Health Check Inactive](troubleshooting-hsm-health-check-inactive.md) |
 
-## HSM problems
+## Portal and server problems
 
-| Symptom | Likely cause | Resolution |
+| Symptom | Likely cause | Fix |
 |---|---|---|
-| `CKR_TOKEN_NOT_PRESENT` or slot missing | HSM client lost connection to the partition | Check HSM network, client registration, and HA group status. |
-| `CKR_PIN_INCORRECT` or `CKR_PIN_LOCKED` | Wrong partition credential, or lockout | Correct the credential. Unlock per vendor procedure. |
-| `CKR_DEVICE_ERROR` | HSM fault or overload | Check HSM logs and health. Collect diagnostics (see related articles). |
-| nShield "key not found" | Security World files out of date on server | Synchronize `kmdata/local`. |
-| Slow signing under load | HSM or server capacity limits | Review HSM performance. Batch files per request where tools allow. |
+| The portal doesn't load | Apache service stopped, or DNS points elsewhere | Check the services and Apache Monitor on the server, and the DNS name. |
+| The browser shows a certificate warning | The portal still uses the self-signed certificate, the chain is incomplete, or old files are cached | Import a certificate from your PKI with its full chain in **SSL/TLS Management**, then restart Apache Monitor. |
+| Azure AD sign-in fails | Redirect URI, client secret, or consent problem | See the Azure AD rows in the [error message index](codesign-secure-error-message-index.md). |
+| You're signed out unexpectedly | Only one portal session per account is allowed | Use separate accounts for each person. Client tokens aren't affected. |
+| The page shows an error right after connecting a plugin | The server restarts after a plugin connects | Wait a few seconds and refresh. Requests in progress at that moment fail. |
+| Emails or MFA codes don't arrive | No active SMTP configuration or template | Activate them in **System Setup > Email**. Check spam folders. |
+| The portal SSL/TLS certificate can't be renewed | Renew works only for the bundled self-signed certificate | Generate a new CSR and import the new certificate. |
+| A user can't be deleted | A replacement user is required | Choose a replacement user to take over the deleted user's records. |
 
-## Signing tool problems
+## macOS and containers
 
-| Symptom | Likely cause | Resolution |
+| Symptom | Likely cause | Fix |
 |---|---|---|
-| SignTool: "No certificates were found that met all the given criteria" | Wrong thumbprint or store, or no linked private key | Check `Cert:\CurrentUser\My` and the thumbprint. Re-run client setup. |
-| SignTool: "The specified timestamp server either could not be reached or returned an invalid response" | TSA unreachable or wrong URL | Check proxy and firewall. Try a second TSA. |
-| SignTool: error 0x800B0101 during sign | Signing certificate expired | Renew the certificate. |
-| jarsigner: `ProviderException` | Bad `pkcs11.cfg` | Fix the `library` and `slot` values. |
-| cosign: PKCS#11 URI not accepted | cosign built without PKCS#11 support | Build with the `pkcs11key` tag. |
+| codesign reports `errSecInternalComponent` | codesign can't reach the signing identity, common in CI sessions | Recheck the EC KSP for Mac setup, allow `ECCssProvider.app` access to the authentication certificate's key in Keychain Access, and unlock the keychain in CI sessions. |
+| Kubernetes rejects an image | The admission webhook blocks unsigned images | Expected. Sign the image first. See [Signing container images](signing-container-images.md). |
 
-## Verification problems
+## Information to send EC support
 
-| Symptom | Likely cause | Resolution |
-|---|---|---|
-| Windows shows "Unknown publisher" | File not signed, or chain not trusted | Run `signtool verify /pa /v <file>`. For internal CAs, deploy the root to clients. |
-| Signature invalid after certificate expiry | No timestamp | Re-sign with `/tr` and `/td`. |
-| Driver will not load | Wrong signing requirements for kernel mode | Follow Microsoft driver signing requirements for the target Windows version. |
-| `jarsigner -verify` warns about unsigned entries | Files added after signing | Sign as the last build step. |
+Include:
 
-## Collecting information for EC support
-
-Include the following in the case:
-
-- Time of failure (with time zone), user or service identity, key name, and file name.
-- Full signing tool command (remove secrets) and complete output.
-- CodeSign Secure server and client versions: {{TBD: how to find CodeSign Secure version numbers}}.
-- Client logs and server logs. See [Collecting diagnostic logs for EC products](../../00-Working-with-EC-Support/collecting-diagnostic-logs-for-ec-products.md).
+- The product version (hover over the version in the profile menu; the footer shows the frontend and backend versions).
+- The client tool and its version, and the operating system.
+- The exact command, with passwords removed, and the full error text.
+- The time of the failure, with its time zone.
+- Client logs from Step 2, and a support package if you are a System Admin.
 - HSM diagnostics if the HSM is involved. See [Collecting HSM and PKI diagnostics for support](../../00-Working-with-EC-Support/collecting-hsm-and-pki-diagnostics-for-support.md).
 
-> **Warning:** Never send private keys, HSM passwords, PINs, or API tokens to support.
+> **Warning:** Never send private keys, `.pfx` files, passwords, passcodes, activation codes, tokens, HSM credentials, or `ec_pkcs11client.ini` with real values. Share support packages only through an approved channel. See [Secure file sharing with EC Support](../../00-Working-with-EC-Support/secure-file-sharing-with-ec-support.md).
 
 ## Related articles
 
+- [CodeSign Secure error message index](codesign-secure-error-message-index.md)
+- [CodeSign Secure: common misconceptions](codesign-secure-common-misconceptions.md)
 - [CodeSign Secure FAQ](codesign-secure-faq.md)
-- [Signing Windows binaries with SignTool](signing-windows-binaries-with-signtool.md)
-- [Timestamping for code signing](timestamping-for-code-signing.md)
 - [HSM health check and monitoring](../../04-Featured-Articles/HSM-Runbooks/hsm-health-check-and-monitoring.md)
 - [How to open a support case](../../00-Working-with-EC-Support/how-to-open-a-support-case.md)

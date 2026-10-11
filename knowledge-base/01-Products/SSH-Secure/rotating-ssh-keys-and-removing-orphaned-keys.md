@@ -39,7 +39,7 @@ SSH Secure runs these steps as one job, on demand or on a schedule, and records 
 ## Before starting
 
 - **Lockout risk:** Never remove the last working key for an account used by automation or for emergency access. Keep a second access path (console, out-of-band management, or a break-glass account) open during the change.
-- **Back up** the `authorized_keys` file on each target before changes. SSH Secure may do this automatically: {{TBD: SSH Secure authorized_keys backup behavior}}.
+- **Back up** the `authorized_keys` file on each target before changes.
 - **Change window:** Run the first wave in a low-traffic window with the application owner available.
 - **Quarantine before delete:** For orphaned keys, disable first and delete later (see Phase 3).
 
@@ -48,12 +48,12 @@ SSH Secure runs these steps as one job, on demand or on a schedule, and records 
 ### Phase 1: Plan the wave
 
 1. Filter the inventory for the target set (for example, all keys older than the policy maximum on non-production hosts).
-2. Check dependencies. For each key, list the client hosts and jobs that use it. SSH Secure shows trust relationships between client and server accounts: {{TBD: SSH Secure trust relationship view name}}.
+2. Check dependencies. For each key, list the client hosts and jobs that use it. SSH Secure shows trust relationships between client and server accounts.
 3. Split into waves: non-production first, then low-risk production, then critical systems.
 
 ### Phase 2: Rotate keys
 
-1. Go to {{TBD: SSH Secure menu path for key rotation jobs}}.
+1. Go to the **Key Rotation** page.
 2. Select the keys and the new key type. Ed25519 is a good default. Use RSA 3072 bits or more where Ed25519 is not supported.
 3. Choose whether the private key is generated on the client host, stored in a Hardware Security Module (HSM), or issued as a short-lived key.
 4. Keep or add restrictions on the new `authorized_keys` entry, such as `from="<client-ip>"` and `command="<allowed-command>"` for automation keys.
@@ -66,7 +66,7 @@ The job adds the new public key, deploys or activates the new private key on the
 
 1. Filter for keys flagged as orphaned (no owner and no matching known private key).
 2. Publish the list to server owners and give a short review period. Unknown keys sometimes belong to vendor support processes.
-3. **Disable** the keys first. Options include moving them to a quarantine list in SSH Secure or commenting them out: {{TBD: SSH Secure disable or quarantine option}}.
+3. **Disable** the keys first. Options include moving them to a quarantine list in SSH Secure or commenting them out.
 4. Watch authentication logs for failed logins that match the disabled keys during the agreed period:
 
 ```bash

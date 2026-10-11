@@ -17,8 +17,8 @@ This article lists the sources CBOM Secure can scan, what it collects from each,
 
 - Start with the sources that hold the most important or most numerous assets, usually certificates, HSMs, and the main code repositories.
 - Use read-only accounts for every connector.
-- Supported versions per source: {{TBD: CBOM Secure compatibility matrix with supported versions}}.
-- The "Typical access" column shows the usual minimum for that kind of source. Exact permissions for each connector: {{TBD: CBOM Secure connector permission requirements}}.
+- Supported versions per source are listed in the release notes for the installed version.
+- The "Typical access" column shows the usual minimum for that kind of source. Exact permissions for each connector are in the CBOM Secure product documentation, or ask EC support.
 
 ## Source code and software
 
@@ -30,7 +30,7 @@ This article lists the sources CBOM Secure can scan, what it collects from each,
 | Source archives | Same as GitHub, from uploaded or mounted archives | File access on the agent host |
 | Binaries | Linked or embedded crypto libraries, algorithm constants, certificates inside packages | File access on the agent host |
 
-EC states coverage of seven programming languages, 70+ crypto libraries, and 880+ function patterns. Language list: {{TBD: CBOM Secure supported programming languages}}.
+CBOM Secure covers seven programming languages, 70+ crypto libraries, and 880+ function patterns. The current language list is in the release notes for the installed version.
 
 ## Keystores and files
 
@@ -53,7 +53,7 @@ EC states coverage of seven programming languages, 70+ crypto libraries, and 880
 | AWS CloudHSM | Key objects and attributes | Crypto user (CU) credential |
 | Azure Dedicated HSM | Key objects and attributes | Partition credential |
 | Google Cloud HSM | HSM-protected keys in Cloud KMS | IAM viewer roles |
-| IBM Crypto Express | Key metadata | {{TBD: IBM Crypto Express connector access requirements}} |
+| IBM Crypto Express | Key metadata | Confirm with EC support for your environment |
 | YubiHSM 2 | Objects, algorithms, capabilities | Auth key with read capabilities |
 
 ## Key managers and KMIP servers

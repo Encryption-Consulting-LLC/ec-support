@@ -80,7 +80,7 @@ This article describes the Public Key Infrastructure (PKI) Design and Implementa
 
 ## Typical timeline
 
-Duration depends on hierarchy size, number of forests, HSM readiness, and migration scope. Typical duration: {{TBD: typical duration for PKI design and implementation}}.
+Duration depends on hierarchy size, number of forests, HSM readiness, and migration scope. EC confirms the timeline during scoping.
 
 ## How to request
 

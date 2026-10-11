@@ -52,8 +52,6 @@ A typical flow: the platform discovers a certificate, records its owner and expi
 | ITSM | ServiceNow, Jira, Zendesk |
 | Monitoring and SIEM | Splunk, Datadog, OpenTelemetry |
 
-Exact supported versions for each integration: {{TBD: link to CertSecure Manager compatibility matrix}}.
-
 ## Deployment options
 
 - **SaaS:** EC hosts and operates the platform.
@@ -67,7 +65,6 @@ A 15-day free trial is available from the EC website.
 
 - Check the [CertSecure Manager FAQ](certsecure-manager-faq.md) and [Troubleshooting CertSecure Manager](troubleshooting-certsecure-manager.md).
 - Open a case through the support portal. See [How to open a support case](../../00-Working-with-EC-Support/how-to-open-a-support-case.md).
-- Product documentation: {{TBD: CertSecure Manager product documentation URL}}.
 
 ## Related articles
 

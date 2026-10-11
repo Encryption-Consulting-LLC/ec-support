@@ -24,8 +24,6 @@ This article describes the Post-Quantum Cryptography (PQC) Advisory Service and 
 - **Implementation planning and pilots:** validate changes on a small scale before an enterprise rollout.
 - **Governance:** policies and ownership that keep the program on track.
 
-A free 20-question PQC Readiness Assessment is also available from EC as a quick self-check before a full engagement. See [Free EC tools](../00-Working-with-EC-Support/free-ec-tools-csr-generator-and-decoders.md).
-
 ## Who it is for
 
 - Organizations that must meet NSA Commercial National Security Algorithm Suite 2.0 (CNSA 2.0) timelines.
@@ -81,7 +79,7 @@ EC follows an eight-step approach:
 
 ## Typical timeline
 
-Duration depends on the size of the estate and how many phases are in scope. Typical duration for the readiness assessment: {{TBD: typical duration for a PQC readiness assessment}}.
+Duration depends on the size of the estate and how many phases are in scope. EC confirms the timeline during scoping.
 
 ## How to request
 

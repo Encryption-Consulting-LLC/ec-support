@@ -31,8 +31,8 @@ This article explains how to get certificates from Encryption Consulting (EC) PK
 
 - Onboarding completed and the root CA trusted on clients. See [Onboarding to PKIaaS](onboarding-to-pkiaas.md).
 - The certificate profile or template for the use case approved and published by EC.
-- **ACME:** the ACME directory URL and, if required, External Account Binding (EAB) key ID and HMAC key from EC: {{TBD: PKIaaS ACME directory URL format and EAB issuance process}}.
-- **SCEP/NDES:** a domain-joined Windows Server for NDES, a service account, and HTTPS publishing (for example Microsoft Entra application proxy or a reverse proxy) if devices enroll from the internet. Who hosts NDES in each model: {{TBD: PKIaaS NDES hosting model (customer-hosted or EC-hosted)}}.
+- **ACME:** the ACME directory URL and, if required, External Account Binding (EAB) key ID and HMAC key from EC.
+- **SCEP/NDES:** a domain-joined Windows Server for NDES, a service account, and HTTPS publishing (for example Microsoft Entra application proxy or a reverse proxy) if devices enroll from the internet.
 - **Intune:** Intune Administrator rights, a Windows Server for the Certificate Connector, and network access from the connector to the issuing CA and NDES.
 
 ## Before starting
@@ -63,7 +63,7 @@ sudo certbot certonly --standalone \
 
 4. Confirm the renewal job (systemd timer or cron for certbot, scheduled task for win-acme).
 
-> **Note:** ACME challenge type (HTTP-01, DNS-01, or TLS-ALPN-01) and any domain allow list are set per PKIaaS ACME profile: {{TBD: supported ACME challenge types in PKIaaS}}.
+> **Note:** ACME challenge type (HTTP-01, DNS-01, or TLS-ALPN-01) and any domain allow list are set per PKIaaS ACME profile.
 
 ### Part B: SCEP through NDES
 

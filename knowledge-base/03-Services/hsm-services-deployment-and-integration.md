@@ -83,7 +83,7 @@ Platforms EC works with include Thales Luna, Entrust nShield, Utimaco, Crypto4A,
 
 ## Typical timeline
 
-Duration depends on the number of HSMs, sites, and integrations. Typical duration: {{TBD: typical duration for HSM deployment and integration}}. Hardware lead times depend on the vendor.
+Duration depends on the number of HSMs, sites, and integrations. EC confirms the timeline during scoping. Hardware lead times depend on the vendor.
 
 ## How to request
 

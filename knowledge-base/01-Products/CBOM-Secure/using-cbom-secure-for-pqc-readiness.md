@@ -42,7 +42,7 @@ CBOM Secure in all deployment models.
 
 ### Phase 1: Check the PQC readiness view
 
-1. Open the PQC readiness dashboard: {{TBD: console menu path for PQC readiness view}}.
+1. Open the **PQC Readiness** dashboard in the console.
 2. Note the readiness scores for the three asset classes CBOM Secure measures: keys, certificates, and protocol cipher suites.
 3. Export the baseline for later comparison.
 

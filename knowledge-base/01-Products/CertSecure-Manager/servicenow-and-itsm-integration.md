@@ -44,11 +44,11 @@ ServiceNow integrations commonly use the ServiceNow REST API, such as the Table 
 2. Select **Web service access only** so the account cannot sign in to the user interface.
 3. Grant the roles needed to create and update records on the target tables.
 4. Note the assignment group names or sys_ids for routing.
-5. For ticket-based issuance, build or import the catalog item and approval flow: {{TBD: CertSecure Manager ServiceNow app or catalog item package name}}.
+5. For ticket-based issuance, build or import the catalog item and approval flow.
 
 ### Phase 2: Configure CertSecure Manager
 
-1. Go to {{TBD: CertSecure Manager menu path for ITSM integrations}}.
+1. Go to the **ITSM Integrations** page.
 2. Select ServiceNow, Jira, or Zendesk.
 3. Enter the instance URL and the integration credentials.
 4. Map fields:

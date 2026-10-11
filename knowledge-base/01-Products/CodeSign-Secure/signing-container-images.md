@@ -3,128 +3,186 @@ title: "Signing Container Images"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "How-to"
-applies_to: "CodeSign Secure with Sigstore cosign (PKCS#11 build) and Notary Project Notation, for OCI container images in any OCI-compliant registry"
-summary: "How to sign and verify OCI container images with cosign over PKCS#11 and with Notation, using HSM-held keys managed through CodeSign Secure."
-keywords: ["sign container images", "cosign pkcs11", "Notation sign", "container image signing HSM", "CodeSign Secure cosign"]
-last_reviewed: "2026-10-06"
+applies_to: "CodeSign Secure v3.2.1  and later with ec-signer and Sigstore cosign on a Linux container build host, with optional Kubernetes enforcement"
+summary: "Sign container images with ec-signer and cosign using keys in CodeSign Secure, and allow only signed images in Kubernetes with the webhook."
+keywords: ["sign container images", "ec-signer", "cosign", "container image signing HSM", "Kubernetes admission webhook", "CodeSign Secure container signing"]
+last_reviewed: "2026-10-08"
 ---
 
 # Signing Container Images
 
-This article explains how to sign container images with keys protected by CodeSign Secure. It covers Sigstore cosign through a PKCS#11 library and the Notary Project Notation tool. It is for platform engineers and DevOps teams who publish images to an Open Container Initiative (OCI) registry.
+This article explains how to sign container images with CodeSign Secure and how to make Kubernetes accept only signed images. Signing uses **ec-signer**, the CodeSign Secure container signing component, together with Sigstore cosign. It is for platform engineers and DevOps teams who publish container images.
 
 ## Overview
 
-A container image signature proves who published an image and that it has not changed. The signature is stored in the registry next to the image. Deployment tools, such as Kubernetes admission controllers, check the signature before running the image.
+A container image signature proves who published an image and that it hasn't changed. ec-signer works with cosign on the build host: the signing key stays in the Hardware Security Module (HSM) behind CodeSign Secure, and each signature follows the certificate's environment policy and team mapping. The signature is pushed to the registry as a separate signature image next to your image.
 
-cosign can use a hardware key through a PKCS#11 Uniform Resource Identifier (URI). When the PKCS#11 module is the CodeSign Secure library, the private key stays in the Hardware Security Module (HSM) and each signature follows CodeSign Secure policy.
+For deployment-time enforcement, CodeSign Secure provides two Kubernetes services: an **image verifier** and an **image validation webhook**. Together they block any image that isn't signed.
 
 ## Applies to
 
-- Sigstore cosign built with PKCS#11 support.
-- Notary Project Notation with a signing plugin.
-- Any OCI-compliant registry (for example Azure Container Registry, Amazon ECR, Google Artifact Registry, Harbor, GitHub Container Registry).
+- CodeSign Secure v3.2.1  and later.
+- A Linux container build host (the product guide uses Ubuntu) with Python and Docker.
+- Docker Hub, as used in the product guide.
 
 ## Prerequisites
 
-- CodeSign Secure PKCS#11 library installed on the build agent: {{TBD: CodeSign Secure PKCS#11 library name and path per platform}}.
-- A key in CodeSign Secure that is allowed for container signing, and permission to use it.
-- A cosign binary with PKCS#11 support. Standard cosign release binaries do not include PKCS#11 support; build cosign with the `pkcs11key` build tag (for example `go build -tags=pkcs11key ./cmd/cosign`). Verify against the cosign documentation for the installed version.
-- Push access to the registry (`docker login` or the registry credential helper).
-
-## Before starting
-
-- Always sign by digest (`<image>@sha256:<digest>`), not by tag. Tags can move to other images.
-- Decide whether signatures should be recorded in the public Sigstore Rekor transparency log. Images for internal use usually should not be. Recent cosign versions upload to Rekor by default.
+- A signing certificate in CodeSign Secure, mapped to a team that includes your user.
+- An authentication certificate (`.pfx`) and its password, from **System Setup > User > Generate Authentication Certificate**.
+- A Docker Hub account with push access to the repository.
+- The **Container Signing Tools** package, downloaded from **Signing Tools**.
 
 ## Procedure
 
-### Phase 1: Find the key URI
+### Phase 1: Install cosign
 
-1. List tokens exposed by the PKCS#11 library:
-
-```bash
-cosign pkcs11-tool list-tokens --module-path <path-to-pkcs11-library>
-```
-
-2. List keys and their URIs in the token:
+The product guide pins cosign v2.0.0 as a working example. If you use a newer release, update both the download URL and the file name so they match.
 
 ```bash
-cosign pkcs11-tool list-keys-uris --module-path <path-to-pkcs11-library> --slot-id <slot-id> --pin <pin>
+# Binary
+wget "https://github.com/sigstore/cosign/releases/download/v2.0.0/cosign-linux-amd64"
+mv cosign-linux-amd64 /usr/local/bin/cosign
+chmod +x /usr/local/bin/cosign
+
+# Or, Debian or Ubuntu package
+wget "https://github.com/sigstore/cosign/releases/download/v2.0.0/cosign_2.0.0_amd64.deb"
+dpkg -i cosign_2.0.0_amd64.deb
+
+# Or, RPM package
+wget "https://github.com/sigstore/cosign/releases/download/v2.0.0/cosign-2.0.0.x86_64.rpm"
+rpm -ivh cosign-2.0.0.x86_64.rpm
 ```
 
-3. Copy the URI for the signing key. It looks like this:
-
-```text
-pkcs11:token=<token-label>;slot-id=<slot-id>;object=<key-label>?module-path=<path-to-pkcs11-library>&pin-value=<pin>
-```
-
-> **Warning:** Do not store the PIN in scripts or in the URI in source control. Insert it at run time from the CI/CD secret store, or use the `pin-source` attribute to read it from a protected file.
-
-### Phase 2: Sign the image with cosign
-
-1. Get the image digest after pushing:
+### Phase 2: Install Python and Docker
 
 ```bash
-docker buildx imagetools inspect <registry>/<repository>:<tag>
+sudo apt-get install docker.io
+sudo apt-get install python-is-python3
+sudo apt install python3-pip
+sudo apt-get install python3-docker
+sudo apt-get -y install python3-openssl
+sudo apt-get install -y dbus-user-session
+sudo apt-get install -y docker-ce-rootless-extras
 ```
 
-2. Sign by digest:
+If `docker-ce-rootless-extras` can't be found, add Docker's official repository first:
 
 ```bash
-cosign sign --key "pkcs11:token=<token-label>;slot-id=<slot-id>;object=<key-label>?module-path=<path-to-pkcs11-library>&pin-value=${CSS_PIN}" \
-  --tlog-upload=false \
-  <registry>/<repository>@sha256:<digest>
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg lsb-release
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce-rootless-extras
 ```
 
-Remove `--tlog-upload=false` if the organization wants the signature in the public transparency log.
-
-3. Export the public key for verifiers:
+Then sign in to Docker Hub:
 
 ```bash
-cosign public-key --key "<pkcs11-uri>" > cosign.pub
+sudo docker login
 ```
 
-### Phase 3: Sign with Notation (optional)
+### Phase 3: Configure ec-signer
 
-Notation uses plugins to reach external key stores. If CodeSign Secure provides a Notation plugin ({{TBD: whether a CodeSign Secure Notation plugin exists and its name}}):
+1. Extract the Container Signing Tools package and open the `SignImage` folder.
+2. Edit `ec-signer.conf` and set:
+   - The CodeSign Secure URL.
+   - The path to your authentication certificate (`.pfx`).
+   - The authentication certificate's password.
+3. Restrict the file to the build user, because it holds a password: `chmod 600 ec-signer.conf`.
+
+### Phase 4: Sign the image
+
+From the `SignImage` folder:
 
 ```bash
-notation plugin install --file <plugin-archive>
-notation key add --plugin <plugin-name> --id <key-id> <key-name>
-notation sign --key <key-name> <registry>/<repository>@sha256:<digest>
+./ec-signer --project_name=<certificate-name> --image_name=<target-image> --docker_username=<docker-username>
 ```
 
-Notation signatures need an X.509 certificate chain. Verifiers configure a trust store and trust policy.
+| Option | Value |
+|---|---|
+| `--project_name` | The name of the signing certificate in CodeSign Secure |
+| `--image_name` | The image to sign, for example `<docker-username>/<repository>:<tag>` |
+| `--docker_username` | Your Docker Hub username |
+
+ec-signer asks for your Docker Hub password and for root privileges. When it finishes, a new signature image appears in your Docker Hub repository.
+
+If the certificate's environment needs approval, an approver must act within 100 seconds. For automated pipelines, use a certificate in a No Approval environment.
+
+## Enforce signed images in Kubernetes (optional)
+
+The product guide uses k3s as the example cluster:
+
+```bash
+curl -sfL https://get.k3s.io | sh -
+```
+
+### Deploy the image verifier service
+
+1. Go to `VerifyImage/image-verifier` in the Container Signing Tools package.
+2. Build and push the verifier image. Keep the image name `verifyImage`; change only the username and repository:
+
+   ```bash
+   sudo docker build -t <docker-username>/<repository>:verifyImage .
+   sudo docker image push <docker-username>/<repository>:verifyImage
+   ```
+
+3. Edit `validator-deploy.yaml` and set `cert_name`, `server_url`, `pfx_file_path`, `pfx_file_passwd`, `DOCKER_USERNAME`, `DOCKER_PASSWORD`, and `image`.
+4. Deploy it:
+
+   ```bash
+   sudo kubectl apply -f validator-deploy.yaml
+   ```
+
+> **Warning:** `validator-deploy.yaml` holds the authentication certificate password and the Docker password. Don't commit it to source control, and limit who can read it.
+
+### Deploy the image validation webhook
+
+1. Go to `VerifyImage/validating-webhook`.
+2. Build and push the webhook image. Keep the image name `image-validation-webhook`:
+
+   ```bash
+   sudo docker build -t <docker-username>/<repository>:image-validation-webhook .
+   sudo docker image push <docker-username>/<repository>:image-validation-webhook
+   ```
+
+3. Apply the secret and configuration:
+
+   ```bash
+   sudo kubectl apply -f webhook-secret.yaml
+   sudo kubectl apply -f webhook-config.yaml
+   ```
+
+4. Edit `image` in `webhook-deploy.yaml`, then deploy it:
+
+   ```bash
+   sudo kubectl apply -f webhook-deploy.yaml
+   ```
+
+5. Confirm both services are running:
+
+   ```bash
+   sudo kubectl get pods --all-namespaces
+   ```
 
 ## Verification
 
-**cosign:**
-
-```bash
-cosign verify --key cosign.pub --insecure-ignore-tlog=true <registry>/<repository>@sha256:<digest>
-```
-
-Drop `--insecure-ignore-tlog=true` if the signature was uploaded to Rekor.
-
-**Notation:**
-
-```bash
-notation verify <registry>/<repository>@sha256:<digest>
-```
-
-Also confirm a matching record in the CodeSign Secure audit log. For runtime enforcement, configure an admission controller such as Sigstore policy-controller, Kyverno, or Ratify with the public key or trust store.
+1. Deploy a Deployment that uses an **unsigned** image. Kubernetes rejects it. This is the expected result.
+2. Deploy a Deployment that uses the **signed** image, for example with `sudo kubectl apply -f demo-deployment.yaml`. The pod starts.
+3. Check **Reports > Audit Trail** in CodeSign Secure for the signing record.
 
 ## Troubleshooting
 
 | Symptom | Likely cause | Resolution |
 |---|---|---|
-| `unknown command "pkcs11-tool"` or PKCS#11 URI not accepted | cosign built without PKCS#11 support | Build cosign with the `pkcs11key` tag. |
-| `could not load module` | Wrong library path or architecture mismatch | Fix `module-path`. Use a 64-bit library for a 64-bit cosign. |
-| `CKR_PIN_INCORRECT` | Wrong PIN | Check the secret value. |
-| `UNAUTHORIZED` or `DENIED` from registry | No push rights for the signature artifact | Run `docker login` with an account that can push. |
-| Verification fails with "no matching signatures" | Signed a different digest, or wrong public key | Sign and verify the same digest. Re-export the public key. |
-| Verification fails on transparency log | Signature not in Rekor | Use `--insecure-ignore-tlog=true` for private signatures. |
+| ec-signer can't authenticate | Wrong URL, `.pfx` path, or password in `ec-signer.conf`, or the authentication certificate expired | Correct `ec-signer.conf`. Generate a new authentication certificate if needed. See [Troubleshooting client authentication and connection errors](troubleshooting-client-authentication-and-connection-errors.md). |
+| Signing is denied | User not in a team mapped to the certificate, or wrong `--project_name` | See [Troubleshooting certificate access and permission issues](troubleshooting-certificate-access-and-permission-issues.md). |
+| Signing waits, then fails | Approval needed and nobody approved within 100 seconds | See [Troubleshooting signing request timeouts and approvals](troubleshooting-signing-request-timeouts-and-approvals.md). |
+| The signature can't be pushed | Not signed in to Docker Hub, or no push rights | Run `sudo docker login` with an account that can push to the repository. |
+| `docker-ce-rootless-extras` can't be installed | Docker's repository isn't configured | Add Docker's repository as shown in Phase 2. |
+| Kubernetes rejects an image | The webhook blocks unsigned images | Expected for unsigned images. Sign the image first. |
+| Kubernetes rejects a signed image | The verifier can't reach CodeSign Secure, or `cert_name` doesn't match the signing certificate | Check `server_url`, `cert_name`, and the credentials in `validator-deploy.yaml`, and the verifier pod's logs. |
 
 ## Related articles
 

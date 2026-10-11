@@ -29,3 +29,4 @@ CBOM Secure is the Encryption Consulting (EC) product for cryptographic discover
 ## Help
 
 - [CBOM Secure FAQ](cbom-secure-faq.md)
+- [CBOM Secure deployment and installation troubleshooting FAQ](cbom-secure-deployment-troubleshooting-faq.md)

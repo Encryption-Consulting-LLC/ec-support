@@ -35,13 +35,13 @@ The ACME flow, in short:
 | dns-01 | A TXT record at `_acme-challenge.<domain>` | The client can update DNS. Needed for wildcard names |
 | tls-alpn-01 (RFC 8737) | A special certificate on TCP 443 using the `acme-tls/1` protocol | The ACME server must reach the host on TCP 443 |
 
-For internal names, CertSecure Manager may allow other validation settings according to policy, for example trusting EAB plus an allowed domain list: {{TBD: CertSecure Manager ACME validation options for internal domains}}.
+For internal names, CertSecure Manager may allow other validation settings according to policy, for example trusting EAB plus an allowed domain list.
 
 ## Prerequisites
 
 - The CertSecure Manager ACME service enabled and linked to a CA and a certificate profile.
-- The ACME directory URL: {{TBD: CertSecure Manager ACME directory URL format}}.
-- EAB credentials (key ID and HMAC key) if the directory requires them, created at {{TBD: CertSecure Manager menu path for ACME EAB credentials}}.
+- The ACME directory URL, shown on the **ACME** settings page in the console.
+- EAB credentials (key ID and HMAC key) if the directory requires them, created on the **ACME** settings page in the console.
 - The client host trusts the CertSecure Manager ACME server's TLS certificate. Add the internal root CA to the trust store if needed.
 - Network access from the ACME server to the client for http-01 or tls-alpn-01, or DNS API access for dns-01.
 
@@ -117,7 +117,7 @@ Create the `certsecure-eab` Secret in the cert-manager namespace before applying
 
 - ACME clients renew on their own schedule (certbot and acme.sh use a scheduled job; cert-manager renews before expiry based on the `renewBefore` setting or by default at two thirds of the lifetime).
 - Make sure the scheduled job or timer is enabled.
-- Some clients support ACME Renewal Information (ARI, RFC 9773), which lets the server suggest a renewal window. Support in CertSecure Manager: {{TBD: CertSecure Manager ARI support}}.
+- Some clients support ACME Renewal Information (ARI, RFC 9773), which lets the server suggest a renewal window.
 
 ## Verification
 
