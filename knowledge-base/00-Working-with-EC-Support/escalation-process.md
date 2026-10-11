@@ -85,5 +85,4 @@ General feedback about EC support can be sent to info@encryptionconsulting.com. 
 - [Support severity levels and response targets](support-severity-levels-and-response-targets.md)
 - [Support plans and coverage](support-plans-and-coverage.md)
 - [How to open a support case](how-to-open-a-support-case.md)
-- [Emergency CRL signing](../04-Featured-Articles/PKI-Runbooks/emergency-crl-signing.md)
 - [Preventing certificate outages](../02-General/Certificate-Lifecycle-Management/preventing-certificate-outages.md)

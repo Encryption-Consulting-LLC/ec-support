@@ -91,4 +91,3 @@ EC may open a case with the HSM or CA vendor. The EC case stays open with the st
 - [How to open a support case](how-to-open-a-support-case.md)
 - [Escalation process](escalation-process.md)
 - [Recovering from an expired CRL](../04-Featured-Articles/PKI-Runbooks/recovering-from-an-expired-crl.md)
-- [Emergency CRL signing](../04-Featured-Articles/PKI-Runbooks/emergency-crl-signing.md)

@@ -111,7 +111,6 @@ certutil -URL <certificate.cer>
 - [CertSecure Manager overview](../01-Products/CertSecure-Manager/certsecure-manager-overview.md): discovery, alerts, and automated renewal.
 - [Configuring expiry alerts and notifications](../01-Products/CertSecure-Manager/configuring-expiry-alerts-and-notifications.md): set up layered alerts.
 - [Preventing certificate outages](../02-General/Certificate-Lifecycle-Management/preventing-certificate-outages.md): deeper practitioner guidance.
-- [Emergency CRL signing](../04-Featured-Articles/PKI-Runbooks/emergency-crl-signing.md): restore revocation service fast.
 - [Recovering from an expired CRL](../04-Featured-Articles/PKI-Runbooks/recovering-from-an-expired-crl.md): step-by-step recovery.
 - [PKI managed support](../03-Services/pki-managed-support.md): ongoing expert operation of PKI.
 

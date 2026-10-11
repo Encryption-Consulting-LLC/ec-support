@@ -119,7 +119,7 @@ Run these from the build machine, as the account that signs:
 
 **Cause.** Your license limits how many KSP clients can be in use. The Dashboard KPI **Signing KSPs Utilized** shows the count in use against the count allowed, for example `15/15`.
 
-**Resolution.** Check the **Client Report** in **Reports** to find clients that are no longer used. To raise the limit, contact EC support. The exact behavior when the limit is reached: {{TBD: error or behavior a new KSP client sees when the licensed client count is reached}}.
+**Resolution.** Check the **Client Report** in **Reports** to find clients that are no longer used. To raise the limit, contact EC support.
 
 ## Information to collect for EC support
 

@@ -90,7 +90,7 @@ dir %windir%\System32\CertSrv\CertEnroll
 
 **Path D: CA cannot start in time**
 
-10. Follow [Emergency CRL Signing](emergency-crl-signing.md) to re-sign the last CRL from a server that can use the CA key.
+10. Open a Severity 1 case with EC Support to re-sign the last CRL from a server that can use the CA key.
 
 ### Phase 3: Clear client caches
 
@@ -127,7 +127,6 @@ certutil -setreg chain\ChainCacheResyncFiletime @now
 
 ## Related articles
 
-- [Emergency CRL Signing](emergency-crl-signing.md)
 - [Troubleshooting Revocation Server Offline Errors](troubleshooting-revocation-server-offline-errors.md)
 - [Changing CRL Publication Periods](changing-crl-publication-periods.md)
 - [Preventing Certificate Outages](../../02-General/Certificate-Lifecycle-Management/preventing-certificate-outages.md)

@@ -44,7 +44,6 @@ Search the knowledge base or browse by category below.
 - [Changing CRL Publication Periods in AD CS](04-Featured-Articles/PKI-Runbooks/changing-crl-publication-periods.md)
 - [Configuring an Online Responder (OCSP) with an HSM](04-Featured-Articles/PKI-Runbooks/configuring-an-online-responder-ocsp-with-hsm.md)
 - [Decommissioning a Certificate Authority](04-Featured-Articles/PKI-Runbooks/decommissioning-a-certificate-authority.md)
-- [Emergency CRL Signing from a Secondary Issuing CA with an nShield HSM](04-Featured-Articles/PKI-Runbooks/emergency-crl-signing.md)
 - [High Availability CDP and AIA for Microsoft AD CS](04-Featured-Articles/PKI-Runbooks/high-availability-cdp-and-aia.md)
 - [Issuing CA Certificate Renewal with an HSM](04-Featured-Articles/PKI-Runbooks/issuing-ca-certificate-renewal.md)
 - [Migrating AD CS to a New Server with an HSM-Protected CA Key](04-Featured-Articles/PKI-Runbooks/migrating-ad-cs-to-a-new-server.md)

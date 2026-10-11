@@ -82,7 +82,7 @@ certutil -sign <InCRL> <OutCRL> now+<dd:hh> [-<OIDList>] [+<SerialList>]
 - `2.5.29.27` is the Delta CRL Indicator. It identifies a delta CRL and is not in a base CRL.
 - `-Cert <CertId>` selects the signing certificate.
 
-See [Emergency CRL Signing](emergency-crl-signing.md) for the full procedure.
+For the full emergency procedure, open a Severity 1 case with EC Support.
 
 ## Keys and certificate stores
 
@@ -122,7 +122,6 @@ HSM provider names: `nCipher Security World Key Storage Provider` (Entrust nShie
 
 ## Related articles
 
-- [Emergency CRL Signing](emergency-crl-signing.md)
 - [Changing CRL Publication Periods](changing-crl-publication-periods.md)
 - [Issuing CA Certificate Renewal with an HSM](issuing-ca-certificate-renewal.md)
 - [Troubleshooting Revocation Server Offline Errors](troubleshooting-revocation-server-offline-errors.md)

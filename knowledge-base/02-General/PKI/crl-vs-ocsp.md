@@ -105,7 +105,7 @@ certutil -crl
 Most AD CS deployments publish CRLs to HTTP and add an Online Responder for applications that prefer OCSP. CRLs are the base layer, because the Online Responder reads them.
 
 ### What happens if the root CRL expires?
-Validation of every certificate under that root can fail. See [Recovering from an expired CRL](../../04-Featured-Articles/PKI-Runbooks/recovering-from-an-expired-crl.md) and [Emergency CRL signing](../../04-Featured-Articles/PKI-Runbooks/emergency-crl-signing.md).
+Validation of every certificate under that root can fail. See [Recovering from an expired CRL](../../04-Featured-Articles/PKI-Runbooks/recovering-from-an-expired-crl.md).
 
 ### Can CRL publication be monitored automatically?
 Yes. Certificate lifecycle tools such as [CertSecure Manager](../../01-Products/CertSecure-Manager/certsecure-manager-overview.md) and general monitoring tools can alert before CRLs and certificates expire.

@@ -17,7 +17,6 @@ Featured articles are detailed runbooks written by EC support engineers for the 
 
 [Section landing page](PKI-Runbooks/_index.md)
 
-- [Emergency CRL Signing](PKI-Runbooks/emergency-crl-signing.md)
 - [Issuing CA Certificate Renewal with an HSM](PKI-Runbooks/issuing-ca-certificate-renewal.md)
 - [Root CA CRL Renewal for an Offline Root CA](PKI-Runbooks/root-ca-crl-renewal-offline-root.md)
 - [High Availability CDP and AIA for Microsoft AD CS](PKI-Runbooks/high-availability-cdp-and-aia.md)

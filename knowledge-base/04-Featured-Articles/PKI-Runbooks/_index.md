@@ -15,7 +15,6 @@ These runbooks give tested, step-by-step procedures for running a Microsoft Acti
 
 ## Incident response
 
-- [Emergency CRL Signing](emergency-crl-signing.md)
 - [Recovering from an Expired CRL](recovering-from-an-expired-crl.md)
 - [Troubleshooting Revocation Server Offline Errors](troubleshooting-revocation-server-offline-errors.md)
 
