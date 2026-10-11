@@ -106,7 +106,7 @@ export const ACCEPTED_EXTENSIONS =
  * the footer — one source so a number change is one edit.
  */
 export const SUPPORT_CONTACT = {
-  email: "support@encryptionconsulting.com",
+  email: "info@encryptionconsulting.com",
   phone: "+1 469 815 4136",
   phoneHref: "tel:+14698154136",
   phoneHours: "Mon – Fri, 8 AM to 5 PM CST",

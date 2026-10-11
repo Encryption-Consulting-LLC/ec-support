@@ -135,7 +135,7 @@ on a phone. Hard refresh (Ctrl+Shift+R) after each deploy.
 ### 1. Knowledge base, signed out
 
 - [ ] `/` opens the KB home, not the login page.
-- [ ] Home: dark hero, "How can we help?", one search pill, common searches, "Browse by product" with six products and article counts, "Beyond products" links, Sev 1 box with the phone number.
+- [ ] Home: dark hero, "How can we help?" (signed in: "What are you working on?"), one search pill, common searches, "Browse by product" list with six products and article counts, "Beyond products" links, "Still stuck?" band at the bottom.
 - [ ] Typing two letters in the home search shows up to 3 suggestions and "Not finding it? Sign in to open a case". Clicking away closes the list.
 - [ ] Enter opens `/kb/search?q=...`: "N answers for ...", type pills with counts, results grouped by section, "N more in X" link.
 - [ ] Type pills filter; "N more in X" shows the whole section; "Search everything" clears it; Back restores the previous filters.
@@ -149,7 +149,7 @@ on a phone. Hard refresh (Ctrl+Shift+R) after each deploy.
 - [ ] No "Session expired" dialog anywhere in the KB.
 - [ ] Top bar: logo, Knowledge base, theme toggle, Sign in. No Cases links.
 - [ ] `/support`, `/support/new`, `/support/guide` all redirect to `/login`.
-- [ ] "Sign in to open a case" goes to login.
+- [ ] "Open a case" in the "Still stuck?" band goes to login when signed out, and to the Open a case form when signed in.
 
 ### 2. Login and session
 
@@ -172,7 +172,7 @@ Compare each step side by side with the live portal.
 - [ ] Case detail: details, description, attachments download and open, add an update (another `.eml`), refresh button.
 - [ ] Mark as resolved, then Reopen case: status changes, a system line appears in Activity, emails are sent.
 - [ ] Admin account: sees other people's cases and internal comments the same way as live.
-- [ ] How support works page: contact cards, steps, severity table, plans table all display.
+- [ ] How support works page: contact cards (email shows info@encryptionconsulting.com), steps, severity table, plans table all display.
 - [ ] "Documentation and knowledge base" buttons open the right KB product page in a new tab.
 
 ### 4. Look and layout
@@ -185,7 +185,7 @@ Compare each step side by side with the live portal.
 ### 5. Before go-live (not testable on the VM, but blocking)
 
 - [ ] `npm run test` passes: restore or remove the 15 missing images in `04-Featured-Articles/PKI-Runbooks/emergency-crl-signing.md`.
-- [ ] No `{{TBD}}` left in published articles (see `knowledge-base/_TBD-REPORT.md`).
+- [ ] No `{{TBD}}` left in published articles (search the knowledge-base folder for `{{TBD`).
 - [ ] Live `backend/.env` and `frontend/.env` hold live values (real SMTP, live portal URL), not the test VM ones.
 - [ ] Keycloak: Microsoft provider locked to EC's tenant; first-login "user already exists" flow set to re-authenticate.
 - [ ] Auth service: `callback_url` checked against an allow-list.

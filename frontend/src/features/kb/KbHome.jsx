@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { articles, sections } from "./kbContent";
 import { ROUTES, kbUrl } from "../../lib/router/path";
-import { SUPPORT_CONTACT } from "../support/supportMeta";
 import SearchBox from "./SearchBox";
 import SectionRows from "./SectionRows";
+import StillStuck from "./StillStuck";
 import useSignedIn from "./useSignedIn";
 
 const PRODUCTS = "products";
@@ -66,13 +66,9 @@ export default function KbHome() {
             <Link key={s.id} to={kbUrl(s.id)} className="kb-link">{s.title}</Link>
           ))}
         </section>
-
-        <p className="kb-sev1">
-          Production down? <Link to={ROUTES.SUPPORT_NEW}>Open a Sev 1 case</Link>
-          {!signedIn && " (sign in first)"}, then call{" "}
-          <a href={SUPPORT_CONTACT.phoneHref}>{SUPPORT_CONTACT.phone}</a>.
-        </p>
       </div>
+
+      <StillStuck />
     </div>
   );
 }
