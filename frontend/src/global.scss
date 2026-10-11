@@ -3697,3 +3697,52 @@ html[data-theme="dark"] .site-chrome .support-main {
 .site-chrome .support-main .p-fileupload .p-fileupload-file-badge {
   display: none;
 }
+
+// Phone menu (the ☰ button, below 960px). PrimeReact sizes the drop-down to
+// the 28px button, so labels broke letter by letter, and the dark theme's
+// transparent-menubar rule made it see-through. Give it a real dark panel.
+@media (max-width: 960px) {
+  // Position the panel against the whole topbar, not the small button, so
+  // it spans the bar under the pill and never runs off the screen edge.
+  .layout-container.site-chrome .layout-topbar .topbar-menus,
+  .layout-container.site-chrome .layout-topbar .p-menubar {
+    position: static !important;
+  }
+
+  .layout-container.site-chrome .layout-topbar .p-menubar .p-menubar-root-list {
+    top: 100%;
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+    margin-top: -0.25rem;
+    padding: 0.5rem !important;
+    background: #11151d !important;
+    border: 1px solid #2c3340 !important;
+    border-radius: 16px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+    z-index: 10;
+
+    .p-menuitem-content,
+    .p-menuitem-link {
+      border-radius: 10px;
+    }
+    .p-menuitem-link {
+      padding: 0.75rem 1rem;
+    }
+    .p-menuitem-text {
+      color: #c9cfda !important;
+      white-space: nowrap;
+    }
+    .p-menuitem.topbar-current .p-menuitem-text {
+      color: #ffffff !important;
+      font-weight: 600;
+    }
+    // The desktop underline for the current page; bold white is enough here.
+    .p-menuitem.topbar-current > .p-menuitem-content {
+      box-shadow: none !important;
+    }
+    .p-menuitem-content:hover {
+      background: rgba(255, 255, 255, 0.06) !important;
+    }
+  }
+}
