@@ -128,21 +128,65 @@ of the frontend build.
 
 ## Test checklist
 
-Signed out:
+Run it in a private window (no cached login), then again signed in. Do
+every step in light and dark mode at least once, on Chrome and Edge, and
+on a phone. Hard refresh (Ctrl+Shift+R) after each deploy.
 
-- [ ] `/kb` loads; search suggestions appear while typing; Enter opens results.
-- [ ] Search filters (type, section) and paging work; Back restores filters.
-- [ ] An article shows breadcrumb, table of contents, code blocks and images.
-- [ ] No "Session expired" dialog on KB pages.
-- [ ] Top bar shows Knowledge base, theme toggle, Sign in. Dark mode readable.
-- [ ] `/support` redirects to `/login`.
+### 1. Knowledge base, signed out
 
-Signed in (Azure and username/password):
+- [ ] `/` opens the KB home, not the login page.
+- [ ] Home: dark hero, "How can we help?", one search pill, common searches, "Browse by product" with six products and article counts, "Beyond products" links, Sev 1 box with the phone number.
+- [ ] Typing two letters in the home search shows up to 3 suggestions and "Not finding it? Sign in to open a case". Clicking away closes the list.
+- [ ] Enter opens `/kb/search?q=...`: "N answers for ...", type pills with counts, results grouped by section, "N more in X" link.
+- [ ] Type pills filter; "N more in X" shows the whole section; "Search everything" clears it; Back restores the previous filters.
+- [ ] A search with no results ("zzzz") shows the "No articles match" message.
+- [ ] Every product row and "Beyond products" link opens its section page; every section lists its articles.
+- [ ] An article shows: breadcrumb, title, summary, type pill, review date; "In this section" menu (current article black); "On this page" with the blue dot following the scroll; code blocks; tables; images; "Still stuck?" band.
+- [ ] The top nav search appears on article and section pages only (not on the KB home or search page) and works the same way.
+- [ ] Links inside articles: links to other articles open in the portal; external links open in a new tab.
+- [ ] Tab title changes per article (browser tab shows the article title).
+- [ ] An unknown URL (`/kb/nope`) shows "Article not found".
+- [ ] No "Session expired" dialog anywhere in the KB.
+- [ ] Top bar: logo, Knowledge base, theme toggle, Sign in. No Cases links.
+- [ ] `/support`, `/support/new`, `/support/guide` all redirect to `/login`.
+- [ ] "Sign in to open a case" goes to login.
 
-- [ ] Login lands on Cases. Top bar shows Cases, Open a case, How support works, Knowledge base.
-- [ ] Open a case with an attachment and a CC. Case number appears; two `.eml` files appear in the mail catcher.
-- [ ] Case detail: add an update, download the attachment, mark resolved, reopen.
-- [ ] "Documentation and knowledge base" buttons and "Looking for documentation instead?" open the right KB product page in a new tab.
-- [ ] Sign out returns to login.
+### 2. Login and session
 
-Phone width (about 390 px): top bar wraps, tables scroll, nothing overflows.
+- [ ] Azure SSO login (EC account) lands on Cases.
+- [ ] Username and password login lands on Cases.
+- [ ] Wrong password shows an error and the button stops spinning.
+- [ ] MFA (TOTP or WebAuthn) for an account that has it.
+- [ ] Account icon (top right) opens the menu; Sign out returns to login and `/support` is blocked again.
+- [ ] Leave a session idle past expiry: the "Session expired" dialog appears on a case page.
+
+### 3. Cases, signed in (must behave exactly as before the redesign)
+
+Compare each step side by side with the live portal.
+
+- [ ] Top bar: Cases, Open a case, How support works, Knowledge base, theme toggle, account icon.
+- [ ] Cases list loads; search box filters; sort columns; table scrolls sideways on a phone.
+- [ ] Open a case: every inquiry type and product appears in the dropdowns; required-field errors show; Sev 1 note shows.
+- [ ] Submit with a CC and 2 attachments. Case number appears; the case shows in the list; two `.eml` files appear in `/var/lib/ec-support/maildump` (acknowledgement and support copy).
+- [ ] Attachment limits: a 6th file, an 11 MB file, more than 20 MB total are each refused with a message.
+- [ ] Case detail: details, description, attachments download and open, add an update (another `.eml`), refresh button.
+- [ ] Mark as resolved, then Reopen case: status changes, a system line appears in Activity, emails are sent.
+- [ ] Admin account: sees other people's cases and internal comments the same way as live.
+- [ ] How support works page: contact cards, steps, severity table, plans table all display.
+- [ ] "Documentation and knowledge base" buttons open the right KB product page in a new tab.
+
+### 4. Look and layout
+
+- [ ] Phone width (about 390 px): top bar wraps into two rows inside the pill, nothing scrolls sideways, buttons readable.
+- [ ] Tablet width (about 800 px): article side menu hides, "On this page" hides below about 990 px.
+- [ ] Dark and light mode on every page: text readable, no white boxes on dark pages, code blocks black.
+- [ ] Browser console (F12) shows no red errors on any page.
+
+### 5. Before go-live (not testable on the VM, but blocking)
+
+- [ ] `npm run test` passes: restore or remove the 15 missing images in `04-Featured-Articles/PKI-Runbooks/emergency-crl-signing.md`.
+- [ ] No `{{TBD}}` left in published articles (see `knowledge-base/_TBD-REPORT.md`).
+- [ ] Live `backend/.env` and `frontend/.env` hold live values (real SMTP, live portal URL), not the test VM ones.
+- [ ] Keycloak: Microsoft provider locked to EC's tenant; first-login "user already exists" flow set to re-authenticate.
+- [ ] Auth service: `callback_url` checked against an allow-list.
+- [ ] Mailbox password rotated and `.env` files no longer tracked in git.
