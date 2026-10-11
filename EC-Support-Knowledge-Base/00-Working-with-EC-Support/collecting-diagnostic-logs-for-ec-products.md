@@ -6,7 +6,7 @@ article_type: "How-to"
 applies_to: "CertSecure Manager, CodeSign Secure, CBOM Secure, SSH Secure (on-premises and SaaS)"
 summary: "How to collect application logs, agent logs, and system details from EC products such as CertSecure Manager and CodeSign Secure, and send them to EC safely."
 keywords: ["EC product logs", "CertSecure Manager logs", "CodeSign Secure logs", "debug logging", "support bundle"]
-last_reviewed: "2026-10-06"
+last_reviewed: "2026-10-08"
 ---
 
 # Collecting Diagnostic Logs for EC Products
