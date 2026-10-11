@@ -34,22 +34,22 @@ Escalate when one or more of these is true:
 ## How to escalate
 
 1. **Reply in the case** with the word "Escalation" in the first line. State the reason, the business impact, and any deadline.
-2. **Call** {{TBD: support phone number}} and ask for the duty manager. Give the case number.
-3. If there is no response within {{TBD: time before moving to the next escalation level}}, contact the next level in the table below.
+2. **Call** +1-469-815-4136 and ask for the duty manager. Give the case number.
+3. If there is no response within 2 hours for Severity 1 or 2, or 1 business day for Severity 3 or 4, contact the next level in the table below.
 
 | Level | Role | Contact |
 |---|---|---|
 | 1 | Assigned support engineer | Case reply |
-| 2 | Support team lead or duty manager | {{TBD: duty manager contact method}} |
-| 3 | Support manager | {{TBD: support manager email or phone}} |
-| 4 | Director of support or customer success | {{TBD: director contact}} |
-| Account | Account manager or technical account manager (TAM) | {{TBD: account manager contact}} |
+| 2 | Support team lead or duty manager | Request through the case or support line |
+| 3 | Support manager | Request through the case or support line |
+| 4 | Director of support or customer success | Request through the case or support line |
+| Account | Account manager or technical account manager (TAM) | info@encryptionconsulting.com |
 
 > **Note:** Customers on plans with a TAM can also escalate through the TAM. See [Support plans and coverage](support-plans-and-coverage.md).
 
 ## What happens after escalation
 
-1. EC acknowledges the escalation within {{TBD: escalation acknowledgement target}}.
+1. EC acknowledges the escalation within 1 business hour.
 2. A manager reviews the case history, severity, and resources.
 3. The manager agrees an action plan with the customer contact, including next steps, owners, and update times.
 4. For critical incidents, EC may set up a bridge call and add senior engineers or specialists, such as HSM or PKI architects.
@@ -72,13 +72,13 @@ For a Severity 1 incident, such as an expired CRL, an offline HSM holding a CA k
 - Call the support line right away. Do not wait for an email reply.
 - Keep a technical contact on the line or bridge.
 - Prepare remote access as allowed by policy.
-- After the incident, EC can provide a root cause summary within {{TBD: time to deliver post-incident report}}.
+- After the incident, EC can provide a root cause summary within 5 business days.
 
 > **Warning:** In a suspected key compromise, do not send any key material, PINs, or passphrases to EC. Isolate the affected systems and follow the organization's incident response plan.
 
 ## Feedback and complaints
 
-General feedback about EC support can be sent to {{TBD: support feedback email address}}. Feedback does not change the case severity, so use the escalation steps above for active issues.
+General feedback about EC support can be sent to info@encryptionconsulting.com. Feedback does not change the case severity, so use the escalation steps above for active issues.
 
 ## Related articles
 

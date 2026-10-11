@@ -28,8 +28,6 @@ Supported public and cloud CAs:
 | AWS Certificate Manager (ACM) | AWS API | Identity and Access Management (IAM) role or access key |
 | AWS Private CA | AWS API | IAM role or access key with AWS Private CA permissions |
 
-Exact connector names in the console: {{TBD: CertSecure Manager public CA connector names}}.
-
 ## Prerequisites
 
 - An active account with each CA, with API access enabled.
@@ -85,12 +83,12 @@ Public CAs must confirm that the requester controls each domain. Common methods:
 | HTTP file | A token is served from `http://<domain>/.well-known/acme-challenge/` (ACME) or a CA-specific path | Public web servers |
 | Email | An approval email is sent to a domain contact | Low-volume, manual cases |
 
-For automation, DNS validation through a supported DNS provider API is the most reliable choice. Supported DNS providers: {{TBD: CertSecure Manager supported DNS providers}}. Under SC-081v3, domain validation reuse periods also shrink (200 days in 2026, 100 days in 2027, 10 days in 2029), so automated validation becomes required in practice.
+For automation, DNS validation through a supported DNS provider API is the most reliable choice. Under SC-081v3, domain validation reuse periods also shrink (200 days in 2026, 100 days in 2027, 10 days in 2029), so automated validation becomes required in practice.
 
 ### Phase 3: Add the connector in CertSecure Manager
 
 1. Sign in as an administrator.
-2. Go to {{TBD: CertSecure Manager menu path for adding a CA connector}}.
+2. Go to the **CA Connectors** page and add a new connector.
 3. Select the CA type.
 4. Enter the API endpoint or ACME directory URL and the credentials from Phase 1.
 5. Select the products or certificate profiles to expose (for example, OV TLS or DV TLS).

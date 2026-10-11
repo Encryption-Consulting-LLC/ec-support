@@ -130,15 +130,16 @@ Configure the portal in this order. Each step depends on the ones before it.
 
 Then create your first certificate, application, and team mapping. See [Approval workflows and signing policies](approval-workflows-and-signing-policies.md).
 
-## Create a signing key and certificate
+1. Sign in to the CodeSign Secure console as an administrator.
+2. Open the **HSM Configuration** page.
+3. Enter the PKCS#11 library path, slot or token label, and the partition credential.
+4. Save and run the connection test, if offered.
 
 In **Keys and Certificates > Add New Certificate**, the private key is always generated inside the HSM.
 
-| Method | Use for |
-|---|---|
-| Self Signed Certificate | Testing and development. Issued by the internal CA, so operating systems don't trust it unless you install the certificate chain from **Signing Tools**. |
-| Certificate Signing Request (CSR) | Production. Submit the CSR to a public or enterprise CA. Every CSR creates a new key pair. |
-| Import Certificate | Uploading the certificate your CA issued for a CSR created in CodeSign Secure. The Certificate Name must match the name used for the CSR. |
+1. Generate a key pair in the HSM from the **Keys** page in CodeSign Secure.
+2. Create a Certificate Signing Request (CSR) and submit it to the public or internal Certificate Authority (CA).
+3. Import the issued certificate and full chain into CodeSign Secure.
 
 For RSA and ECDSA keys, CodeSign Secure supports RSA 2048, 3072, and 4096 bits (default 4096), and ECDSA P-256, P-384, and P-521. Public CAs require code signing RSA keys of at least 3072 bits. Check which ECDSA curves your CA accepts before you generate the CSR.
 

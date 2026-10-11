@@ -31,7 +31,7 @@ No. It supports agent-based discovery, agentless discovery over SSH with a servi
 
 ### Which platforms are supported?
 
-Linux, Unix, and Windows (OpenSSH), plus cloud and Kubernetes environments. Exact operating system versions: {{TBD: SSH Secure supported platforms and versions}}.
+Linux, Unix, and Windows (OpenSSH), plus cloud and Kubernetes environments.
 
 ### Where does Windows store SSH keys for administrators?
 
@@ -39,7 +39,7 @@ On Windows with OpenSSH, accounts in the local Administrators group do not use t
 
 ### Does discovery copy private keys off servers?
 
-Inventory needs only fingerprints and metadata, such as type, size, location, and whether a passphrase is set. Confirm the exact collection behavior in {{TBD: SSH Secure data collection reference}}.
+Inventory needs only fingerprints and metadata, such as type, size, location, and whether a passphrase is set.
 
 ### Will rotation lock out automated jobs?
 
@@ -55,7 +55,7 @@ Ed25519 is a good default. Use RSA with 3072 bits or more where Ed25519 is not s
 
 ### Can private keys be stored in an HSM?
 
-Yes. SSH Secure supports Hardware Security Module (HSM) backed private key storage, which keeps private keys out of reach of host compromise. Supported HSM models: {{TBD: SSH Secure supported HSMs}}.
+Yes. SSH Secure supports Hardware Security Module (HSM) backed private key storage, which keeps private keys out of reach of host compromise.
 
 ### Which standards does it help with?
 

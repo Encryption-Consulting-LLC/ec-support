@@ -46,8 +46,8 @@ Command options change between releases. Verify against the vendor documentation
 ### Phase 1: Scope
 
 1. Join the kickoff call. Share applications, key types, expected operations per second, and compliance needs.
-2. Agree the platform, region, and number of partitions or key stores: {{TBD: HSMaaS hosting regions and sizing tiers}}.
-3. Agree network connectivity (internet, VPN, or private link): {{TBD: HSMaaS network endpoints and ports per platform}}.
+2. Agree the platform, region, and number of partitions or key stores.
+3. Agree network connectivity (internet, VPN, or private link). EC provides the endpoints and ports during onboarding.
 
 ### Phase 2: Build (EC)
 
@@ -137,7 +137,7 @@ sudo /opt/cloudhsm/bin/configure-pkcs11 -a <HSM_ENI_IP>
 ```
 
 4. Allow TCP ports 2223 to 2225 from the client to the cluster security group.
-5. Who owns the cluster AWS account: {{TBD: HSMaaS AWS account ownership model}}.
+5. Who owns the cluster AWS account, as agreed during onboarding.
 
 #### Azure Managed HSM
 

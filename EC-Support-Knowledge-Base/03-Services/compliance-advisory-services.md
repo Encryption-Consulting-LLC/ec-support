@@ -91,7 +91,7 @@ Frameworks commonly in scope:
 
 ## Typical timeline
 
-Duration depends on the number of frameworks and business units. Typical duration: {{TBD: typical duration for a compliance advisory engagement}}.
+Duration depends on the number of frameworks and business units. EC confirms the timeline during scoping.
 
 ## How to request
 

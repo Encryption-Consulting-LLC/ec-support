@@ -33,7 +33,7 @@ SSH Secure looks in these common locations:
 - SSH Secure platform deployed and reachable.
 - A target list of hosts with owners.
 - For agentless discovery: a service account on each host that can read every user's `.ssh` directory (usually through a scoped sudo rule on Linux), and network access on TCP 22 or the custom SSH port.
-- For agent-based discovery: the agent package and installation method. See {{TBD: SSH Secure agent installation guide}}.
+- For agent-based discovery: the agent package and installation method, provided by EC.
 - Approval from the security team, since discovery reads sensitive files.
 
 ## Before starting
@@ -59,15 +59,15 @@ SSH Secure looks in these common locations:
 from="<sshsecure-collector-ip>" ssh-ed25519 <public-key> svc-sshsecure
 ```
 
-3. Give the account read access to `.ssh` directories through a narrow sudo rule. The exact commands needed: {{TBD: SSH Secure agentless sudo command list}}.
+3. Give the account read access to `.ssh` directories through a narrow sudo rule.
 
 **Agent-based**
 1. Install the agent using the organization's software deployment tool.
-2. Register the agent with the platform: {{TBD: SSH Secure agent registration steps}}.
+2. Register the agent with the platform.
 
 ### Phase 2: Create the discovery job
 
-1. Go to {{TBD: SSH Secure menu path for discovery jobs}}.
+1. Go to the **Discovery Jobs** page.
 2. Add hosts by name, IP range, or group (for example, from a configuration management database (CMDB) import).
 3. Select the collection method and credentials.
 4. Set the schedule. Daily discovery keeps the inventory current.

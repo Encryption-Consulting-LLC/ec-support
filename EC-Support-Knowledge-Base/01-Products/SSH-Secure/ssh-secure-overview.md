@@ -33,9 +33,7 @@ SSH keys give people and automated processes direct access to servers. Over time
 2. **Collection:** Either a lightweight agent on each host, or agentless collection where the platform connects over SSH (or a Windows remote method) with a privileged service account. Many estates mix both.
 3. **Analysis:** The platform matches public keys in `authorized_keys` files with known private keys and owners, and builds trust relationships between hosts and accounts.
 4. **Action:** Rotation and removal jobs update `authorized_keys` files and key pairs on the hosts, under policy and approval rules.
-5. **Reporting:** Dashboards, compliance reports, and logs that can be exported to a Security Information and Event Management (SIEM) tool. SIEM connectors: {{TBD: SSH Secure supported SIEM and ITSM integrations}}.
-
-Agent operating system support and agent package names: {{TBD: SSH Secure agent supported platforms and versions}}.
+5. **Reporting:** Dashboards, compliance reports, and logs that can be exported to a Security Information and Event Management (SIEM) tool.
 
 ## Supported environments
 
@@ -43,8 +41,8 @@ Agent operating system support and agent package names: {{TBD: SSH Secure agent 
 |---|---|
 | Linux and Unix | OpenSSH `authorized_keys`, host keys, and user private keys |
 | Windows | OpenSSH for Windows, including `administrators_authorized_keys` for members of the Administrators group |
-| Cloud | Virtual machines in public clouds and cloud-provided key stores {{TBD: list of supported cloud providers and services}} |
-| Kubernetes | Keys used by workloads and nodes {{TBD: SSH Secure Kubernetes coverage details}} |
+| Cloud | Virtual machines in public clouds and cloud-provided key stores |
+| Kubernetes | Keys used by workloads and nodes |
 
 ## Deployment options
 
@@ -59,7 +57,6 @@ A 15-day free trial is available from the EC website.
 
 - Read the [SSH Secure FAQ](ssh-secure-faq.md).
 - Open a case through the portal. See [How to open a support case](../../00-Working-with-EC-Support/how-to-open-a-support-case.md).
-- Product documentation: {{TBD: SSH Secure product documentation URL}}.
 
 ## Related articles
 

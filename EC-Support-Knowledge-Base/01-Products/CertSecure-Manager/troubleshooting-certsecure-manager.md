@@ -20,8 +20,6 @@ This article lists common CertSecure Manager problems, their likely causes, and 
 3. Run the quick checks for that area.
 4. If the issue remains, collect the items listed under "Before opening a case" and contact EC support.
 
-Location of job logs and platform logs: {{TBD: CertSecure Manager job log location and platform log file paths}}.
-
 ## Quick checks
 
 Run these from the host that runs the failing component (the platform server or the on-premises component).
@@ -101,7 +99,7 @@ openssl rsa  -noout -modulus -in <key.pem>  | openssl sha256
 | ServiceNow HTTP 401 or 403 | Bad credentials or missing roles or ACLs | Fix the integration user |
 | Console certificate warning | Console TLS certificate expired or not trusted | Renew the console certificate from a trusted CA |
 | On-premises component shows offline | Outbound HTTPS blocked by proxy, or component service stopped | Check proxy rules and the component service |
-| Slow console | Database or server resources low | Check resource use against the sizing guide {{TBD: sizing guide}} |
+| Slow console | Database or server resources low | Check CPU, memory, and database resource use |
 
 ## Before opening a case
 

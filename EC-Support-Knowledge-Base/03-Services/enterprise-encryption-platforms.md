@@ -88,7 +88,7 @@ Platforms EC works with include:
 
 ## Typical timeline
 
-Duration depends on the platform, the number of integrations, and migration scope. Typical duration: {{TBD: typical duration for an enterprise encryption platform engagement}}.
+Duration depends on the platform, the number of integrations, and migration scope. EC confirms the timeline during scoping.
 
 ## How to request
 

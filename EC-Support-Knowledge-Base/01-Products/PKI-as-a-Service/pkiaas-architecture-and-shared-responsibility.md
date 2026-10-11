@@ -28,8 +28,8 @@ Most PKI outages come from operational gaps: an expired Certificate Revocation L
 3. **HSM layer.** EC deploys, patches, and monitors the HSMs. Key material never leaves the HSM in plain form. Backups are encrypted under HSM-protected keys.
 4. **Revocation services.** CRLs and Authority Information Access (AIA) files are published to highly available HTTP endpoints. Online Certificate Status Protocol (OCSP) responders answer status checks when included in scope.
 5. **Enrollment layer.** Clients request certificates over Automated Certificate Management Environment (ACME), Simple Certificate Enrollment Protocol (SCEP), Enrollment over Secure Transport (EST), Windows enrollment (DCOM or WSTEP), or Microsoft Intune connectors.
-6. **Customer connectivity.** The customer network reaches the enrollment and revocation endpoints over the internet or a private link. Required endpoints and ports: {{TBD: PKIaaS network endpoints and ports list}}.
-7. **Monitoring and logging.** EC monitors CA health, HSM health, CRL freshness, and certificate expiry of CA certificates. Audit logs can be exported to the customer Security Information and Event Management (SIEM) system: {{TBD: PKIaaS log export method and format}}.
+6. **Customer connectivity.** The customer network reaches the enrollment and revocation endpoints over the internet or a private link.
+7. **Monitoring and logging.** EC monitors CA health, HSM health, CRL freshness, and certificate expiry of CA certificates. Audit logs can be exported to the customer Security Information and Event Management (SIEM) system.
 
 ### Typical hierarchy
 
@@ -59,7 +59,7 @@ Contoso-Root-CA (offline, HSM)
 | Disaster recovery | Maintain backups and recovery plan for CAs and HSMs | Test business recovery of dependent applications |
 | Incident response | Detect and report platform incidents | Report suspected key compromise or misuse to EC at once |
 
-Contract terms may change some lines. The signed service description wins in case of conflict: {{TBD: PKIaaS service description document reference}}.
+Contract terms may change some lines. The signed service description wins in case of conflict.
 
 ## Key terms
 
@@ -75,7 +75,7 @@ Contract terms may change some lines. The signed service description wins in cas
 
 ## Common questions
 
-**Does EC hold the CA private keys?** The keys stay inside HSMs operated by EC. The customer owns the CA and its keys under the contract. Key export rules: {{TBD: PKIaaS key ownership and exit terms}}.
+**Does EC hold the CA private keys?** The keys stay inside HSMs operated by EC. The customer owns the CA and its keys under the contract.
 
 **Can PKIaaS sit alongside an existing AD CS?** Yes. Many customers run both during migration and cross-issue or move templates in phases.
 

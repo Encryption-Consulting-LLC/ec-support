@@ -121,7 +121,9 @@ Both give you the public certificate only. The private key stays in the HSM.
 signtool sign /csp "Encryption Consulting Key Storage Provider" /kc <key-name> /fd SHA256 /f <path-to-certificate>.pem /tr http://timestamp.digicert.com /td SHA256 <file-to-sign>
 ```
 
-Example:
+The provider name is `<CodeSign Secure KSP name>` (run `certutil -csplist` to see it), and the key container is `<key alias>` as shown for the key in the CodeSign Secure console.
+
+**Option C: digest signing library.** SignTool also supports a digest signing library with `/dlib` and `/dmdf`. Use this only if CodeSign Secure ships such a library.
 
 ```cmd
 signtool sign /csp "Encryption Consulting Key Storage Provider" /kc evcodesigning /fd SHA256 /f evcodesigning.pem /tr http://timestamp.digicert.com /td SHA256 setup.exe

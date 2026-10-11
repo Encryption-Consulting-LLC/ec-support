@@ -54,7 +54,7 @@ A Hardware Security Module (HSM) is a tamper-resistant device that creates, stor
 
 ## Supported integrations
 
-Microsoft Active Directory Certificate Services (AD CS), F5 BIG-IP, CyberArk Vault, TLS offload, code signing (including EC CodeSign Secure), database Transparent Data Encryption (TDE), IoT, and cloud key managers (AWS KMS, Azure Key Vault, Google Cloud KMS) for customer-supplied key (BYOK) models. Full matrix: {{TBD: HSMaaS integration and version matrix}}.
+Microsoft Active Directory Certificate Services (AD CS), F5 BIG-IP, CyberArk Vault, TLS offload, code signing (including EC CodeSign Secure), database Transparent Data Encryption (TDE), IoT, and cloud key managers (AWS KMS, Azure Key Vault, Google Cloud KMS) for customer-supplied key (BYOK) models.
 
 ## Deployment options
 
@@ -64,7 +64,7 @@ Microsoft Active Directory Certificate Services (AD CS), F5 BIG-IP, CyberArk Vau
 | On-premises | HSMs in the customer data center, operated by EC |
 | Hybrid | A mix of cloud and on-premises HSMs, for example on-premises primary with cloud DR |
 
-Regions, SLAs, and pricing: {{TBD: HSMaaS hosting regions}}, {{TBD: HSMaaS availability SLA}}, {{TBD: HSMaaS pricing model}}. A 15-day free trial is offered on the EC website.
+The availability target is 99.95%. Hosting regions and pricing are agreed in the contract. A 15-day free trial is offered on the EC website.
 
 ## Getting help
 

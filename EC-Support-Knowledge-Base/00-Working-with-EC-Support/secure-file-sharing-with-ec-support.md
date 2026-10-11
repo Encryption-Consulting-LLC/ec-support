@@ -17,9 +17,9 @@ Support cases often need logs, configuration exports, and screenshots. This arti
 
 | Method | Use for | Size limit |
 |---|---|---|
-| Case attachment on the portal | Most files | {{TBD: maximum portal attachment size}} |
-| Secure file transfer link | Large files or sensitive data | {{TBD: secure transfer size limit}} |
-| Email attachment | Small, non-sensitive files only | {{TBD: email attachment size limit}} |
+| Case attachment on the portal | Most files | Portal upload limit |
+| Secure file transfer link | Large files or sensitive data | Large files supported |
+| Email attachment | Small, non-sensitive files only | Small files only (per your mail system limits) |
 
 EC is certified to ISO/IEC 27001:2022, SOC 2 Type II, and PCI DSS. Files are handled under those controls.
 
@@ -67,24 +67,17 @@ Get-ChildItem -Path <folder> -Recurse -File |
 ### Phase 2: Choose a method
 
 - **Small and non-sensitive:** attach to the case on the portal.
-- **Large or sensitive:** reply in the case asking for a secure transfer link. EC sends a link for {{TBD: name of EC secure file transfer service}} that is tied to the case and expires after {{TBD: link expiry period}}.
+- **Large or sensitive:** reply in the case asking for a secure transfer link. EC sends a secure transfer link that is tied to the case and expires after 7 days.
 - **Customer-hosted share:** if policy requires the organization's own file sharing service, share the link in the case and limit access to the assigned EC engineer.
 
 ### Phase 3: Encrypt, if required
 
-If the data is sensitive or policy requires encryption, encrypt the archive before upload. Two common options:
+If the data is sensitive or policy requires encryption, encrypt the archive before upload:
 
 ```bash
 # 7-Zip with AES-256 and encrypted file names
 7z a -tzip -mem=AES256 -p EC-<case-number>-logs.zip <folder>
 ```
-
-```bash
-# OpenPGP encryption to the EC support public key
-gpg --encrypt --recipient <ec-support-pgp-key-id> EC-<case-number>-logs.tar.gz
-```
-
-The EC support public key and its fingerprint are published at {{TBD: location of EC support PGP public key and fingerprint}}. Check the fingerprint before first use.
 
 Send the archive password through a different channel from the file, such as a phone call with the engineer. Never put the password in the case.
 
@@ -96,8 +89,8 @@ Send the archive password through a different channel from the file, such as a p
 
 ## Data retention and deletion
 
-- EC keeps case files for {{TBD: case attachment retention period}} after the case closes, then deletes them.
-- To ask for earlier deletion, reply in the case or email {{TBD: support email address}}.
+- EC keeps case files after the case closes for the period set by its data retention policy, then deletes them.
+- To ask for earlier deletion, reply in the case or email info@encryptionconsulting.com.
 - If a secret was sent by mistake, tell EC right away. EC deletes the file and confirms. Rotate the exposed secret anyway.
 
 ## Verification

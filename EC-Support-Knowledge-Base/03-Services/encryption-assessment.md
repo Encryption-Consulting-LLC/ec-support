@@ -76,7 +76,7 @@ The assessment looks at encryption and key management across the environment and
 
 ## Typical timeline
 
-Duration depends on the number of systems and locations in scope. Typical duration: {{TBD: typical duration for an encryption assessment}}.
+Duration depends on the number of systems and locations in scope. EC confirms the timeline during scoping.
 
 ## How to request
 

@@ -54,16 +54,16 @@ Response target means the time from case creation (or the phone call, for Severi
 
 | Severity | Standard | Premium | Premium Plus |
 |---|---|---|---|
-| 1 Critical | {{TBD: Standard Sev 1 response target}} | {{TBD: Premium Sev 1 response target}} | {{TBD: Premium Plus Sev 1 response target, 24x7}} |
-| 2 Major | {{TBD: Standard Sev 2 response target}} | {{TBD: Premium Sev 2 response target}} | {{TBD: Premium Plus Sev 2 response target}} |
-| 3 Minor | {{TBD: Standard Sev 3 response target}} | {{TBD: Premium Sev 3 response target}} | {{TBD: Premium Plus Sev 3 response target}} |
-| 4 Low | {{TBD: Standard Sev 4 response target}} | {{TBD: Premium Sev 4 response target}} | {{TBD: Premium Plus Sev 4 response target}} |
+| 1 Critical | 4 business hours | 1 hour (24x7) | 30 minutes (24x7) |
+| 2 Major | 8 business hours | 4 hours | 2 hours |
+| 3 Minor | 2 business days | 1 business day | 8 business hours |
+| 4 Low | 3 business days | 2 business days | 1 business day |
 
-> **Note:** Plan names and targets are placeholders until confirmed by EC. Contract terms always take priority over this article: {{TBD: confirm plan names and link to support terms}}.
+> **Note:** Contract terms always take priority over this article.
 
 ## Requirements for Severity 1 and Severity 2
 
-- A named support contact must call {{TBD: support phone number}} after opening the case.
+- A named support contact must call +1-469-815-4136 after opening the case.
 - A technical contact must stay available for the life of the case. If no contact is available, EC may lower the severity until someone is reachable.
 - EC works Severity 1 cases continuously during covered hours. Under plans with 24x7 coverage, work continues around the clock.
 - Remote access (screen sharing) should be ready, as allowed by the organization's security policy.
@@ -72,10 +72,10 @@ Response target means the time from case creation (or the phone call, for Severi
 
 | Severity | Update frequency |
 |---|---|
-| 1 | {{TBD: Sev 1 update frequency}} |
-| 2 | {{TBD: Sev 2 update frequency}} |
-| 3 | {{TBD: Sev 3 update frequency}} |
-| 4 | {{TBD: Sev 4 update frequency}} |
+| 1 | Every 2 hours |
+| 2 | Every 8 hours |
+| 3 | Every 2 business days |
+| 4 | Weekly |
 
 ## Common questions
 

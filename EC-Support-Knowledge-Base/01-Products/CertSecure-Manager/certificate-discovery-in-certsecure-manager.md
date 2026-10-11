@@ -49,11 +49,11 @@ Discovery runs continuously on a schedule, so new and rogue certificates are fla
 
 ### Phase 2: Create a network discovery job
 
-1. Go to {{TBD: CertSecure Manager menu path for discovery jobs}}.
+1. Go to the **Discovery Jobs** page.
 2. Create a job and enter the ranges, ports, and exclusions.
 3. Select the discovery component that has network access to those ranges.
 4. Set the schedule (for example, daily for production web ranges, weekly for wider ranges).
-5. Set concurrency and timeout values. Defaults: {{TBD: default scan concurrency and timeout}}. Lower concurrency on slow links or across firewalls.
+5. Set concurrency and timeout values. Lower concurrency on slow links or across firewalls.
 6. Save and run the job once on demand.
 
 > **Note:** A server that hosts several sites with Server Name Indication (SNI) returns a certificate based on the hostname sent by the client. Scanning by IP address may only show the default certificate. Add hostnames to the scope to find SNI certificates.
@@ -71,7 +71,7 @@ Discovery runs continuously on a schedule, so new and rogue certificates are fla
 3. Flag weak keys and algorithms, for example RSA keys under 2048 bits or SHA-1 signatures.
 4. Assign an owner and an application to every certificate. Use tags or groups for business units.
 5. Mark certificates that are out of scope (for example, vendor appliances managed by a third party) so they do not raise noise.
-6. Remove duplicates where the same certificate was found by several sources. The platform matches certificates by thumbprint or serial number and issuer: {{TBD: CertSecure Manager de-duplication behavior}}.
+6. Remove duplicates where the same certificate was found by several sources. The platform matches certificates by thumbprint or serial number and issuer.
 
 ### Phase 5: Move to automation
 

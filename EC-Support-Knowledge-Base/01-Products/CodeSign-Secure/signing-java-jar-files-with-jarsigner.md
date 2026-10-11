@@ -76,8 +76,7 @@ For an ECDSA key, use `-sigalg SHA256withECDSA` (or `SHA384withECDSA`).
    [server_url]
    url = https://codesign.example.com
 
-   [pfxfile_path]
-   path = <absolute path to the authentication certificate .pfx>
+Enter the token PIN when asked. Note the alias of the signing key.
 
    [pfxfile_passwd]
    passwd = <PFX password>

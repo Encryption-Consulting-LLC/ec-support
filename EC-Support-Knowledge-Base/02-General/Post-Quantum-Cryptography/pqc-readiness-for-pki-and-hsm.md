@@ -89,7 +89,7 @@ It depends on client support. Many organizations build a classical root now with
 
 ### Can EC managed services support PQC?
 
-PKI-as-a-Service and HSM-as-a-Service PQC support is {{TBD: confirm PQC algorithm support and timeline for PKIaaS and HSMaaS}}. See [PKI-as-a-Service overview](../../01-Products/PKI-as-a-Service/pki-as-a-service-overview.md) and [HSM-as-a-Service overview](../../01-Products/HSM-as-a-Service/hsm-as-a-service-overview.md).
+PQC support for PKI-as-a-Service and HSM-as-a-Service is on the EC roadmap. Contact EC for the current status. See [PKI-as-a-Service overview](../../01-Products/PKI-as-a-Service/pki-as-a-service-overview.md) and [HSM-as-a-Service overview](../../01-Products/HSM-as-a-Service/hsm-as-a-service-overview.md).
 
 ## Related articles
 

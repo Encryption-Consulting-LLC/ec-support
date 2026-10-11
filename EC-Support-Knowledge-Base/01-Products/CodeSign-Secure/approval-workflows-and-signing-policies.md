@@ -41,7 +41,10 @@ CodeSign Secure v3.2.1  and later.
 
 ## Approval policies
 
-Each environment has exactly one policy.
+- Administrator access to the CodeSign Secure console.
+- Users and groups available from the identity source.
+- Keys and certificates already created. See [CodeSign Secure prerequisites and HSM integration](codesign-secure-prerequisites-and-hsm-integration.md).
+- A list of projects, owners, and approvers agreed with the security team.
 
 | Policy | What happens to a signing request | Who approves |
 |---|---|---|
@@ -62,7 +65,7 @@ Each environment has exactly one policy.
 
 ## Roles and permissions
 
-CodeSign Secure has five default roles. **Every role except System Admin starts with no permissions**, so a System Admin must enable them before users with those roles can do anything.
+CodeSign Secure uses Role-Based Access Control (RBAC). Typical roles are below.
 
 | Role | Suggested permissions |
 |---|---|
@@ -92,6 +95,9 @@ CodeSign Secure has five default roles. **Every role except System Admin starts 
 - At least one active SMTP configuration in **System Setup > Email > Config**, and active templates for the notifications you use, including **Signing MFA Code**. Without them, approval notifications and MFA codes aren't sent.
 - A list of applications, owners, teams, and approvers agreed with the security team.
 
+1. Create one project (or equivalent grouping) per product or team on the **Projects** page.
+2. Use separate keys for test and production. A test key should use a certificate from an internal Certificate Authority (CA), not a public one.
+3. Assign each key to exactly one project.
 ## Procedure
 
 ### Phase 1: Enable role permissions
@@ -106,7 +112,13 @@ CodeSign Secure has five default roles. **Every role except System Admin starts 
 2. Enter the **Environment Name**, choose the **Policy Type**, set **Status** to Active, and select **Needs MFA** if required.
 3. For **Quorum**, select the eligible approvers and the number of approvals required. Choose more eligible approvers than the minimum, so one absence doesn't block a release.
 
-Only active environments can be assigned to certificates.
+1. Choose the approval mode:
+   - **No approval:** suitable for test keys and tightly controlled pipelines.
+   - **Single approval:** one approver from a group must accept.
+   - **M of N quorum:** M approvers out of a group of N must accept. For example, 2 of 4 release managers.
+2. Choose the approver group. Use a group, not named individuals.
+3. Block self-approval so a requester cannot approve their own request.
+4. Set the approval timeout. After the timeout, the request expires and must be submitted again.
 
 ### Phase 3: Assign each certificate to an environment
 
@@ -141,7 +153,9 @@ If nobody acts within 100 seconds, the request times out and the action buttons 
 
 ## Verification
 
-Test each production policy before you rely on it:
+- Audit log entries show requester, approver, key, file name or hash, and result for each test.
+- Real-time alerts fire for rejected or unauthorized attempts, if configured.
+- Reports for auditors show the policy and its history.
 
 1. Sign as a team member with a Certificate Owner or Quorum certificate. Confirm the request appears for the right approvers and that the MFA step works.
 2. Let a request time out. Confirm the signing command fails and the **Expired Requests** count on the Dashboard goes up.

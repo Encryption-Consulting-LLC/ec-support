@@ -21,12 +21,12 @@ This article explains how Encryption Consulting (EC) plans maintenance on its ho
 | PKI-as-a-Service (PKIaaS) | EC |
 | HSM-as-a-Service (HSMaaS) | EC, with HSM firmware changes agreed in advance |
 | On-premises EC products | The customer, using EC release packages |
-| On-premises agents used with SaaS | The customer, or automatic update if enabled {{TBD: confirm agent auto-update support}} |
+| On-premises agents used with SaaS | The customer, or automatic update if enabled |
 
 ## Planned maintenance for hosted services
 
-- **Standard window:** {{TBD: regular maintenance window day, time, and time zone}}.
-- **Advance notice:** at least {{TBD: notice period for planned maintenance}} for work that may cause downtime or noticeable change.
+- **Standard window:** outside business hours, announced in advance.
+- **Advance notice:** at least 7 days for work that may cause downtime or noticeable change.
 - **Expected impact:** each notice states the services affected, expected downtime (if any), and actions needed from customers.
 - **Regions:** where a service runs in several regions, EC may schedule regions at different times to limit impact.
 
@@ -34,15 +34,14 @@ Most updates are designed to run without downtime. For PKIaaS, EC plans maintena
 
 ## Emergency maintenance
 
-EC may apply urgent changes outside the standard window to fix a security issue or prevent an outage. EC gives as much notice as possible, at least {{TBD: minimum notice for emergency maintenance}} when the situation allows, and posts updates until the work is complete.
+EC may apply urgent changes outside the standard window to fix a security issue or prevent an outage. EC gives as much notice as possible, at least 2 hours when the situation allows, and posts updates until the work is complete.
 
 ## How notices are sent
 
 - Email to named support contacts and subscribed users.
 - Banner on the support portal.
-- Status page: {{TBD: service status page URL}}.
 
-To subscribe more people, open a Severity 4 case with their names and email addresses, or use {{TBD: portal subscription setting, if available}}.
+To subscribe more people, open a Severity 4 case with their names and email addresses.
 
 > **Tip:** Use a shared mailbox or distribution list for notices so they do not depend on one person.
 
@@ -50,15 +49,13 @@ To subscribe more people, open a Severity 4 case with their names and email addr
 
 | Type | Contents | Typical frequency |
 |---|---|---|
-| Major release | New features, possible changes to requirements | {{TBD: major release frequency}} |
-| Minor release | Enhancements and fixes | {{TBD: minor release frequency}} |
+| Major release | New features, possible changes to requirements | As announced in release notes |
+| Minor release | Enhancements and fixes | As announced in release notes |
 | Patch or hotfix | Defect and security fixes | As needed |
-
-Version numbering: {{TBD: EC version number format, for example major.minor.patch}}.
 
 ## Release notes
 
-Release notes for each version are published at {{TBD: release notes location on the portal}}. Each set of notes includes:
+Release notes for each version are published at the Release Notes section of the support portal. Each set of notes includes:
 
 - New features and changes.
 - Fixed issues.
@@ -78,8 +75,8 @@ Release notes for each version are published at {{TBD: release notes location on
 
 ## Support lifecycle
 
-- EC supports the current release and {{TBD: number of prior releases supported}} prior releases.
-- End-of-support dates are listed at {{TBD: product lifecycle page location}}.
+- EC supports the current release and the prior releases listed in the product lifecycle policy.
+- End-of-support dates are listed in the release notes, or available on request.
 - After end of support, EC gives best-effort help only and may ask for an upgrade before investigating.
 
 ## Third-party changes

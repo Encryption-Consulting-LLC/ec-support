@@ -130,7 +130,6 @@ These stages line up with the EC [PQC maturity model](../02-General/Post-Quantum
 - [PQC advisory and readiness assessment](../03-Services/pqc-advisory-and-readiness-assessment.md): inventory, quantum risk, algorithm selection, and a phased roadmap.
 - [Building a PQC migration roadmap](../02-General/Post-Quantum-Cryptography/building-a-pqc-migration-roadmap.md): how to sequence the work.
 - [Crypto agility explained](../02-General/Post-Quantum-Cryptography/crypto-agility-explained.md): design principles for future change.
-- [Free EC tools](../00-Working-with-EC-Support/free-ec-tools-csr-generator-and-decoders.md): includes the 20-question PQC Readiness Assessment.
 
 ## Frequently asked questions
 

@@ -31,10 +31,10 @@ The private key never reaches the agent. If the pipeline is compromised, the att
 
 ## Before starting
 
-- **Use a No Approval environment for automated signing.** Approvals time out after a fixed 100 seconds, and a timed-out request fails the job. If releases need human approval, use your CI/CD platform's approval gate before the signing step. See [Approval workflows and signing policies](approval-workflows-and-signing-policies.md).
-- **Use a dedicated CodeSign Secure user per pipeline**, with only the **CodeSigning Operation** permission (plus **API Access** if the pipeline calls the API), and its own authentication certificate.
-- **Sign only on protected branches or release tags**, so pull requests from forks can't reach the secrets.
-- **Never commit** `.pfx` files, `ec_pkcs11client.ini`, passwords, or passcodes. Make sure secrets are masked in job logs.
+- CodeSign Secure client (`<CodeSign Secure client package>`) installed on the agent, or installed at job start.
+- A dedicated service identity in CodeSign Secure for each pipeline, with access only to the keys it needs.
+- The credential stored as a secret in the CI/CD platform.
+- Network access from agents to the CodeSign Secure API (HTTPS 443 by default) and to the Time Stamping Authority (TSA).
 
 ## Set up a Windows agent (KSP and SignTool)
 
