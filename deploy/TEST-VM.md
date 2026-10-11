@@ -97,7 +97,7 @@ Expect `{"ok":true}`. Then open the test hostname, pass Cloudflare Access, and
 sign in. Open one case and confirm an `.eml` file appears:
 
 ```bash
-ls -lt /var/lib/ec-support/maildump | head
+sudo ls -lt /var/lib/ec-support/maildump | head
 ```
 
 ## Deploying a new version to test

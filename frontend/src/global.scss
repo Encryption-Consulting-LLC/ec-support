@@ -2793,6 +2793,13 @@ html[data-theme="dark"] .kb-band {
   input::placeholder {
     color: #7a8291;
   }
+  // The pill shows focus (ring below), so the input itself draws no box.
+  // Beats the page-wide .kb :focus-visible outline.
+  input:focus,
+  input:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+  }
   &:focus-within {
     box-shadow: 0 0 0 3px rgba(52, 112, 240, 0.55);
   }
@@ -3237,7 +3244,7 @@ html[data-theme="dark"] .kb-band {
   h3,
   h4 {
     color: var(--kb-ink);
-    scroll-margin-top: 96px; // keep anchored headings clear of the sticky topbar
+    scroll-margin-top: 130px; // keep anchored headings clear of the sticky topbar
   }
   h2 {
     margin: 2.5rem 0 0.75rem;
@@ -3420,8 +3427,9 @@ html[data-theme="dark"] .kb-band {
       .sidebar-logo {
         margin-right: 1rem !important;
       }
-      // The right-hand group (search, theme, sign in) gets its own full row.
-      > div:last-child {
+      // When the right-hand group holds the KB search, it gets its own full
+      // row. Without it (case pages), the icons stay on the logo row.
+      > div:last-child:has(.kb-search-nav) {
         flex: 1 1 100%;
       }
     }
@@ -3631,4 +3639,61 @@ html[data-theme="dark"] .site-chrome .support-main {
 .site-chrome .footer-wrapper {
   background: $kb-band;
   border-top: 1px solid #1a1f29;
+}
+
+// Cases page, "Documentation and knowledge base" card: the buttons are
+// right-aligned and wrap raggedly on phones. Below 640px, lay them out as an
+// even two-column grid of full-width buttons.
+@media (max-width: 640px) {
+  .site-chrome .support-main .content-card .flex-wrap.gap-2.justify-content-end {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+
+    > a,
+    > a .p-button {
+      width: 100%;
+    }
+    > a .p-button {
+      justify-content: center;
+    }
+    > a:last-child {
+      grid-column: 1 / -1; // Education Center spans the row
+    }
+  }
+}
+
+// Footer: on narrow screens the three groups (social, contact links,
+// copyright) squeeze into one row and their text breaks letter by letter.
+// Let them wrap, keep each link on one line, and stack centered on phones.
+.site-chrome .layout-footer {
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+
+  a,
+  span {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center !important;
+    text-align: center !important;
+
+    > div {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem 1.5rem !important;
+    }
+    > span {
+      white-space: normal; // the copyright line may wrap between words
+    }
+  }
+}
+
+// File picker on New case: files are sent with the form, not
+// uploaded on their own, so PrimeReact's "Pending" badge reads like a stuck
+// upload. Hide it; the file name, size and remove button stay.
+.site-chrome .support-main .p-fileupload .p-fileupload-file-badge {
+  display: none;
 }
