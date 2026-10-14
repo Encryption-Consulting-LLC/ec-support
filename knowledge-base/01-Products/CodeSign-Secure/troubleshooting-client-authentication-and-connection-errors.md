@@ -3,7 +3,7 @@ title: "Troubleshooting Client Authentication and Connection Errors"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "Troubleshooting"
-applies_to: "CodeSign Secure v3.2.1  and later; Windows KSP, EC KSP for Mac, PKCS#11 Wrapper, Utility Tool, and ec-signer clients"
+applies_to: "CodeSign Secure v3.2.1 and later; Windows KSP, EC KSP for Mac, PKCS#11 Wrapper, Utility Tool, and ec-signer clients"
 summary: "Fix CodeSign Secure connection and mutual TLS errors: wrong API URL, expired authentication certificate, TLS inspection, untrusted portal certificate."
 keywords: ["CodeSign Secure connection error", "mutual TLS", "client authentication certificate", "EC_Client_Auth", "TLS inspection", "API base URL", "PFX expired"]
 last_reviewed: "2026-10-08"
@@ -15,7 +15,7 @@ This article helps you fix problems where a signing client can't reach CodeSign 
 
 ## Applies to
 
-- CodeSign Secure v3.2.1  and later, single server and cluster deployments.
+- CodeSign Secure v3.2.1 and later, single server and cluster deployments.
 - All signing clients: the Encryption Consulting KSP for Windows, EC KSP for Mac, the PKCS#11 Wrapper, the Utility Tool, and ec-signer.
 
 ## How clients authenticate
@@ -117,7 +117,7 @@ Run these from the build machine, as the account that signs:
 
 ## Problem: new build machines can't be onboarded
 
-**Cause.** Your license limits how many KSP clients can be in use. The Dashboard KPI **Signing KSPs Utilized** shows the count in use against the count allowed, for example `15/15`.
+**Cause.** Your license limits how many KSP clients can be in use. The limit is decided during the CodeSign Secure installation setup. The Dashboard KPI **Signing KSPs Utilized** shows the count in use against the count allowed, for example `15/15`.
 
 **Resolution.** Check the **Client Report** in **Reports** to find clients that are no longer used. To raise the limit, contact EC support.
 

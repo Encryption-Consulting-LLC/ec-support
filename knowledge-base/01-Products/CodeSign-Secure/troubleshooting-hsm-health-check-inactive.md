@@ -3,7 +3,7 @@ title: "Troubleshooting HSM Health Check Inactive in CodeSign Secure"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "Troubleshooting"
-applies_to: "CodeSign Secure v3.2.1  and later, on-premises, cloud, and hybrid deployments with Entrust nShield, Thales Luna, Securosys Primus, or Utimaco SecurityServer HSMs"
+applies_to: "CodeSign Secure v3.2.1 and later, on-premises, cloud, and hybrid deployments with Entrust nShield, Thales Luna, Securosys Primus, or Utimaco SecurityServer HSMs"
 summary: "What to check when CodeSign Secure shows HSM Health Check as Inactive and all signing fails: network, HSM client, vendor tools, and the status cache."
 keywords: ["HSM Health Check Inactive", "CodeSign Secure HSM down", "nShield enquiry", "Luna vtl verify", "HSM not reachable", "all signing fails"]
 last_reviewed: "2026-10-08"
@@ -15,7 +15,7 @@ This article explains what to check when the **HSM Health Check** panel on the C
 
 ## Applies to
 
-- CodeSign Secure v3.2.1  and later, on-premises, cloud, and hybrid deployments.
+- CodeSign Secure v3.2.1 and later, on-premises, cloud, and hybrid deployments.
 - Supported HSMs: Entrust nShield, Thales Luna, Securosys Primus, and Utimaco SecurityServer Se Gen2.
 
 > **Note:** SaaS customers don't manage the HSM. If the status is Inactive on a SaaS deployment, open a support case. If production signing is down, use Severity 1. See [Support severity levels and response targets](../../00-Working-with-EC-Support/support-severity-levels-and-response-targets.md).

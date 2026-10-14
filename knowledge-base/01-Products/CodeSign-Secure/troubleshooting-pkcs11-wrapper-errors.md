@@ -3,7 +3,7 @@ title: "Troubleshooting PKCS#11 Wrapper Errors"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "Troubleshooting"
-applies_to: "CodeSign Secure v3.2.1  and later, Encryption Consulting PKCS#11 Wrapper on Windows, Linux, and macOS with jarsigner, apksigner, JSign, OpenSSL, XML signing, and GnuPG"
+applies_to: "CodeSign Secure v3.2.1 and later, Encryption Consulting PKCS#11 Wrapper on Windows, Linux, and macOS with jarsigner, apksigner, JSign, OpenSSL, XML signing, and GnuPG"
 summary: "Fix PKCS#11 Wrapper errors: provider won't load, EC_INI_FILE_PATH not set, Certificate chain not found, wrong key after renewal, Luna slot, and gpg-agent."
 keywords: ["PKCS#11 Wrapper error", "EC_INI_FILE_PATH", "Certificate chain not found for", "jarsigner PKCS11", "ec_pkcs11client.ini", "pkcs11properties.cfg", "CKR_FUNCTION_FAILED", "liblog4cxx"]
 last_reviewed: "2026-10-08"
@@ -15,7 +15,7 @@ This article helps you fix errors from the Encryption Consulting PKCS#11 Wrapper
 
 ## Applies to
 
-- CodeSign Secure v3.2.1  and later. Key caching and the `EC_PKCS11_*` variables were added in 3.02.01.
+- CodeSign Secure v3.2.1 and later. Key caching and the `EC_PKCS11_*` variables were added in v3.2.1.
 - The PKCS#11 Wrapper downloaded from **Signing Tools** for your operating system.
 
 ## How the wrapper is configured
@@ -71,7 +71,7 @@ The log is controlled by `EC_PKCS11_CLIENT-LogConfig.xml`, which ships with the 
 
 **Symptom.** After a certificate was renewed, replaced, or remapped, signing uses the old key or says the key can't be found.
 
-**Cause.** Since 3.02.01 the wrapper caches the signing key to make repeated signing faster. It decides which key to use in one of three ways: automatic detection from the tool's command line (the default), the `EC_PKCS11_KEY_LABEL` variable, or the `[key_filter]` section of the INI file. The cache or the detection can pick up the wrong key after a change.
+**Cause.** Since v3.2.1, the wrapper caches the signing key to make repeated signing faster. It decides which key to use in one of three ways: automatic detection from the tool's command line (the default), the `EC_PKCS11_KEY_LABEL` variable, or the `[key_filter]` section of the INI file. The cache or the detection can pick up the wrong key after a change.
 
 **Resolution.**
 

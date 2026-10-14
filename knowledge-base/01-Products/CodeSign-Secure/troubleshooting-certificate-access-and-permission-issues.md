@@ -3,7 +3,7 @@ title: "Troubleshooting Certificate Access and Permission Issues"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "Troubleshooting"
-applies_to: "CodeSign Secure v3.2.1  and later, all signing clients"
+applies_to: "CodeSign Secure v3.2.1 and later, all signing clients"
 summary: "Why a user or pipeline can't sign with a certificate in CodeSign Secure: permissions, team mapping, environments, inactive or expired certificates, renewals."
 keywords: ["CodeSign Secure access denied", "can't sign with certificate", "team mapping", "CodeSigning Operation permission", "certificate missing from mapping", "expired code signing certificate", "new user no permissions"]
 last_reviewed: "2026-10-08"
@@ -15,7 +15,7 @@ This article helps you find out why a user or pipeline can't sign with a certifi
 
 ## Applies to
 
-CodeSign Secure v3.2.1  and later, with any signing client.
+CodeSign Secure v3.2.1 and later, with any signing client.
 
 ## The access chain
 

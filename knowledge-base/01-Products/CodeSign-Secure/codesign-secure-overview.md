@@ -3,7 +3,7 @@ title: "CodeSign Secure Overview"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "Overview"
-applies_to: "CodeSign Secure v3.2.1  and later (SaaS, cloud, on-premises, and hybrid deployments)"
+applies_to: "CodeSign Secure v3.2.1 and later (SaaS, cloud, on-premises, and hybrid deployments)"
 summary: "An introduction to EC CodeSign Secure: HSM-backed code signing with approval policies, team-based access, audit trails, and CI/CD integration."
 keywords: ["CodeSign Secure", "code signing platform", "HSM code signing", "Encryption Consulting KSP", "PKCS#11 Wrapper", "Authenticode"]
 last_reviewed: "2026-10-08"

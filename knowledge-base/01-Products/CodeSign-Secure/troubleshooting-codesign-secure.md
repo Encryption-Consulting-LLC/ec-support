@@ -3,7 +3,7 @@ title: "Troubleshooting CodeSign Secure"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "Troubleshooting"
-applies_to: "CodeSign Secure v3.2.1  and later, the portal, all signing clients, and connected HSMs (all deployment models)"
+applies_to: "CodeSign Secure v3.2.1 and later, the portal, all signing clients, and connected HSMs (all deployment models)"
 summary: "Start here for CodeSign Secure problems: find where a signing request fails, collect the right diagnostics, fix common issues, and know what to send EC support."
 keywords: ["CodeSign Secure troubleshooting", "signtool error", "PKCS11 Wrapper error", "code signing timestamp error", "HSM signing failure", "support package"]
 last_reviewed: "2026-10-08"
@@ -17,7 +17,7 @@ This article is the starting point for CodeSign Secure problems. It shows how to
 
 ## Applies to
 
-CodeSign Secure v3.2.1  and later, all deployment models.
+CodeSign Secure v3.2.1 and later, all deployment models.
 
 ## Step 1: find where the request fails
 

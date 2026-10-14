@@ -3,7 +3,7 @@ title: "CodeSign Secure FAQ"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "FAQ"
-applies_to: "CodeSign Secure v3.2.1  and later (all deployment models)"
+applies_to: "CodeSign Secure v3.2.1 and later (all deployment models)"
 summary: "Answers to common CodeSign Secure questions about keys, file uploads, formats, clients, CI/CD, approvals, permissions, PQC, and support."
 keywords: ["CodeSign Secure FAQ", "code signing questions", "HSM code signing", "CodeSign Secure approval timeout", "PQC code signing", "CodeSign Secure supported HSMs"]
 last_reviewed: "2026-10-08"

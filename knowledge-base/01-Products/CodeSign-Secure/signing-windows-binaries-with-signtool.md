@@ -3,7 +3,7 @@ title: "Signing Windows Binaries with SignTool"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "How-to"
-applies_to: "CodeSign Secure v3.2.1  and later with the Encryption Consulting KSP and Microsoft SignTool on Windows 10, Windows 11, and Windows Server 2019, 2022, and 2025"
+applies_to: "CodeSign Secure v3.2.1 and later with the Encryption Consulting KSP and Microsoft SignTool on Windows 10, Windows 11, and Windows Server 2019, 2022, and 2025"
 summary: "Install and configure the Encryption Consulting KSP, then sign EXE, DLL, MSI, driver, script, and macro files with SignTool using keys held in CodeSign Secure."
 keywords: ["SignTool", "Authenticode", "Encryption Consulting Key Storage Provider", "EC KSP install", "ECGetCert", "EC_Client_Auth", "signtool timestamp"]
 last_reviewed: "2026-10-08"
@@ -19,7 +19,7 @@ SignTool is Microsoft's command-line tool for Authenticode signing. It can use a
 
 ## Applies to
 
-- CodeSign Secure v3.2.1  and later.
+- CodeSign Secure v3.2.1 and later.
 - Windows 10, Windows 11, and Windows Server 2019, 2022, and 2025.
 - Any file type SignTool can sign, for example `.exe`, `.dll`, `.sys`, `.msi`, `.cab`, `.cat`, `.ps1`, and Office macro files such as `.xlsm`.
 
@@ -121,9 +121,7 @@ Both give you the public certificate only. The private key stays in the HSM.
 signtool sign /csp "Encryption Consulting Key Storage Provider" /kc <key-name> /fd SHA256 /f <path-to-certificate>.pem /tr http://timestamp.digicert.com /td SHA256 <file-to-sign>
 ```
 
-The provider name is `<CodeSign Secure KSP name>` (run `certutil -csplist` to see it), and the key container is `<key alias>` as shown for the key in the CodeSign Secure console.
-
-**Option C: digest signing library.** SignTool also supports a digest signing library with `/dlib` and `/dmdf`. Use this only if CodeSign Secure ships such a library.
+Example:
 
 ```cmd
 signtool sign /csp "Encryption Consulting Key Storage Provider" /kc evcodesigning /fd SHA256 /f evcodesigning.pem /tr http://timestamp.digicert.com /td SHA256 setup.exe

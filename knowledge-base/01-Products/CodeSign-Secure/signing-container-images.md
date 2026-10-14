@@ -3,7 +3,7 @@ title: "Signing Container Images"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "How-to"
-applies_to: "CodeSign Secure v3.2.1  and later with ec-signer and Sigstore cosign on a Linux container build host, with optional Kubernetes enforcement"
+applies_to: "CodeSign Secure v3.2.1 and later with ec-signer and Sigstore cosign on a Linux container build host, with optional Kubernetes enforcement"
 summary: "Sign container images with ec-signer and cosign using keys in CodeSign Secure, and allow only signed images in Kubernetes with the webhook."
 keywords: ["sign container images", "ec-signer", "cosign", "container image signing HSM", "Kubernetes admission webhook", "CodeSign Secure container signing"]
 last_reviewed: "2026-10-08"
@@ -21,7 +21,7 @@ For deployment-time enforcement, CodeSign Secure provides two Kubernetes service
 
 ## Applies to
 
-- CodeSign Secure v3.2.1  and later.
+- CodeSign Secure v3.2.1 and later.
 - A Linux container build host (the product guide uses Ubuntu) with Python and Docker.
 - Docker Hub, as used in the product guide.
 

@@ -3,7 +3,7 @@ title: "Troubleshooting Timestamping Errors"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "Troubleshooting"
-applies_to: "CodeSign Secure v3.2.1  and later with SignTool, jarsigner, JSign, NuGet, Mage, and macOS codesign"
+applies_to: "CodeSign Secure v3.2.1 and later with SignTool, jarsigner, JSign, NuGet, Mage, and macOS codesign"
 summary: "Fix code signing timestamp errors: TSA unreachable, proxy settings for SignTool and Java, files signed without a timestamp, and formats with no timestamp."
 keywords: ["timestamp server could not be reached", "signtool timestamp error", "jarsigner -tsa proxy", "RFC 3161", "file not timestamped", "No -tsa or -tsacert is provided"]
 last_reviewed: "2026-10-08"
@@ -15,7 +15,7 @@ This article helps you fix errors in the timestamp step of code signing, and fin
 
 ## Applies to
 
-CodeSign Secure v3.2.1  and later, with any signing tool that supports RFC 3161 timestamps.
+CodeSign Secure v3.2.1 and later, with any signing tool that supports RFC 3161 timestamps.
 
 ## Who contacts the timestamp server
 

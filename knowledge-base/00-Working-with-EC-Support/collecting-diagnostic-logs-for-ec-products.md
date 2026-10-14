@@ -20,7 +20,7 @@ Each EC product writes logs on the application server and, where used, on agents
 | Product | Server logs | Agent or client logs |
 |---|---|---|
 | CertSecure Manager | Provided by your EC support engineer for your version | Provided by your EC support engineer for your version |
-| CodeSign Secure | `<install folder>\logs` | `<client install folder>\logs` |
+| CodeSign Secure | **Logs** page in the portal: export to CSV or download the system logs. Also included in a support package. | Windows KSP: `C:\ProgramData\Encryption Consulting\SigningKSP\rolling-ecksp.log` (settings in `ECKSP-LogConfig.xml`). PKCS#11 Wrapper: the log defined in `EC_PKCS11_CLIENT-LogConfig.xml`. Installer: **Open Logs** in the wizard. |
 | CBOM Secure | `<install folder>/logs` | `<agent install folder>/logs` |
 | SSH Secure | `<install folder>/logs` | `<agent install folder>/logs` |
 
