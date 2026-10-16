@@ -3,7 +3,7 @@ title: "Approval Workflows and Signing Policies"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "How-to"
-applies_to: "CodeSign Secure v3.2.1  and later (all deployment models)"
+applies_to: "CodeSign Secure v3.2.1 and later (all deployment models)"
 summary: "How CodeSign Secure controls signing: environment approval policies (No Approval, Certificate Owner, Quorum), MFA, roles, and team mapping."
 keywords: ["signing policy", "code signing approval workflow", "quorum approval", "CodeSign Secure environment", "Needs MFA", "App Management team mapping", "roles and permissions"]
 last_reviewed: "2026-10-08"
@@ -37,7 +37,7 @@ Good designs follow two principles:
 
 ## Applies to
 
-CodeSign Secure v3.2.1  and later.
+CodeSign Secure v3.2.1 and later.
 
 ## Approval policies
 
@@ -153,9 +153,7 @@ If nobody acts within 100 seconds, the request times out and the action buttons 
 
 ## Verification
 
-- Audit log entries show requester, approver, key, file name or hash, and result for each test.
-- Real-time alerts fire for rejected or unauthorized attempts, if configured.
-- Reports for auditors show the policy and its history.
+Test each production policy before you rely on it:
 
 1. Sign as a team member with a Certificate Owner or Quorum certificate. Confirm the request appears for the right approvers and that the MFA step works.
 2. Let a request time out. Confirm the signing command fails and the **Expired Requests** count on the Dashboard goes up.

@@ -3,7 +3,7 @@ title: "Troubleshooting SignTool and Encryption Consulting KSP Errors"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "Troubleshooting"
-applies_to: "CodeSign Secure v3.2.1  and later with the Encryption Consulting KSP and Microsoft SignTool on Windows 10 and Windows 11"
+applies_to: "CodeSign Secure v3.2.1 and later with the Encryption Consulting KSP and Microsoft SignTool on Windows 10, Windows 11, and Windows Server 2019, 2022, and 2025"
 summary: "Fix SignTool errors with the EC KSP: provider not found, no certificates found, SignerSign() failed 0x80090016 and 0x8007000B, and KSP auth errors."
 keywords: ["SignTool error", "No certificates were found that met all the given criteria", "SignerSign() failed", "0x80090016", "NTE_BAD_KEYSET", "0x8007000B", "Encryption Consulting Key Storage Provider", "EC_SSL_VERBOSE"]
 last_reviewed: "2026-10-08"
@@ -15,8 +15,8 @@ This article helps you fix errors that appear when Microsoft SignTool signs a fi
 
 ## Applies to
 
-- CodeSign Secure v3.2.1  and later.
-- The Encryption Consulting KSP (downloaded from **Signing Tools** as "Encryption Consulting CNG-SigningKSP"), tested on Windows 10 and Windows 11.
+- CodeSign Secure v3.2.1 and later.
+- The Encryption Consulting KSP (downloaded from **Signing Tools** as "Encryption Consulting CNG-SigningKSP") on Windows 10, Windows 11, and Windows Server 2019, 2022, and 2025.
 - SignTool from the Windows SDK, and other Windows tools that use the same KSP: Mage, NuGet, Visual Studio ClickOnce, and jarsigner with the `Windows-MY` keystore.
 
 ## How a KSP signing works
@@ -145,7 +145,7 @@ The same mismatch also causes installation of the signed package to fail. See th
 
    | Value | Should be |
    |---|---|
-   | Username | The CodeSign Secure user this machine signs as |
+   | Username | Your registered CodeSign Secure username |
    | Code | The CodeSign Secure activation code set during setup |
    | Identity Type | `1` |
    | API Base URL | `https://<your-domain>/api/`, ending with `/api/`. Include the port if it isn't 443, for example `https://<your-domain>:8443/api/` |
@@ -162,7 +162,7 @@ The same mismatch also causes installation of the signed package to fail. See th
 
 **Resolution.**
 
-1. Run the agent service under a dedicated build account.
+1. Set the agent service to log on as a dedicated account with local administrator privileges. In `services.msc`, open the service and use **Log On > This account**.
 2. Configure the same registry values for that account, and set `EC_Client_Auth` and `EC_Client_Pass` as system variables or for that account.
 3. Store the `.pfx` file in a folder only that account can read.
 4. Restart the agent service so new jobs pick up the changes.

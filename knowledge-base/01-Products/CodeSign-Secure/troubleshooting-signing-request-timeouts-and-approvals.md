@@ -3,7 +3,7 @@ title: "Troubleshooting Signing Request Timeouts and Approvals"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "Troubleshooting"
-applies_to: "CodeSign Secure v3.2.1  and later, environments with the Certificate Owner, Quorum, or No Approval policy"
+applies_to: "CodeSign Secure v3.2.1 and later, environments with the Certificate Owner, Quorum, or No Approval policy"
 summary: "Why CodeSign Secure signing requests time out after 100 seconds, why approvers can't see or approve requests, MFA code issues, and approvals in CI/CD."
 keywords: ["signing request timeout", "100 seconds", "approval workflow", "Requires MFA", "quorum approval", "Expired Requests", "CodeSign Secure pipeline fails"]
 last_reviewed: "2026-10-08"
@@ -15,7 +15,7 @@ This article explains why a signing job fails while it waits for approval, why a
 
 ## Applies to
 
-CodeSign Secure v3.2.1  and later, all deployment models.
+CodeSign Secure v3.2.1 and later, all deployment models.
 
 ## How approvals work
 

@@ -3,7 +3,7 @@ title: "Integrating CodeSign Secure with CI/CD Pipelines"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "How-to"
-applies_to: "CodeSign Secure v3.2.1  and later with GitHub Actions, GitLab CI/CD, Jenkins, Azure DevOps, TeamCity, and Bamboo"
+applies_to: "CodeSign Secure v3.2.1 and later with GitHub Actions, GitLab CI/CD, Jenkins, Azure DevOps, TeamCity, and Bamboo"
 summary: "Add CodeSign Secure signing to GitHub Actions, GitLab, Jenkins, Azure DevOps, TeamCity, and Bamboo with self-hosted agents and secrets."
 keywords: ["CI/CD code signing", "GitHub Actions signing", "Jenkins code signing", "Azure DevOps signing", "GitLab CI signing", "TeamCity signing", "Bamboo signing", "self-hosted runner"]
 last_reviewed: "2026-10-08"
@@ -26,15 +26,16 @@ The private key never reaches the agent. If the pipeline is compromised, the att
 
 ## Applies to
 
-- CodeSign Secure v3.2.1  and later.
+- CodeSign Secure v3.2.1 and later.
 - Documented platforms: GitHub Actions, GitLab CI/CD, Jenkins, Azure DevOps, TeamCity, and Bamboo. Other platforms that can run a self-hosted agent with a CodeSign Secure client can use the same pattern.
 
 ## Before starting
 
-- CodeSign Secure client (`<CodeSign Secure client package>`) installed on the agent, or installed at job start.
-- A dedicated service identity in CodeSign Secure for each pipeline, with access only to the keys it needs.
-- The credential stored as a secret in the CI/CD platform.
-- Network access from agents to the CodeSign Secure API (HTTPS 443 by default) and to the Time Stamping Authority (TSA).
+- **Use a No Approval environment for automated signing.** Approvals time out after a fixed 100 seconds, and a timed-out request fails the job. If releases need human approval, use your CI/CD platform's approval gate before the signing step. See [Approval workflows and signing policies](approval-workflows-and-signing-policies.md).
+- **Use a dedicated CodeSign Secure user per pipeline**, with only the **CodeSigning Operation** permission (plus **API Access** if the pipeline calls the API), and its own authentication certificate.
+- **Sign only on protected branches or release tags**, so pull requests from forks can't reach the secrets.
+- **Never commit** `.pfx` files, `ec_pkcs11client.ini`, passwords, or passcodes. Make sure secrets are masked in job logs.
+- **Allow network access** from agents to CodeSign Secure (HTTPS on TCP 443 by default) and to the Time Stamping Authority (TSA).
 
 ## Set up a Windows agent (KSP and SignTool)
 
@@ -174,7 +175,7 @@ Bamboo masks variables whose names contain `password`, `secret`, or `passphrase`
 
 ## Platform examples: PKCS#11 Wrapper
 
-The PKCS#11 Wrapper reads the path to its configuration file from `EC_INI_FILE_PATH`. Keep `ec_pkcs11client.ini` (and the `.pfx` it points to) in the secret store and let the platform provide the path at run time. Replace `EC-Cert-020` with your certificate's key label. We will be using jarsigner as an example here, you can check other supported tools with PKCS11 Wrapper as well.
+The PKCS#11 Wrapper reads the path to its configuration file from `EC_INI_FILE_PATH`. Keep `ec_pkcs11client.ini` (and the `.pfx` it points to) in the secret store and let the platform provide the path at run time. Replace `EC-Cert-020` with your certificate's key label. These examples use jarsigner. The same approach works with the other tools the PKCS#11 Wrapper supports, such as apksigner, JSign, OpenSSL, and GnuPG.
 
 **GitLab CI/CD.** Create a CI/CD variable of type **File** named `EC_INI_FILE_PATH` whose value is the content of your INI file, and mark it **Protected**. GitLab writes it to a temporary file and sets the variable to that file's path.
 

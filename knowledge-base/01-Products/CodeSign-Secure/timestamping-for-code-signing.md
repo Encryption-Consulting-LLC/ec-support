@@ -3,7 +3,7 @@ title: "Timestamping for Code Signing"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "Concept"
-applies_to: "CodeSign Secure v3.2.1  and later with SignTool, jarsigner, JSign, NuGet, Mage, codesign, and other RFC 3161 capable signing tools"
+applies_to: "CodeSign Secure v3.2.1 and later with SignTool, jarsigner, JSign, NuGet, Mage, codesign, and other RFC 3161 capable signing tools"
 summary: "RFC 3161 timestamping with CodeSign Secure: why signatures outlive the certificate, which TSA to use, options for each tool, and checks."
 keywords: ["code signing timestamp", "RFC 3161", "time stamping authority", "signtool tr td", "jarsigner tsa", "timestamp.digicert.com"]
 last_reviewed: "2026-10-08"

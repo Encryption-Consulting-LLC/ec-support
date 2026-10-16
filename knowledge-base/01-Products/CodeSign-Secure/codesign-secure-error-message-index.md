@@ -3,7 +3,7 @@ title: "CodeSign Secure Error Message Index"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "Reference"
-applies_to: "CodeSign Secure v3.2.1  and later, all signing clients and the portal"
+applies_to: "CodeSign Secure v3.2.1 and later, all signing clients and the portal"
 summary: "Look up a CodeSign Secure, SignTool, jarsigner, PKCS#11, codesign, or Azure AD error message to find its most likely cause and the article that fixes it."
 keywords: ["CodeSign Secure error", "SignTool error list", "SignerSign() failed", "0x80090016", "0x8007000B", "Certificate chain not found", "errSecInternalComponent", "AADSTS50011", "code signing error codes"]
 last_reviewed: "2026-10-08"
@@ -17,7 +17,7 @@ This page lists error messages and symptoms seen with CodeSign Secure, grouped b
 
 ## Applies to
 
-CodeSign Secure v3.2.1  and later.
+CodeSign Secure v3.2.1 and later.
 
 ## Start here: is it the client, the server, or the HSM?
 

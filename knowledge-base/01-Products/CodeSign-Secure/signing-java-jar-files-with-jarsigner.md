@@ -3,7 +3,7 @@ title: "Signing Java JAR Files with jarsigner"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "How-to"
-applies_to: "CodeSign Secure v3.2.1  and later with jarsigner, through the Encryption Consulting KSP (Windows) or the PKCS#11 Wrapper (Windows, Linux, macOS)"
+applies_to: "CodeSign Secure v3.2.1 and later with jarsigner, through the Encryption Consulting KSP (Windows) or the PKCS#11 Wrapper (Windows, Linux, macOS)"
 summary: "Sign JAR files with jarsigner and keys in CodeSign Secure, using the Windows KSP (Windows-MY) or the PKCS#11 Wrapper on Windows, Linux, macOS."
 keywords: ["jarsigner", "sign JAR", "PKCS#11 Wrapper", "Windows-MY", "SunPKCS11", "pkcs11properties.cfg", "EC_INI_FILE_PATH", "jarsigner timestamp"]
 last_reviewed: "2026-10-08"
@@ -25,7 +25,7 @@ This article explains how to sign Java Archive (JAR) files with the standard `ja
 
 ## Applies to
 
-- CodeSign Secure v3.2.1  and later.
+- CodeSign Secure v3.2.1 and later.
 - Any `.jar` file. The same steps also work for `.war`, `.ear`, and other JAR-format archives.
 
 ## Prerequisites
@@ -85,7 +85,7 @@ Enter the token PIN when asked. Note the alias of the signing key.
    username = <registered CodeSign Secure username>
    passcode = <CodeSign Secure passcode>
 
-   ; Optional, 3.02.01 and later: the key to sign with
+   ; Optional, v3.2.1 and later: the key to sign with
    ;[key_filter]
    ;label = EC-Cert-020
    ```
@@ -152,7 +152,7 @@ jarsigner -keystore NONE -storetype PKCS11 -storepass NONE \
 | `-tsa <url>` | RFC 3161 TSA URL. |
 | `-signedjar <file>` | Write the signed JAR to a new file. |
 
-### Key label and caching (3.02.01 and later)
+### Key label and caching (v3.2.1 and later)
 
 The wrapper caches the signing key for faster repeated signing, and by default reads the key label from the command line (the alias). Use **one** of these methods to name the key:
 

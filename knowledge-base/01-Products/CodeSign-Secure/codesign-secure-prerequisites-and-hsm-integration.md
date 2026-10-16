@@ -3,7 +3,7 @@ title: "CodeSign Secure Prerequisites and HSM Integration"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "How-to"
-applies_to: "CodeSign Secure v3.2.1  and later, customer-installed deployments on Windows Server 2022 with Entrust nShield, Thales Luna, Securosys Primus, or Utimaco SecurityServer HSMs"
+applies_to: "CodeSign Secure v3.2.1 and later, customer-installed deployments on Windows Server 2022 with Entrust nShield, Thales Luna, Securosys Primus, or Utimaco SecurityServer HSMs"
 summary: "Server, network, HSM, and client prerequisites for CodeSign Secure, how the installer connects to the HSM, the first-time configuration order, and verification."
 keywords: ["CodeSign Secure prerequisites", "CodeSign Secure installation", "HSM integration", "Windows Server 2022", "nShield", "Thales Luna", "Securosys", "Utimaco"]
 last_reviewed: "2026-10-08"
@@ -19,7 +19,7 @@ CodeSign Secure needs three things to sign code: a server, an HSM that holds the
 
 ## Applies to
 
-- CodeSign Secure v3.2.1  and later.
+- CodeSign Secure v3.2.1 and later.
 - Single-server and cluster deployments on Windows Server 2022.
 
 ## Server prerequisites
@@ -130,16 +130,15 @@ Configure the portal in this order. Each step depends on the ones before it.
 
 Then create your first certificate, application, and team mapping. See [Approval workflows and signing policies](approval-workflows-and-signing-policies.md).
 
-1. Sign in to the CodeSign Secure console as an administrator.
-2. Open the **HSM Configuration** page.
-3. Enter the PKCS#11 library path, slot or token label, and the partition credential.
-4. Save and run the connection test, if offered.
+## Create a signing key and certificate
 
 In **Keys and Certificates > Add New Certificate**, the private key is always generated inside the HSM.
 
-1. Generate a key pair in the HSM from the **Keys** page in CodeSign Secure.
-2. Create a Certificate Signing Request (CSR) and submit it to the public or internal Certificate Authority (CA).
-3. Import the issued certificate and full chain into CodeSign Secure.
+| Method | Use for |
+|---|---|
+| Self Signed Certificate | Testing and development. Issued by the internal CA, so operating systems don't trust it unless you install the certificate chain from **Signing Tools**. |
+| Certificate Signing Request (CSR) | Production. Submit the CSR to a public or enterprise CA. Every CSR creates a new key pair. |
+| Import Certificate | Uploading the certificate your CA issued for a CSR created in CodeSign Secure. The Certificate Name must match the name used for the CSR. |
 
 For RSA and ECDSA keys, CodeSign Secure supports RSA 2048, 3072, and 4096 bits (default 4096), and ECDSA P-256, P-384, and P-521. Public CAs require code signing RSA keys of at least 3072 bits. Check which ECDSA curves your CA accepts before you generate the CSR.
 

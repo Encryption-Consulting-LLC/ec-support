@@ -3,7 +3,7 @@ title: "CodeSign Secure: Common Misconceptions"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "Concept"
-applies_to: "CodeSign Secure v3.2.1  and later, all deployment models"
+applies_to: "CodeSign Secure v3.2.1 and later, all deployment models"
 summary: "Common misunderstandings about how CodeSign Secure handles files, keys, approvals, permissions, backups, renewals, and timestamps, and what really happens."
 keywords: ["CodeSign Secure misconceptions", "CodeSign Secure how it works", "does CodeSign Secure upload files", "CodeSign Secure backup keys", "No Policy Setup", "approval timeout"]
 last_reviewed: "2026-10-08"
@@ -17,7 +17,7 @@ For misconceptions about code signing in general, such as EV certificates and Sm
 
 ## Applies to
 
-CodeSign Secure v3.2.1  and later.
+CodeSign Secure v3.2.1 and later.
 
 ## At a glance
 

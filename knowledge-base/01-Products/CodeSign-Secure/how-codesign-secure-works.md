@@ -3,7 +3,7 @@ title: "How CodeSign Secure Works"
 category: "Products"
 section: "CodeSign Secure"
 article_type: "Concept"
-applies_to: "CodeSign Secure v3.2.1  and later (all deployment models)"
+applies_to: "CodeSign Secure v3.2.1 and later (all deployment models)"
 summary: "The CodeSign Secure signing flow: client authentication, client-side hashing, access checks, environment policies, HSM signing, and audit."
 keywords: ["CodeSign Secure architecture", "client-side hashing", "HSM signing flow", "mutual TLS", "environment policy", "Encryption Consulting KSP"]
 last_reviewed: "2026-10-08"
