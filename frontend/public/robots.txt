@@ -2,4 +2,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://support.encryptionconsulting.com/sitemap.txt
+Sitemap: https://support.encryptionconsulting.com/sitemap_index.xml
