@@ -33,6 +33,12 @@ describe("routeId", () => {
     );
   });
 
+  it("keeps a number at the start of an article file name", () => {
+    expect(routeId("05-Popular-Right-Now/47-day-ssl-tls.md")).toBe(
+      "popular-right-now/47-day-ssl-tls"
+    );
+  });
+
   it("maps _index.md to its folder and README.md to the home page", () => {
     expect(routeId("01-Products/CBOM-Secure/_index.md")).toBe("products/cbom-secure");
     expect(routeId("README.md")).toBe("");

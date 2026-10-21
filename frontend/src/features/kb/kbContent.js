@@ -67,7 +67,10 @@ const toSlug = (segment) => segment.replace(/^\d+-/, "").toLowerCase();
 export function routeId(rel) {
   const parts = rel.replace(/\.md$/, "").split("/");
   if (isIndex(rel)) parts.pop();
-  return parts.map(toSlug).join("/");
+  // Order prefixes are for folders only: an article named
+  // "47-day-certificates.md" keeps its "47-".
+  const file = isIndex(rel) ? null : parts.pop();
+  return [...parts.map(toSlug), ...(file ? [file.toLowerCase()] : [])].join("/");
 }
 
 // "products/cbom-secure/x" -> "products/cbom-secure"; the home page has no parent.
