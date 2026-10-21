@@ -7,7 +7,7 @@ import useSignedIn from "./useSignedIn";
 
 const SUGGEST_LIMIT = 3;
 
-// White search pill. Submits to /kb/search?q=..., so every search has a
+// White search pill. Submits to /knowledgebase/search?q=..., so every search has a
 // shareable URL. With `suggest`, matching articles show under the box as
 // you type. The list hides itself when focus leaves the box (CSS
 // :focus-within), so no click-outside handler is needed.

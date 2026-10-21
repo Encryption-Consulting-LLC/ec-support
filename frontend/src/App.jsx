@@ -15,6 +15,7 @@ import CaseDetail from "./features/support/CaseDetail";
 import SupportGuide from "./features/support/SupportGuide";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { ROUTES } from "./lib/router/path";
+import LegacyKbRedirect from "./features/kb/LegacyKbRedirect";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.css";
 import "primeflex/themes/primeone-light.css";
@@ -29,7 +30,7 @@ import "./global.scss";
  * action handoff, session rotation, expired-session dialog) is vendored
  * unchanged from the Client Portal, so credentials and behavior match
  * what clients already know. Everything behind PrivateRouteSelector is
- * the support module. The /kb knowledge base is public and sits outside it.
+ * the support module. The /knowledgebase knowledge base is public and sits outside it.
  */
 
 const KbPage = lazy(() => import("./features/kb/kbPage"));
@@ -72,6 +73,7 @@ function App() {
           <Route element={<MainLayout />}>
             {/* Public: the knowledge base needs no login. */}
             <Route path={ROUTES.KB_PAGE} element={<KbPage />} />
+            <Route path={ROUTES.KB_OLD} element={<LegacyKbRedirect />} />
             <Route element={<PrivateRouteSelector />}>
               <Route path={ROUTES.SUPPORT} element={<SupportCases />} />
               <Route path={ROUTES.SUPPORT_NEW} element={<NewCase />} />
