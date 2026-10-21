@@ -23,6 +23,7 @@ These runbooks give tested, step-by-step procedures for running a Microsoft Acti
 - [Root CA CRL Renewal for an Offline Root CA](root-ca-crl-renewal-offline-root.md)
 - [Issuing CA Certificate Renewal with an HSM](issuing-ca-certificate-renewal.md)
 - [Changing CRL Publication Periods in AD CS](changing-crl-publication-periods.md)
+- [NDES Certificate Renewal](ndes-certificate-renewal.md)
 - [certutil Command Reference for AD CS and HSM Operations](certutil-command-reference.md)
 
 ## Design and change projects

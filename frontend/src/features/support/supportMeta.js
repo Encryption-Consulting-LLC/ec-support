@@ -159,18 +159,18 @@ export const PLAN_HOURS = {
 };
 
 /**
- * Product documentation lives in the portal's own knowledge base (/kb).
+ * Product documentation lives in the portal's own knowledge base (/knowledgebase).
  * The case pages still render these as new-tab links, so a half-written
  * case is never lost. Keyed by the same product values as PRODUCTS; each
  * url must match a knowledge-base folder (kbContent.test.js checks it).
  */
 export const PRODUCT_RESOURCES = {
-  certsecuremanager: { label: "CertSecure Manager", url: "/kb/products/certsecure-manager" },
-  codesignsecure: { label: "CodeSign Secure", url: "/kb/products/codesign-secure" },
-  sshsecure: { label: "SSH Secure", url: "/kb/products/ssh-secure" },
-  hsmasaservice: { label: "HSM As A Service", url: "/kb/products/hsm-as-a-service" },
-  cbomsecure: { label: "CBOM Secure", url: "/kb/products/cbom-secure" },
-  pkiasaservice: { label: "PKI As A Service", url: "/kb/products/pki-as-a-service" },
+  certsecuremanager: { label: "CertSecure Manager", url: "/knowledgebase/products/certsecure-manager" },
+  codesignsecure: { label: "CodeSign Secure", url: "/knowledgebase/products/codesign-secure" },
+  sshsecure: { label: "SSH Secure", url: "/knowledgebase/products/ssh-secure" },
+  hsmasaservice: { label: "HSM As A Service", url: "/knowledgebase/products/hsm-as-a-service" },
+  cbomsecure: { label: "CBOM Secure", url: "/knowledgebase/products/cbom-secure" },
+  pkiasaservice: { label: "PKI As A Service", url: "/knowledgebase/products/pki-as-a-service" },
 };
 
 export const EDUCATION_CENTER_URL =

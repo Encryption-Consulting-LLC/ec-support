@@ -8,10 +8,10 @@ import KbHome from "./KbHome";
 import KbSearchPage from "./KbSearchPage";
 
 /**
- * Resolves /kb/* to a KB section (folder with _index.md) or an article.
+ * Resolves /knowledgebase/* to a KB section (folder with _index.md) or an article.
  */
 export default function KbPage() {
-  // "*" is the splat: everything after /kb/, "" on the KB home.
+  // "*" is the splat: everything after /knowledgebase/, "" on the KB home.
   const id = (useParams()["*"] ?? "").replace(/\/$/, "");
   const section = sections[id];
   const article = section ? null : articles.find((a) => a.id === id);
@@ -24,7 +24,7 @@ export default function KbPage() {
   // key: a new page gets a fresh component (fresh TOC state).
   let page;
   if (id === "") page = <KbHome />;
-  else if (id === "search") page = <KbSearchPage />; // /kb/search?q=...
+  else if (id === "search") page = <KbSearchPage />; // /knowledgebase/search?q=...
   else if (section) page = <KbSection key={id} section={section} />;
   else if (article) page = <KbArticle key={id} article={article} />;
   else {

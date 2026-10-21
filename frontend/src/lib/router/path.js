@@ -12,8 +12,10 @@ export const ROUTES = {
   // react-router's static-segment ranking, same as /support/new.
   SUPPORT_GUIDE: "/support/guide",
   SUPPORT_DETAIL: "/support/:case_no",
-  KB: "/kb",
-  KB_SEARCH: "/kb/search",
-  KB_PAGE: "/kb/*",
+  KB: "/knowledgebase",
+  KB_SEARCH: "/knowledgebase/search",
+  KB_PAGE: "/knowledgebase/*",
+  // The KB's first address. Kept so shared links redirect to the new one.
+  KB_OLD: "/kb/*",
 };
 export const kbUrl = (id) => (id ? `${ROUTES.KB}/${id}` : ROUTES.KB);

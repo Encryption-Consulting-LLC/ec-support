@@ -1,5 +1,6 @@
 import fm from "front-matter";
 import { PRODUCTS } from "../support/supportMeta"; // imports the list of products  
+import { ROUTES } from "../../lib/router/path";
 
 /**
  * Knowledge base content loader.
@@ -10,8 +11,8 @@ import { PRODUCTS } from "../support/supportMeta"; // imports the list of produc
  *
  * URLs mirror the folders with the "NN-" order prefixes dropped:
  *   01-Products/CBOM-Secure/reading-a-cbom-report.md
- *     -> /kb/products/cbom-secure/reading-a-cbom-report
- * A folder's _index.md is that folder's landing page (/kb/products/cbom-secure)
+ *     -> /knowledgebase/products/cbom-secure/reading-a-cbom-report
+ * A folder's _index.md is that folder's landing page (/knowledgebase/products/cbom-secure)
  * and the root README.md is the KB home.
  *
  * parseContent/validate take the files as input (pure) so tests can feed
@@ -66,7 +67,10 @@ const toSlug = (segment) => segment.replace(/^\d+-/, "").toLowerCase();
 export function routeId(rel) {
   const parts = rel.replace(/\.md$/, "").split("/");
   if (isIndex(rel)) parts.pop();
-  return parts.map(toSlug).join("/");
+  // Order prefixes are for folders only: an article named
+  // "47-day-certificates.md" keeps its "47-".
+  const file = isIndex(rel) ? null : parts.pop();
+  return [...parts.map(toSlug), ...(file ? [file.toLowerCase()] : [])].join("/");
 }
 
 // "products/cbom-secure/x" -> "products/cbom-secure"; the home page has no parent.
@@ -130,7 +134,7 @@ export function resolveLink(fromRel, href) {
   if (href.startsWith("#")) return href;
   const url = new URL(href, `http://kb/${fromRel}`);
   if (url.host !== "kb" || !url.pathname.endsWith(".md")) return href;
-  return `/kb/${routeId(decodeURIComponent(url.pathname.slice(1)))}${url.hash}`;
+  return `${ROUTES.KB}/${routeId(decodeURIComponent(url.pathname.slice(1)))}${url.hash}`;
 }
 
 // Relative image path inside an article -> the URL Vite gave the bundled file.
@@ -171,7 +175,7 @@ export function validate(files, images = {}, { allowPlaceholders = false } = {})
     }
     const id = routeId(rel);
     if (urls.has(id)) {
-      errors.push(`${where}: same URL /kb/${id} as knowledge-base/${urls.get(id)}`);
+      errors.push(`${where}: same URL ${ROUTES.KB}/${id} as knowledge-base/${urls.get(id)}`);
     }
     urls.set(id, rel);
     const { attributes: a, body, error } = parseFile(raw);

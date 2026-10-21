@@ -33,6 +33,12 @@ describe("routeId", () => {
     );
   });
 
+  it("keeps a number at the start of an article file name", () => {
+    expect(routeId("05-Popular-Right-Now/47-day-ssl-tls.md")).toBe(
+      "popular-right-now/47-day-ssl-tls"
+    );
+  });
+
   it("maps _index.md to its folder and README.md to the home page", () => {
     expect(routeId("01-Products/CBOM-Secure/_index.md")).toBe("products/cbom-secure");
     expect(routeId("README.md")).toBe("");
@@ -90,12 +96,12 @@ describe("resolveLink", () => {
 
   it("turns relative .md links into portal URLs", () => {
     expect(resolveLink(from, "../../02-General/CBOM/what-is-a-cbom.md#intro")).toBe(
-      "/kb/general/cbom/what-is-a-cbom#intro"
+      "/knowledgebase/general/cbom/what-is-a-cbom#intro"
     );
     expect(resolveLink(from, "cbom-secure-overview.md")).toBe(
-      "/kb/products/cbom-secure/cbom-secure-overview"
+      "/knowledgebase/products/cbom-secure/cbom-secure-overview"
     );
-    expect(resolveLink(from, "_index.md")).toBe("/kb/products/cbom-secure");
+    expect(resolveLink(from, "_index.md")).toBe("/knowledgebase/products/cbom-secure");
   });
 
   it("leaves external links and anchors alone", () => {
@@ -189,7 +195,7 @@ describe("validate", () => {
       [K("01-Products/x.md")]: doc(),
       [K("02-Products/x.md")]: doc(),
     }).join("\n");
-    expect(errors).toMatch(/same URL \/kb\/products\/x/);
+    expect(errors).toMatch(/same URL \/knowledgebase\/products\/x/);
   });
 });
 
@@ -204,7 +210,7 @@ describe("knowledge-base folder", () => {
   // Case pages link here through PRODUCT_RESOURCES; a renamed folder must fail CI.
   it("has a section for every product documentation link", () => {
     for (const { url } of Object.values(PRODUCT_RESOURCES)) {
-      expect(sections[url.replace(/^\/kb\//, "")], url).toBeDefined();
+      expect(sections[url.replace(/^\/knowledgebase\//, "")], url).toBeDefined();
     }
   });
 });

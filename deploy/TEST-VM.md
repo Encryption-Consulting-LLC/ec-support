@@ -137,7 +137,7 @@ on a phone. Hard refresh (Ctrl+Shift+R) after each deploy.
 - [ ] `/` opens the KB home, not the login page.
 - [ ] Home: dark hero, "How can we help?" (signed in: "What are you working on?"), one search pill, common searches, "Browse by product" list with six products and article counts, "Beyond products" links, "Still stuck?" band at the bottom.
 - [ ] Typing two letters in the home search shows up to 3 suggestions and "Not finding it? Sign in to open a case". Clicking away closes the list.
-- [ ] Enter opens `/kb/search?q=...`: "N answers for ...", type pills with counts, results grouped by section, "N more in X" link.
+- [ ] Enter opens `/knowledgebase/search?q=...`: "N answers for ...", type pills with counts, results grouped by section, "N more in X" link.
 - [ ] Type pills filter; "N more in X" shows the whole section; "Search everything" clears it; Back restores the previous filters.
 - [ ] A search with no results ("zzzz") shows the "No articles match" message.
 - [ ] Every product row and "Beyond products" link opens its section page; every section lists its articles.
@@ -145,7 +145,7 @@ on a phone. Hard refresh (Ctrl+Shift+R) after each deploy.
 - [ ] The top nav search appears on article and section pages only (not on the KB home or search page) and works the same way.
 - [ ] Links inside articles: links to other articles open in the portal; external links open in a new tab.
 - [ ] Tab title changes per article (browser tab shows the article title).
-- [ ] An unknown URL (`/kb/nope`) shows "Article not found".
+- [ ] An unknown URL (`/knowledgebase/nope`) shows "Article not found".
 - [ ] No "Session expired" dialog anywhere in the KB.
 - [ ] Top bar: logo, Knowledge base, theme toggle, Sign in. No Cases links.
 - [ ] `/support`, `/support/new`, `/support/guide` all redirect to `/login`.
